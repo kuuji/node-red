@@ -679,7 +679,6 @@
         "wires": [
             [
                 "d0d6184d241670dc",
-                "3026ce7534f85995",
                 "b322cc5dcf057a0c"
             ]
         ]
@@ -688,9 +687,8 @@
         "id": "3026ce7534f85995",
         "type": "function",
         "z": "3c13ea3309cc8221",
-        "d": true,
         "name": "openai",
-        "func": "const configuration = new oai.Configuration({\n    apiKey: msg.openapi_key,\n});\n\n\nlet messages = [\n    { role: \"system\", content: `\nYou will generate a json to configure a light.  Your answer has to be a valid json array. You will always respond following the format below.\n\n{\n  \"rgb_color\": [<red>, <green>, <blue>],\n  \"brightness_pct\": <brightness>,\n  \"entity_id\": \"<entity_id>\"\n}\n\nYou will only change the following values\n- <red>\n- <green>\n- <blue>\n- <brightness>\n- <entity_id>\n\n<red>, <green> and <blue> are each numbers between 0 and 255. Their combined value will define the colour of the light.\n<brigthness> is a percentage that will define how bright the light gets.\n<entity_id> will be provided by the user and is the id  of the light being changed. If there are multiple entity_id provided by the user you will provide multiple outputs in a json array.\nEach ligth will have a distinguishably different color but do not explain your choice.\n\nThe user input is a json and should look like the following\n\n{\n  \"entity_id\": [\"test\"],\n  \"theme\": \"halloween\"\n}\n\nYou will choose the color values based on what the user provides in the theme attribute, do not explain your choice.` },\n    { role: \"user\", content: `{   \"entity_id\": [\"light.alex_office_ceiling\",\"light.alex_office_lamp_desk\",\"light.alex_office_lamp_shelf\"],   \"theme\": \"${global.get(\"homeassistant\").homeAssistant.states[\"input_text.light_gpt_theme\"].state}\" }` }\n]\n\n\nconst openai = new oai.OpenAIApi(configuration);\n\nnode.status({ fill: \"green\", shape: \"dot\", text: \"Querying openapi...\" });\n\ntry{\n    const completion = await openai.createChatCompletion({\n        model: \"gpt-3.5-turbo\",\n        messages: messages,\n        temperature: 0\n    });\n    \n    node.status({});\n    msg.completion = completion\n    let result = completion.data.choices[0].message.content.trim()\n    let jsonStart = result.indexOf(\"[\");\n    let jsonEnd = result.lastIndexOf(\"]\");\n\n    if (jsonStart !== -1 && jsonEnd !== -1) {\n        let jsonText = result.substring(jsonStart, jsonEnd + 1);\n        msg.payload = JSON.parse(jsonText); \n    } else {\n        console.log(\"No JSON array found.\");\n    }\n} catch (error) {\n    if (error.response) {\n        msg.error_status = error.response.status\n        msg.error_data = error.response.data\n    } else {\n        msg.error_message = error.message\n    }\n}\n\n\n\nreturn msg",
+        "func": "const configuration = new oai.Configuration({\n    apiKey: msg.openapi_key,\n});\n\nconst entity_ids = msg.payload\n\nlet messages = [\n    { role: \"system\", content: `\nYou will generate a json to configure a light.  Your answer has to be a valid json array. You will always respond following the format below.\n\n{\n  \"rgb_color\": [<red>, <green>, <blue>],\n  \"brightness_pct\": <brightness>,\n  \"entity_id\": \"<entity_id>\"\n}\n\nYou will only change the following values\n- <red>\n- <green>\n- <blue>\n- <brightness>\n- <entity_id>\n\n<red>, <green> and <blue> are each numbers between 0 and 255. Their combined value will define the colour of the light.\n<brigthness> is a percentage that will define how bright the light gets.\n<entity_id> will be provided by the user and is the id  of the light being changed. If there are multiple entity_id provided by the user you will provide multiple outputs in a json array.\nEach ligth will have a distinguishably different color but do not explain your choice.\n\nThe user input is a json and should look like the following\n\n{\n  \"entity_id\": [\"test\"],\n  \"theme\": \"halloween\"\n}\n\nYou will choose the color values based on what the user provides in the theme attribute, do not explain your choice.` },\n    { role: \"user\", content: `{   \"entity_id\": [${entity_ids}],   \"theme\": \"${global.get(\"homeassistant\").homeAssistant.states[\"input_text.light_gpt_theme\"].state}\" }` }\n]\n\n\nconst openai = new oai.OpenAIApi(configuration);\n\nnode.status({ fill: \"green\", shape: \"dot\", text: \"Querying openapi...\" });\n\ntry{\n    const completion = await openai.createChatCompletion({\n        model: \"gpt-3.5-turbo\",\n        messages: messages,\n        temperature: 0\n    });\n    \n    node.status({});\n    msg.completion = completion\n    let result = completion.data.choices[0].message.content.trim()\n    let jsonStart = result.indexOf(\"[\");\n    let jsonEnd = result.lastIndexOf(\"]\");\n\n    if (jsonStart !== -1 && jsonEnd !== -1) {\n        let jsonText = result.substring(jsonStart, jsonEnd + 1);\n        msg.payload = JSON.parse(jsonText); \n    } else {\n        console.log(\"No JSON array found.\");\n    }\n} catch (error) {\n    if (error.response) {\n        msg.error_status = error.response.status\n        msg.error_data = error.response.data\n    } else {\n        msg.error_message = error.message\n    }\n}\n\n\n\nreturn msg",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -701,7 +699,7 @@
                 "module": "openai"
             }
         ],
-        "x": 810,
+        "x": 870,
         "y": 340,
         "wires": [
             [
@@ -933,18 +931,18 @@
         "id": "7ac4580bc60f964e",
         "type": "function",
         "z": "3c13ea3309cc8221",
-        "name": "function 2",
+        "name": "split entity_id",
         "func": "\nconst entity_ids = msg.payload.map(entity => entity.entity_id)\n// split the array into comma separated values\nconst entity_ids_string = entity_ids.join(',')\nmsg.payload = entity_ids_string\nreturn msg",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1000,
-        "y": 600,
+        "x": 810,
+        "y": 500,
         "wires": [
             [
-                "cae1e912a0bcf312"
+                "3026ce7534f85995"
             ]
         ]
     }
