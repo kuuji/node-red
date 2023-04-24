@@ -679,7 +679,7 @@
         "wires": [
             [
                 "d0d6184d241670dc",
-                "c8d804b8b0d071f0"
+                "3026ce7534f85995"
             ]
         ]
     },
@@ -705,7 +705,7 @@
         "type": "function",
         "z": "3c13ea3309cc8221",
         "name": "openai",
-        "func": "const configuration = new oai.Configuration({\n    apiKey: msg.openapi_key,\n});\n\n\nlet messages = [\n    { role: \"system\", content: global.get(\"homeassistant\").homeAssistant.states[\"input_text.gpt_system_prompt\"].state },\n    { role: \"user\", content: global.get(\"homeassistant\").homeAssistant.states[\"input_text.gpt_instructions\"].state }\n]\n\n\nconst openai = new oai.OpenAIApi(configuration);\n\nnode.status({ fill: \"green\", shape: \"dot\", text: \"Querying openapi...\" });\n\ntry{\n    const completion = await openai.createChatCompletion({\n        model: \"gpt-3.5-turbo\",\n        messages: messages\n    });\n    \n    node.status({});\n    msg.completion = completion    \n} catch (error) {\n    if (error.response) {\n        msg.error_status = error.response.status\n        msg.error_data = error.response.data\n    } else {\n        msg.error_message = error.message\n    }\n}\n\n\n\nreturn msg",
+        "func": "const configuration = new oai.Configuration({\n    apiKey: msg.openapi_key,\n});\n\n\nlet messages = [\n    { role: \"system\", content: `\nYou will generate a json to configure a light.  You only answer with the json, no other message. You will always respond following the format below.\n\n{\n  \"rgb_color\": [<red>, <green>, <blue>],\n  \"brightness_pct\": <brightness>,\n  \"entity_id\": \"<entity_id>\"\n}\n\nYou will only change the following values\n- <red>\n- <green>\n- <blue>\n- <brightness>\n- <entity_id>\n\n<red>, <green> and <blue> are each numbers between 0 and 255. Their combined value will define the colour of the light.\n<brigthness> is a percentage that will define how bright the light gets.\n<entity_id> will be provided by the user and is the id  of the light being changed. If there are multiple entity_id provided by the user you will provide multiple outputs in an array, each with a different color .\n\nThe user input is also json and should look like the following\n\n{\n  \"entity_id\": [\"test\"],\n  \"theme\": \"halloween\"\n}\n\nYou will choose the color values based on what the user provides in the theme attribute.` },\n    { role: \"user\", content: global.get(\"homeassistant\").homeAssistant.states[\"input_text.light_gpt_theme\"].state }\n]\n\n\nconst openai = new oai.OpenAIApi(configuration);\n\nnode.status({ fill: \"green\", shape: \"dot\", text: \"Querying openapi...\" });\n\ntry{\n    const completion = await openai.createChatCompletion({\n        model: \"gpt-3.5-turbo\",\n        messages: messages\n    });\n    \n    node.status({});\n    msg.completion = completion\n    msg.parts = JSON.parse(completion.data.choices[0].message)   \n} catch (error) {\n    if (error.response) {\n        msg.error_status = error.response.status\n        msg.error_data = error.response.data\n    } else {\n        msg.error_message = error.message\n    }\n}\n\n\n\nreturn msg",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -716,12 +716,12 @@
                 "module": "openai"
             }
         ],
-        "x": 890,
+        "x": 810,
         "y": 340,
         "wires": [
             [
-                "c8d804b8b0d071f0",
-                "6efa97849e377240"
+                "6efa97849e377240",
+                "0e5ea4eeabd9f43a"
             ]
         ]
     },
@@ -729,7 +729,7 @@
         "id": "c8d804b8b0d071f0",
         "type": "function",
         "z": "3c13ea3309cc8221",
-        "name": "notification ha",
+        "name": "light service",
         "func": "\n\n\n\ntry {\n    const response = await fetch(\"https://home.byeon.ca/api/services/light/turn_on\", {\n        method: \"POST\",\n        headers: {\n            \"Authorization\": `Bearer ${msg.ha_token}`,\n            \"Content-Type\": \"application/json\"\n        },\n        body: JSON.stringify({\n            \"rgb_color\": [\n                165,\n                49,\n                49\n            ],\n            \"brightness_pct\": 100,\n            \"entity_id\":[\n                \"light.alex_office_ceiling\",\n                \"light.alex_office_lamp_desk\"\n            ]\n        }),\n    })\n    const data = await response.text();\n    node.status({ fill: \"green\", shape: \"dot\", text: \"Request successful\" });\n    msg.rsp = data\n} catch (error) {\n    console.log(error);\n    msg.error = error\n}\nnode.status({});   // to clear the status\nreturn msg",
         "outputs": 1,
         "noerr": 0,
@@ -741,8 +741,8 @@
                 "module": "node-fetch"
             }
         ],
-        "x": 840,
-        "y": 460,
+        "x": 970,
+        "y": 480,
         "wires": [
             [
                 "0e5ea4eeabd9f43a",
