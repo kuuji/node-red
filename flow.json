@@ -16,6 +16,14 @@
         "env": []
     },
     {
+        "id": "3c13ea3309cc8221",
+        "type": "tab",
+        "label": "Light Scene GPT",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "0c34728bb51d9c58",
         "type": "server",
         "name": "Home Assistant",
@@ -576,5 +584,15 @@
         "wires": [
             []
         ]
+    },
+    {
+        "id": "b091bf7a746797ce",
+        "type": "comment",
+        "z": "3c13ea3309cc8221",
+        "name": "Prompt",
+        "info": "You will generate a yaml to configure a light.  You only answer with the yaml, no other message. You will always respond following the format below.\n\nservice: light.turn_on\ndata:\n  rgb_color:\n    - <red>\n    - <green>\n    - <blue>\n  brightness_pct: <brigthness>\ntarget:\n  entity_id: <entity_id>\n\n\nYou will only change the following values\n- <red>\n- <green>\n- <blue>\n- <brightness>\n- <entity_id>\n\n<red>, <green> and <blue> are each numbers between 0 and 255. Their combined value will define the colour of the light.\n<brigthness> is a percentage that will define how bright the light gets.\n<entity_id> will be provided by the user and is the id  of the light being changed. If there are multiple entity_id provided by the user, they will be coma separated and you will provide multiple outputs each with a different colour.\n\nThe user input should look like the following\n\nentity_id: test, test2\ntheme: orange\n\n\nYou will choose these values based on what the user provides as a theme.",
+        "x": 130,
+        "y": 220,
+        "wires": []
     }
 ]
