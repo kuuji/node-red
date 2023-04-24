@@ -180,7 +180,49 @@
         "x": 220,
         "y": 240,
         "wires": [
+            [
+                "21b6cbe7eba5b130"
+            ]
+        ]
+    },
+    {
+        "id": "4bc328b347c9ed08",
+        "type": "function",
+        "z": "6ff8268c9a3c5d70",
+        "name": "chat_gpt",
+        "func": "const https = require('https');\n\nconst options = {\n    hostname:\"home.byeon.ca\",\n    path: '/api/states',\n    method: 'GET',\n    headers: {\n        'Authorization': `Bearer ${msg.ha_token}`,\n        'Content-Type': 'application/json'\n    }\n};\n\nconst req = https.request(options, (res) => {\n    return {res:res}\n});\n\nreq.on('error', (error) => {\n    // Handle the error\n});\n\nreq.end();",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 660,
+        "y": 240,
+        "wires": [
             []
+        ]
+    },
+    {
+        "id": "21b6cbe7eba5b130",
+        "type": "credentials",
+        "z": "6ff8268c9a3c5d70",
+        "name": "api_keys",
+        "props": [
+            {
+                "value": "openapi_key",
+                "type": "msg"
+            },
+            {
+                "value": "ha_token",
+                "type": "msg"
+            }
+        ],
+        "x": 460,
+        "y": 240,
+        "wires": [
+            [
+                "4bc328b347c9ed08"
+            ]
         ]
     }
 ]
