@@ -684,23 +684,6 @@
         ]
     },
     {
-        "id": "0e5ea4eeabd9f43a",
-        "type": "debug",
-        "z": "3c13ea3309cc8221",
-        "name": "debug 3",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1260,
-        "y": 340,
-        "wires": []
-    },
-    {
         "id": "3026ce7534f85995",
         "type": "function",
         "z": "3c13ea3309cc8221",
@@ -730,7 +713,7 @@
         "type": "function",
         "z": "3c13ea3309cc8221",
         "name": "light service",
-        "func": "\n\n\n\ntry {\n    const response = await fetch(\"https://home.byeon.ca/api/services/light/turn_on\", {\n        method: \"POST\",\n        headers: {\n            \"Authorization\": `Bearer ${msg.ha_token}`,\n            \"Content-Type\": \"application/json\"\n        },\n        body: JSON.stringify({\n            \"rgb_color\": [\n                165,\n                49,\n                49\n            ],\n            \"brightness_pct\": 100,\n            \"entity_id\":[\n                \"light.alex_office_ceiling\",\n                \"light.alex_office_lamp_desk\"\n            ]\n        }),\n    })\n    const data = await response.text();\n    node.status({ fill: \"green\", shape: \"dot\", text: \"Request successful\" });\n    msg.rsp = data\n} catch (error) {\n    console.log(error);\n    msg.error = error\n}\nnode.status({});   // to clear the status\nreturn msg",
+        "func": "\n\n\n\ntry {\n    const response = await fetch(\"https://home.byeon.ca/api/services/light/turn_on\", {\n        method: \"POST\",\n        headers: {\n            \"Authorization\": `Bearer ${msg.ha_token}`,\n            \"Content-Type\": \"application/json\"\n        },\n        body: msg.payload,\n    })\n    const data = await response.text();\n    node.status({ fill: \"green\", shape: \"dot\", text: \"Request successful\" });\n    msg.rsp = data\n} catch (error) {\n    console.log(error);\n    msg.error = error\n}\nnode.status({});   // to clear the status\nreturn msg",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -741,12 +724,11 @@
                 "module": "node-fetch"
             }
         ],
-        "x": 970,
-        "y": 480,
+        "x": 1210,
+        "y": 340,
         "wires": [
             [
-                "0e5ea4eeabd9f43a",
-                "202bd5cf15bcf9db"
+                "cae1e912a0bcf312"
             ]
         ]
     },
@@ -832,33 +814,6 @@
         ]
     },
     {
-        "id": "202bd5cf15bcf9db",
-        "type": "api-call-service",
-        "z": "3c13ea3309cc8221",
-        "name": "update_status",
-        "server": "0c34728bb51d9c58",
-        "version": 5,
-        "debugenabled": false,
-        "domain": "input_text",
-        "service": "set_value",
-        "areaId": [],
-        "deviceId": [],
-        "entityId": [
-            "input_text.gpt_status"
-        ],
-        "data": "{\"value\":\"Done!\"}",
-        "dataType": "jsonata",
-        "mergeContext": "",
-        "mustacheAltTags": false,
-        "outputProperties": [],
-        "queue": "none",
-        "x": 1300,
-        "y": 460,
-        "wires": [
-            []
-        ]
-    },
-    {
         "id": "fd5f42e6ece3987f",
         "type": "split",
         "z": "3c13ea3309cc8221",
@@ -873,8 +828,24 @@
         "y": 340,
         "wires": [
             [
-                "0e5ea4eeabd9f43a"
+                "c8d804b8b0d071f0"
             ]
         ]
+    },
+    {
+        "id": "cae1e912a0bcf312",
+        "type": "debug",
+        "z": "3c13ea3309cc8221",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1420,
+        "y": 340,
+        "wires": []
     }
 ]
