@@ -190,7 +190,7 @@
         "type": "function",
         "z": "6ff8268c9a3c5d70",
         "name": "chat_gpt",
-        "func": "\nlet newMsg\n\nfetch(\"http://home.byeon.ca/api/states\", {\n    method: \"GET\",\n    headers: {\n        \"Authorization\": `Bearer ${msg.ha_token}`,\n        \"Content-Type\": \"application/json\"\n    }\n})\n.then(response => {\n    node.status({ fill: \"green\", shape: \"dot\", text: \"Request successful\" });\n    newMsg = { res: response }\n})\n.catch(error => {\n    node.status({ fill: \"red\", shape: \"ring\", text: \"Error on request\" });\n    newMsg = { error: error }\n});\n\n\n\nnode.status({});   // to clear the status\nreturn newMsg",
+        "func": "\nlet newMsg\n\nfetch(\"http://home.byeon.ca/api/states\", {\n    method: \"GET\",\n    headers: {\n        \"Authorization\": `Bearer ${msg.ha_token}`,\n        \"Content-Type\": \"application/json\"\n    }\n})\n.then(response => {\n    node.status({ fill: \"green\", shape: \"dot\", text: \"Request successful\" });\n    newMsg = { result: response }\n})\n.catch(error => {\n    node.status({ fill: \"red\", shape: \"ring\", text: \"Error on request\" });\n    newMsg = { error: error }\n});\nnode.status({});   // to clear the status\nreturn newMsg",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
