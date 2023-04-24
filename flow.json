@@ -140,7 +140,7 @@
                 "value": ""
             }
         ],
-        "entityidfilter": "",
+        "entityidfilter": "input_button.gpt_go",
         "entityidfiltertype": "exact",
         "outputinitially": false,
         "state_type": "str",
@@ -177,7 +177,7 @@
                 "valueType": "triggerId"
             }
         ],
-        "x": 190,
+        "x": 220,
         "y": 240,
         "wires": [
             []
