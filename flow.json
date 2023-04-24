@@ -925,6 +925,25 @@
         "y": 600,
         "wires": [
             [
+                "7ac4580bc60f964e"
+            ]
+        ]
+    },
+    {
+        "id": "7ac4580bc60f964e",
+        "type": "function",
+        "z": "3c13ea3309cc8221",
+        "name": "function 2",
+        "func": "\nconst entity_ids = msg.payload.map(entity => entity.entity_id)\n// split the array into comma separated values\nconst entity_ids_string = entity_ids.join(',')\nmsg.payload = entity_ids_string\nreturn msg",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1000,
+        "y": 600,
+        "wires": [
+            [
                 "cae1e912a0bcf312"
             ]
         ]
