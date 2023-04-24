@@ -190,7 +190,7 @@
         "type": "function",
         "z": "6ff8268c9a3c5d70",
         "name": "chat_gpt",
-        "func": "return msg\n\nconst options = {\n    hostname:\"home.byeon.ca\",\n    port: 443,\n    path: '/api/states',\n    method: 'GET',\n    headers: {\n        'Authorization': `Bearer ${msg.ha_token}`,\n        'Content-Type': 'application/json'\n    }\n};\n\nlet newMsg\n\nconst req = https.request(options, (res) => {\n    newMsg = {res:res}\n});\n\nreq.on('error', (error) => {\n    newMsg = { error: error }\n});\n\nreq.end();\n\nreturn newMsg",
+        "func": "\n\nconst options = {\n    hostname:\"home.byeon.ca\",\n    port: 443,\n    path: '/api/states',\n    method: 'GET',\n    headers: {\n        'Authorization': `Bearer ${msg.ha_token}`,\n        'Content-Type': 'application/json'\n    }\n};\n\nlet newMsg\nnode.status({ text: \"Making request...\" });\nconst req = https.request(options, (res) => {\n    node.status({ fill: \"green\", shape: \"dot\", text: \"Request successful\" });\n    newMsg = {res:res}\n});\n\nreq.on('error', (error) => {\n    node.status({ fill: \"red\", shape: \"ring\", text: \"Error on request\" });\n    newMsg = { error: error }\n});\n\nreq.end();\nnode.status({});   // to clear the status\nreturn newMsg",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
