@@ -1,1 +1,55 @@
-[]
+[
+    {
+        "id": "95ab365c95ad6815",
+        "type": "tab",
+        "label": "Alex Idiot Sandwich flow",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "3b77e42fb1341f12",
+        "type": "inject",
+        "z": "95ab365c95ad6815",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "Alex is an idiot",
+        "payloadType": "str",
+        "x": 450,
+        "y": 260,
+        "wires": [
+            [
+                "b4fbf99066e14a4c"
+            ]
+        ]
+    },
+    {
+        "id": "b4fbf99066e14a4c",
+        "type": "debug",
+        "z": "95ab365c95ad6815",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 600,
+        "y": 260,
+        "wires": []
+    }
+]
