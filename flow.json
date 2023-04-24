@@ -190,12 +190,17 @@
         "type": "function",
         "z": "6ff8268c9a3c5d70",
         "name": "chat_gpt",
-        "func": "const https = require('https');\n\nconst options = {\n    hostname:\"home.byeon.ca\",\n    path: '/api/states',\n    method: 'GET',\n    headers: {\n        'Authorization': `Bearer ${msg.ha_token}`,\n        'Content-Type': 'application/json'\n    }\n};\n\nconst req = https.request(options, (res) => {\n    return {res:res}\n});\n\nreq.on('error', (error) => {\n    // Handle the error\n});\n\nreq.end();",
+        "func": "\n\nconst options = {\n    hostname:\"home.byeon.ca\",\n    path: '/api/states',\n    method: 'GET',\n    headers: {\n        'Authorization': `Bearer ${msg.ha_token}`,\n        'Content-Type': 'application/json'\n    }\n};\n\nconst req = https.request(options, (res) => {\n    return {res:res}\n});\n\nreq.on('error', (error) => {\n    // Handle the error\n});\n\nreq.end();",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "libs": [],
+        "libs": [
+            {
+                "var": "https",
+                "module": "https"
+            }
+        ],
         "x": 660,
         "y": 240,
         "wires": [
