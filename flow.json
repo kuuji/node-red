@@ -202,7 +202,7 @@
             }
         ],
         "x": 660,
-        "y": 240,
+        "y": 360,
         "wires": [
             [
                 "b48c1344c84fefa9"
@@ -228,7 +228,7 @@
         "y": 240,
         "wires": [
             [
-                "4bc328b347c9ed08"
+                "b2d135aefbd1f5a9"
             ]
         ]
     },
@@ -254,7 +254,7 @@
         "type": "function",
         "z": "6ff8268c9a3c5d70",
         "name": "openai",
-        "func": "const configuration = new oai.Configuration({\n    apiKey: msg.openapi_key,\n});\nconst openai = new oai.OpenAIApi(configuration);\n\nnode.status({ fill: \"green\", shape: \"dot\", text: \"Querying openapi...\" });\n\nconst completion = await openai.createChatCompletion({\n    model: \"gpt-3.5-turbo\",\n    messages: [\n        { role: \"system\", content: \"You are a sarcastic mean assistant\" },\n        { role: \"user\", content: \"Hello world\" }\n    ],\n});\n\nnode.status({});\n\n\nmsg.completion = completion\n\nreturn msg",
+        "func": "const configuration = new oai.Configuration({\n    apiKey: msg.openapi_key,\n});\nconst openai = new oai.OpenAIApi(configuration);\n\nnode.status({ fill: \"green\", shape: \"dot\", text: \"Querying openapi...\" });\n\nconst completion = await openai.createChatCompletion({\n    model: \"gpt-3.5-turbo\",\n    messages: [\n        { role: \"system\", content: \"You are a sarcastic mean assistant\" },\n        { role: \"user\", content: global.get(\"homeassistant\").homeAssistant.states[\"input_text.gpt_instructions\"].state }\n    ],\n});\n\nnode.status({});\n\n\nmsg.completion = completion\n\nreturn msg",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
