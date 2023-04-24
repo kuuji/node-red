@@ -26,9 +26,9 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "payload": "Alex is an idiot",
+        "payload": "Alex is an idiot 2",
         "payloadType": "str",
-        "x": 450,
+        "x": 460,
         "y": 260,
         "wires": [
             [
