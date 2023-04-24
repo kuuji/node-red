@@ -32,7 +32,7 @@
         "y": 260,
         "wires": [
             [
-                "c7d9b95c6285b32f"
+                "360e9df2bbad4c6c"
             ]
         ]
     },
@@ -45,7 +45,8 @@
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "false",
+        "complete": "true",
+        "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
         "x": 1040,
@@ -68,6 +69,25 @@
         "wires": [
             [
                 "b4fbf99066e14a4c"
+            ]
+        ]
+    },
+    {
+        "id": "360e9df2bbad4c6c",
+        "type": "credentials",
+        "z": "95ab365c95ad6815",
+        "name": "api_keys",
+        "props": [
+            {
+                "value": "openapi_key",
+                "type": "msg"
+            }
+        ],
+        "x": 560,
+        "y": 380,
+        "wires": [
+            [
+                "c7d9b95c6285b32f"
             ]
         ]
     }
