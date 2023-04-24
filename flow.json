@@ -140,7 +140,6 @@
                 "value": ""
             }
         ],
-        "entityidfilter": "input_button.gpt_go",
         "entityidfiltertype": "exact",
         "outputinitially": false,
         "state_type": "str",
@@ -177,7 +176,7 @@
                 "valueType": "triggerId"
             }
         ],
-        "x": 220,
+        "x": 190,
         "y": 240,
         "wires": [
             [
@@ -190,7 +189,7 @@
         "type": "function",
         "z": "6ff8268c9a3c5d70",
         "name": "ha_states",
-        "func": "\n\n\nconst response = await fetch(\"https://home.byeon.ca/api/states\", {\n    method: \"GET\",\n    headers: {\n        \"Authorization\": `Bearer ${msg.ha_token}`,\n        \"Content-Type\": \"application/json\"\n    }\n})\nconst states = await response.json();\nnode.status({ fill: \"green\", shape: \"dot\", text: \"Request successful\" });\n\n\nmsg.states = states\n\nnode.status({});   // to clear the status\nreturn msg",
+        "func": "\n\n\nconst response = await fetch(\"https://home.byeon.ca/api/states\", {\n    method: \"GET\",\n    headers: {\n        \"Authorization\": `Bearer ${msg.ha_token}`,\n        \"Content-Type\": \"application/json\"\n    }\n})\nconst states = await response.json();\nnode.status({ fill: \"green\", shape: \"dot\", text: \"Request successful\" });\n\n\nmsg.states = states\nmsg.global = global.keys\nnode.status({});   // to clear the status\nreturn msg",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -205,7 +204,7 @@
         "y": 240,
         "wires": [
             [
-                "b2d135aefbd1f5a9"
+                "b48c1344c84fefa9"
             ]
         ]
     },
@@ -245,8 +244,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1100,
-        "y": 240,
+        "x": 1160,
+        "y": 340,
         "wires": []
     },
     {
