@@ -201,12 +201,10 @@
                 "module": "node-fetch"
             }
         ],
-        "x": 660,
-        "y": 360,
+        "x": 1060,
+        "y": 340,
         "wires": [
-            [
-                "b48c1344c84fefa9"
-            ]
+            []
         ]
     },
     {
@@ -245,8 +243,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1160,
-        "y": 340,
+        "x": 1180,
+        "y": 240,
         "wires": []
     },
     {
@@ -267,6 +265,31 @@
         ],
         "x": 890,
         "y": 240,
+        "wires": [
+            [
+                "b48c1344c84fefa9",
+                "09523ba8ab0cc3ed"
+            ]
+        ]
+    },
+    {
+        "id": "09523ba8ab0cc3ed",
+        "type": "function",
+        "z": "6ff8268c9a3c5d70",
+        "name": "notification ha",
+        "func": "\n\n\nconst response = await fetch(\"https://home.byeon.ca//api/services/persistent_notification/create\", {\n    method: \"POST\",\n    headers: {\n        \"Authorization\": `Bearer ${msg.ha_token}`,\n        \"Content-Type\": \"application/json\"\n    },\n    body: JSON.stringify({\n        notification_id: 1,\n        title: \"Ask GPT\",\n        message: msg.completion.data.choices[0].message.content\n    }),\n})\nconst rsp = await response.json();\nnode.status({ fill: \"green\", shape: \"dot\", text: \"Request successful\" });\n\n\nmsg.rsp = rsp\nnode.status({});   // to clear the status\nreturn msg",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [
+            {
+                "var": "fetch",
+                "module": "node-fetch"
+            }
+        ],
+        "x": 760,
+        "y": 360,
         "wires": [
             [
                 "b48c1344c84fefa9"
