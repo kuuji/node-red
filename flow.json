@@ -23,13 +23,13 @@
         ],
         "repeat": "",
         "crontab": "",
-        "once": false,
+        "once": true,
         "onceDelay": 0.1,
         "topic": "",
         "payload": "Alex is an idiot 2",
         "payloadType": "str",
-        "x": 460,
-        "y": 260,
+        "x": 310,
+        "y": 380,
         "wires": [
             [
                 "360e9df2bbad4c6c"
