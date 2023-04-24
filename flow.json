@@ -181,7 +181,8 @@
         "y": 240,
         "wires": [
             [
-                "21b6cbe7eba5b130"
+                "21b6cbe7eba5b130",
+                "6eec0ae00cae6390"
             ]
         ]
     },
@@ -201,8 +202,8 @@
                 "module": "node-fetch"
             }
         ],
-        "x": 1120,
-        "y": 420,
+        "x": 780,
+        "y": 600,
         "wires": [
             []
         ]
@@ -226,7 +227,8 @@
         "y": 240,
         "wires": [
             [
-                "b2d135aefbd1f5a9"
+                "b2d135aefbd1f5a9",
+                "338303fff77665eb"
             ]
         ]
     },
@@ -268,7 +270,8 @@
         "wires": [
             [
                 "b48c1344c84fefa9",
-                "09523ba8ab0cc3ed"
+                "09523ba8ab0cc3ed",
+                "2549be45f1455a40"
             ]
         ]
     },
@@ -292,31 +295,115 @@
         "y": 360,
         "wires": [
             [
-                "b48c1344c84fefa9"
+                "b48c1344c84fefa9",
+                "10b8dbcd77243188"
             ]
         ]
     },
     {
-        "id": "a049c5a7f9984091",
+        "id": "6eec0ae00cae6390",
         "type": "api-call-service",
         "z": "6ff8268c9a3c5d70",
-        "name": "",
+        "name": "update_status",
         "server": "0c34728bb51d9c58",
         "version": 5,
         "debugenabled": false,
-        "domain": "persistent_notification",
-        "service": "create",
+        "domain": "input_text",
+        "service": "set_value",
         "areaId": [],
         "deviceId": [],
-        "entityId": [],
-        "data": "{\"message\":\"Please check your configuration.yaml.\",\"title\":\"Test notification\",\"notification_id\":1234}",
+        "entityId": [
+            "input_text.gpt_status"
+        ],
+        "data": "{\"value\":\"Request received\"}",
         "dataType": "jsonata",
         "mergeContext": "",
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 780,
-        "y": 580,
+        "x": 340,
+        "y": 360,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "338303fff77665eb",
+        "type": "api-call-service",
+        "z": "6ff8268c9a3c5d70",
+        "name": "update_status",
+        "server": "0c34728bb51d9c58",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "input_text",
+        "service": "set_value",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "input_text.gpt_status"
+        ],
+        "data": "{\"value\":\"Asking Chat GPT...\"}",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 660,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2549be45f1455a40",
+        "type": "api-call-service",
+        "z": "6ff8268c9a3c5d70",
+        "name": "update_status",
+        "server": "0c34728bb51d9c58",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "input_text",
+        "service": "set_value",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "input_text.gpt_status"
+        ],
+        "data": "{\"value\":\"Notifying Home Assistant...\"}",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1020,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "10b8dbcd77243188",
+        "type": "api-call-service",
+        "z": "6ff8268c9a3c5d70",
+        "name": "update_status",
+        "server": "0c34728bb51d9c58",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "input_text",
+        "service": "set_value",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "input_text.gpt_status"
+        ],
+        "data": "{\"value\":\"Done!\"}",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1220,
+        "y": 360,
         "wires": [
             []
         ]
