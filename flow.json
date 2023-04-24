@@ -277,7 +277,7 @@
         "type": "function",
         "z": "6ff8268c9a3c5d70",
         "name": "notification ha",
-        "func": "\n\nmsg.json = JSON.stringify({\n    notification_id: 1,\n    title: \"Ask GPT\",\n    message: msg.completion.data.choices[0].message.content\n})\ntry {\n    const response = await fetch(\"https://home.byeon.ca//api/services/persistent_notification/create\", {\n        method: \"POST\",\n        headers: {\n            \"Authorization\": `Bearer ${msg.ha_token}`,\n            \"Content-Type\": \"application/json\"\n        },\n        body: JSON.stringify({\n            \"notification_id\": \"1\",\n            \"title\": \"Ask GPT\",\n            \"message\": msg.completion.data.choices[0].message.content\n        }),\n    })\n    const data = await response.json();\n    node.status({ fill: \"green\", shape: \"dot\", text: \"Request successful\" });\n    msg.rsp = data\n} catch (error) {\n    console.log(error);\n    msg.error = error\n}\nnode.status({});   // to clear the status\nreturn msg",
+        "func": "\n\n\ntry {\n    const response = await fetch(\"https://home.byeon.ca//api/services/persistent_notification/create\", {\n        method: \"POST\",\n        headers: {\n            \"Authorization\": `Bearer ${msg.ha_token}`,\n            \"Content-Type\": \"application/json\"\n        },\n        body: {\n            \"notification_id\": 1,\n            \"title\": \"Ask GPT\",\n            \"message\": msg.completion.data.choices[0].message.content\n        },\n    })\n    const data = await response.json();\n    node.status({ fill: \"green\", shape: \"dot\", text: \"Request successful\" });\n    msg.rsp = data\n} catch (error) {\n    console.log(error);\n    msg.error = error\n}\nnode.status({});   // to clear the status\nreturn msg",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -294,6 +294,31 @@
             [
                 "b48c1344c84fefa9"
             ]
+        ]
+    },
+    {
+        "id": "a049c5a7f9984091",
+        "type": "api-call-service",
+        "z": "6ff8268c9a3c5d70",
+        "name": "",
+        "server": "0c34728bb51d9c58",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "persistent_notification",
+        "service": "create",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [],
+        "data": "{\"message\":\"Please check your configuration.yaml.\",\"title\":\"Test notification\",\"notification_id\":1234}",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 920,
+        "y": 600,
+        "wires": [
+            []
         ]
     }
 ]
