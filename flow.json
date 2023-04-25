@@ -1710,12 +1710,29 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 530,
-        "y": 320,
+        "x": 470,
+        "y": 240,
         "wires": [
             [
-                "5edbdee36adabe60"
+                "b3528ef6241ead9b"
             ]
         ]
+    },
+    {
+        "id": "b3528ef6241ead9b",
+        "type": "debug",
+        "z": "288d161e4d4e4b21",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 560,
+        "y": 140,
+        "wires": []
     }
 ]
