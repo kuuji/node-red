@@ -639,8 +639,8 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 380,
-        "y": 140,
+        "x": 440,
+        "y": 120,
         "wires": [
             []
         ]
@@ -755,10 +755,10 @@
         "x": 200,
         "y": 200,
         "wires": [
+            [],
             [
                 "cff5484031b9b91a"
-            ],
-            []
+            ]
         ]
     },
     {
