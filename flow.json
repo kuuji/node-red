@@ -1213,7 +1213,7 @@
         "wires": [
             [
                 "a2b7c4c7e8441a85",
-                "1696fbdff68025a3"
+                "37ca62ed3c04fe30"
             ]
         ]
     },
@@ -1708,7 +1708,7 @@
         "fieldType": "msg",
         "format": "handlebars",
         "syntax": "mustache",
-        "template": "Use the themes below\nMoral: {{global.homeAssistant.states[\"input_select.bedtime_gpt_theme_emotions\"].state}}\nProtagonists: {{global.homeAssistant.states[\"input_select.bedtime_gpt_theme_protagonist\"].state}}\nLocation: {{global.homeAssistant.states[\"input_select.bedtime_gpt_theme_location\"].state}}\nOther: {{global.homeAssistant.states[\"input_select.bedtime_gpt_theme_other\"].state}}",
+        "template": "Use the themes below\nMoral: {{payload.states[\"input_select.bedtime_gpt_theme_emotions\"].state}}\nProtagonists: {{payload.states[\"input_select.bedtime_gpt_theme_protagonist\"].state}}\nLocation: {{payload.states[\"input_select.bedtime_gpt_theme_location\"].state}}\nOther: {{payload.states[\"input_select.bedtime_gpt_theme_other\"].state}}",
         "output": "str",
         "x": 390,
         "y": 160,
@@ -1727,7 +1727,7 @@
         "fieldType": "msg",
         "format": "handlebars",
         "syntax": "mustache",
-        "template": "You write {{global.homeAssistant.states[\"input_select.bedtime_gpt_type\"].state}} for children that are ${global.homeAssistant.states[\"input_number.bedtime_gpt_age_month\"].state} month(s) old.\nThe user will provide a list of themes that you will use as inspiration. If the user says Random, pick something of your own.\nYour response will be less than 1000 characters.\nYou will answer in {{global.homeAssistant.states[\"input_text.bedtime_gpt_language\"].state}}",
+        "template": "You write {{payload.states[\"input_select.bedtime_gpt_type\"].state}} for children that are {{payload.states[\"input_number.bedtime_gpt_age_month\"].state}} month(s) old.\nThe user will provide a list of themes that you will use as inspiration. If the user says Random, pick something of your own.\nYour response will be less than 1000 characters.\nYou will answer in {{payload.states[\"input_text.bedtime_gpt_language\"].state}}",
         "output": "str",
         "x": 200,
         "y": 160,
@@ -1746,7 +1746,7 @@
         "fieldType": "msg",
         "format": "handlebars",
         "syntax": "mustache",
-        "template": "Keep going using the themes below\nMoral: {{global.homeAssistant.states[\"input_select.bedtime_gpt_theme_emotions\"].state}}\nProtagonists: {{global.homeAssistant.states[\"input_select.bedtime_gpt_theme_protagonist\"].state}}\nLocation: {{global.homeAssistant.states[\"input_select.bedtime_gpt_theme_location\"].state}}\nOther: {{global.homeAssistant.states[\"input_select.bedtime_gpt_theme_other\"].state}}",
+        "template": "Keep going using the themes below\nMoral: {{payload.states[\"input_select.bedtime_gpt_theme_emotions\"].state}}\nProtagonists: {{payload.states[\"input_select.bedtime_gpt_theme_protagonist\"].state}}\nLocation: {{payload.states[\"input_select.bedtime_gpt_theme_location\"].state}}\nOther: {{payload.states[\"input_select.bedtime_gpt_theme_other\"].state}}",
         "output": "str",
         "x": 600,
         "y": 160,
@@ -1772,5 +1772,32 @@
         "x": 820,
         "y": 80,
         "wires": []
+    },
+    {
+        "id": "37ca62ed3c04fe30",
+        "type": "change",
+        "z": "288d161e4d4e4b21",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "homeassistant",
+                "tot": "global"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 200,
+        "y": 300,
+        "wires": [
+            [
+                "1696fbdff68025a3"
+            ]
+        ]
     }
 ]
