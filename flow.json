@@ -1784,7 +1784,8 @@
                 "p": "payload",
                 "pt": "msg",
                 "to": "homeassistant",
-                "tot": "global"
+                "tot": "global",
+                "dc": true
             }
         ],
         "action": "",
