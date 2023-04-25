@@ -1704,18 +1704,46 @@
         "type": "function",
         "z": "288d161e4d4e4b21",
         "name": "set_prompts",
-        "func": "msg.system_prompt = `You write ${global.get(\"homeassistant\").homeAssistant.states[\"input_select.bedtime_gpt_type\"].state} for children that are ${global.get(\"homeassistant\").homeAssistant.states[\"input_number.bedtime_gpt_age_month\"].state} month(s) old.\nThe user will provide a list of themes that you will use as inspiration. If the user says Random, pick something of your own.\nYour response will be less than 1000 characters.\nYou will answer in ${global.get(\"homeassistant\").homeAssistant.states[\"input_text.bedtime_gpt_language\"].state}\n`\n\nmsg.user_prompt = `Use the themes below\nMoral: ${global.get(\"homeassistant\").homeAssistant.states[\"input_select.bedtime_gpt_theme_emotions\"].state}\nProtagonists: ${global.get(\"homeassistant\").homeAssistant.states[\"input_select.bedtime_gpt_theme_protagonist\"].state}\nLocation: ${global.get(\"homeassistant\").homeAssistant.states[\"input_select.bedtime_gpt_theme_location\"].state}\nOther: ${global.get(\"homeassistant\").homeAssistant.states[\"input_select.bedtime_gpt_theme_other\"].state}\n`\n\nmsg.user_prompt_continue = `\nKeep going using the themes below\nMoral: ${global.get(\"homeassistant\").homeAssistant.states[\"input_select.bedtime_gpt_theme_emotions\"].state}\nProtagonists: ${global.get(\"homeassistant\").homeAssistant.states[\"input_select.bedtime_gpt_theme_protagonist\"].state}\nLocation: ${global.get(\"homeassistant\").homeAssistant.states[\"input_select.bedtime_gpt_theme_location\"].state}\nOther: ${global.get(\"homeassistant\").homeAssistant.states[\"input_select.bedtime_gpt_theme_other\"].state}\n`\n\nreturn msg;",
+        "func": "msg.system_prompt = `You write ${global.get(\"homeassistant\").homeAssistant.states[\"input_select.bedtime_gpt_type\"].state} for children that are ${global.get(\"homeassistant\").homeAssistant.states[\"input_number.bedtime_gpt_age_month\"].state} month(s) old.\nThe user will provide a list of themes that you will use as inspiration. If the user says Random, pick something of your own.\nYour response will be less than 1000 characters.\nYou will answer in ${global.get(\"homeassistant\").homeAssistant.states[\"input_text.bedtime_gpt_language\"].state}\n`\n\nmsg.user_prompt = `Use the themes below\nMoral: ${global.get(\"homeassistant\").homeAssistant.states[\"input_select.bedtime_gpt_theme_emotions\"].state}\nProtagonists: ${global.get(\"homeassistant\").homeAssistant.states[\"input_select.bedtime_gpt_theme_protagonist\"].state}\nLocation: ${global.get(\"homeassistant\").homeAssistant.states[\"input_select.bedtime_gpt_theme_location\"].state}\nOther: ${global.get(\"homeassistant\").homeAssistant.states[\"input_select.bedtime_gpt_theme_other\"].state}\n`\n\nif (global.get(\"homeassistant\").homeAssistant.states[\"bedtime_gpt_user_prompt\"].state =! \"\") {\n    msg.user_prompt_continue = global.get(\"homeassistant\").homeAssistant.states[\"bedtime_gpt_user_prompt\"].state\n} else {\n    msg.user_prompt_continue = `\nKeep going using the themes below\nMoral: ${global.get(\"homeassistant\").homeAssistant.states[\"input_select.bedtime_gpt_theme_emotions\"].state}\nProtagonists: ${global.get(\"homeassistant\").homeAssistant.states[\"input_select.bedtime_gpt_theme_protagonist\"].state}\nLocation: ${global.get(\"homeassistant\").homeAssistant.states[\"input_select.bedtime_gpt_theme_location\"].state}\nOther: ${global.get(\"homeassistant\").homeAssistant.states[\"input_select.bedtime_gpt_theme_other\"].state}\n`\n}\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 470,
-        "y": 240,
+        "x": 510,
+        "y": 320,
         "wires": [
             [
-                "5edbdee36adabe60"
+                "5edbdee36adabe60",
+                "bba348498988c13f"
             ]
+        ]
+    },
+    {
+        "id": "bba348498988c13f",
+        "type": "api-call-service",
+        "z": "288d161e4d4e4b21",
+        "name": "update_status",
+        "server": "0c34728bb51d9c58",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "input_text",
+        "service": "set_value",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "input_text.bedtime_gpt_user_prompt"
+        ],
+        "data": "{\"value\":\"\"}",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 560,
+        "y": 200,
+        "wires": [
+            []
         ]
     }
 ]
