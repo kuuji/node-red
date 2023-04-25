@@ -1729,12 +1729,10 @@
         "syntax": "mustache",
         "template": "You write {{payload.homeAssistant.states[\"input_select.bedtime_gpt_type\"].state}} for children that are {{payload.homeAssistant.states[\"input_number.bedtime_gpt_age_month\"].state}} month(s) old.\nThe user will provide a list of themes that you will use as inspiration. If the user says Random, pick something of your own.\nYour response will be less than 1000 characters.\nYou will answer in {{payload.homeAssistant.states[\"input_text.bedtime_gpt_language\"].state}}\n\n\n{{payload.homeAssistant}}",
         "output": "str",
-        "x": 200,
-        "y": 160,
+        "x": 140,
+        "y": 120,
         "wires": [
-            [
-                "a3462431770a48ed"
-            ]
+            []
         ]
     },
     {
@@ -1797,7 +1795,23 @@
         "y": 300,
         "wires": [
             [
-                "1696fbdff68025a3"
+                "15368ac2417639c7"
+            ]
+        ]
+    },
+    {
+        "id": "15368ac2417639c7",
+        "type": "handlebars",
+        "z": "288d161e4d4e4b21",
+        "name": "",
+        "sourceProperty": "payload",
+        "targetProperty": "system_prompt",
+        "query": "You write {{payload.homeAssistant.states[\"input_select.bedtime_gpt_type\"].state}} for children that are\n{{payload.homeAssistant.states[\"input_number.bedtime_gpt_age_month\"].state}} month(s) old.\nThe user will provide a list of themes that you will use as inspiration. If the user says Random, pick something of your\nown.\nYour response will be less than 1000 characters.\nYou will answer in {{payload.homeAssistant.states[\"input_text.bedtime_gpt_language\"].state}}\n",
+        "x": 170,
+        "y": 160,
+        "wires": [
+            [
+                "a3462431770a48ed"
             ]
         ]
     }
