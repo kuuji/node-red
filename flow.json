@@ -1727,7 +1727,7 @@
         "fieldType": "msg",
         "format": "handlebars",
         "syntax": "mustache",
-        "template": "You write {{global.homeAssistant.states[\"input_select.bedtime_gpt_type\"].state}} for children that are ${global.homeAssistant.states[\"input_number.bedtime_gpt_age_month\"].state} month(s) old.\nThe user will provide a list of themes that you will use as inspiration. If the user says Random, pick something of your own.\nYour response will be less than 1000 characters.\nYou will answer in ${{global.homeAssistant.states[\"input_text.bedtime_gpt_language\"].state}}",
+        "template": "You write {{global.homeAssistant.states[\"input_select.bedtime_gpt_type\"].state}} for children that are ${global.homeAssistant.states[\"input_number.bedtime_gpt_age_month\"].state} month(s) old.\nThe user will provide a list of themes that you will use as inspiration. If the user says Random, pick something of your own.\nYour response will be less than 1000 characters.\nYou will answer in {{global.homeAssistant.states[\"input_text.bedtime_gpt_language\"].state}}",
         "output": "str",
         "x": 200,
         "y": 160,
@@ -1752,8 +1752,25 @@
         "y": 160,
         "wires": [
             [
-                "5edbdee36adabe60"
+                "508e1d39c495b2cc"
             ]
         ]
+    },
+    {
+        "id": "508e1d39c495b2cc",
+        "type": "debug",
+        "z": "288d161e4d4e4b21",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 820,
+        "y": 80,
+        "wires": []
     }
 ]
