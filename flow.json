@@ -1807,7 +1807,7 @@
         "sourceProperty": "payload",
         "targetProperty": "system_prompt",
         "query": "You write {{payload.homeAssistant.states.[input_select.bedtime_gpt_type].state}} for children that are\n{{payload.homeAssistant.states.[input_number.bedtime_gpt_age_month].state}} month(s) old.\nThe user will provide a list of themes that you will use as inspiration. If the user says Random, pick something of your\nown.\nYour response will be less than 1000 characters.\nYou will answer in {{payload.homeAssistant.states.[input_text.bedtime_gpt_language].state}}",
-        "x": 170,
+        "x": 190,
         "y": 160,
         "wires": [
             [
