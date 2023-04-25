@@ -1213,7 +1213,7 @@
         "wires": [
             [
                 "a2b7c4c7e8441a85",
-                "37ca62ed3c04fe30"
+                "947c96e692532a40"
             ]
         ]
     },
@@ -1700,104 +1700,21 @@
         ]
     },
     {
-        "id": "a3462431770a48ed",
-        "type": "template",
+        "id": "947c96e692532a40",
+        "type": "function",
         "z": "288d161e4d4e4b21",
-        "name": "user_prompt",
-        "field": "user_prompt",
-        "fieldType": "msg",
-        "format": "handlebars",
-        "syntax": "mustache",
-        "template": "Use the themes below\nMoral: {{payload.homeAssistant.states[\"input_select.bedtime_gpt_theme_emotions\"].state}}\nProtagonists: {{payload.homeAssistant.states[\"input_select.bedtime_gpt_theme_protagonist\"].state}}\nLocation: {{payload.homeAssistant.states[\"input_select.bedtime_gpt_theme_location\"].state}}\nOther: {{payload.homeAssistant.states[\"input_select.bedtime_gpt_theme_other\"].state}}",
-        "output": "str",
-        "x": 390,
-        "y": 160,
+        "name": "set_prompts",
+        "func": "msg.system_prompt = `You write ${global.homeAssistant.states[\"input_select.bedtime_gpt_type\"].state} for children that are ${global.homeAssistant.states[\"input_number.bedtime_gpt_age_month\"].state} month(s) old.\nThe user will provide a list of themes that you will use as inspiration. If the user says Random, pick something of your own.\nYour response will be less than 1000 characters.\nYou will answer in ${global.homeAssistant.states[\"input_text.bedtime_gpt_language\"].state}\n`\n\nmsg.user_prompt = `Use the themes below\nMoral: ${global.homeAssistant.states[\"input_select.bedtime_gpt_theme_emotions\"].state}\nProtagonists: ${global.homeAssistant.states[\"input_select.bedtime_gpt_theme_protagonist\"].state}\nLocation: ${global.homeAssistant.states[\"input_select.bedtime_gpt_theme_location\"].state}\nOther: ${global.homeAssistant.states[\"input_select.bedtime_gpt_theme_other\"].state}\n`\n\nmsg.user_prompt_continue = `\nKeep going using the themes below\nMoral: ${global.homeAssistant.states[\"input_select.bedtime_gpt_theme_emotions\"].state}\nProtagonists: ${global.homeAssistant.states[\"input_select.bedtime_gpt_theme_protagonist\"].state}\nLocation: ${global.homeAssistant.states[\"input_select.bedtime_gpt_theme_location\"].state}\nOther: ${global.homeAssistant.states[\"input_select.bedtime_gpt_theme_other\"].state}\n`\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 530,
+        "y": 320,
         "wires": [
             [
-                "8dd96d2dbebcb7e8"
-            ]
-        ]
-    },
-    {
-        "id": "1696fbdff68025a3",
-        "type": "template",
-        "z": "288d161e4d4e4b21",
-        "name": "system_prompt",
-        "field": "system_prompt",
-        "fieldType": "msg",
-        "format": "handlebars",
-        "syntax": "mustache",
-        "template": "You write {{payload.homeAssistant.states.input_select.bedtime_gpt_type.state}} for children that are {{payload.homeAssistant.states[\"input_number.bedtime_gpt_age_month\"].state}} month(s) old.\nThe user will provide a list of themes that you will use as inspiration. If the user says Random, pick something of your own.\nYour response will be less than 1000 characters.\nYou will answer in {{payload.homeAssistant.states[\"input_text.bedtime_gpt_language\"].state}}\n\n\n{{payload.homeAssistant}}",
-        "output": "str",
-        "x": 140,
-        "y": 120,
-        "wires": [
-            [
-                "a3462431770a48ed"
-            ]
-        ]
-    },
-    {
-        "id": "8dd96d2dbebcb7e8",
-        "type": "template",
-        "z": "288d161e4d4e4b21",
-        "name": "user_prompt_continue",
-        "field": "user_prompt_continue",
-        "fieldType": "msg",
-        "format": "handlebars",
-        "syntax": "mustache",
-        "template": "Keep going using the themes below\nMoral: {{payload.homeAssistant.states[\"input_select.bedtime_gpt_theme_emotions\"].state}}\nProtagonists: {{payload.homeAssistant.states[\"input_select.bedtime_gpt_theme_protagonist\"].state}}\nLocation: {{payload.homeAssistant.states[\"input_select.bedtime_gpt_theme_location\"].state}}\nOther: {{payload.homeAssistant.states[\"input_select.bedtime_gpt_theme_other\"].state}}",
-        "output": "str",
-        "x": 600,
-        "y": 160,
-        "wires": [
-            [
-                "508e1d39c495b2cc"
-            ]
-        ]
-    },
-    {
-        "id": "508e1d39c495b2cc",
-        "type": "debug",
-        "z": "288d161e4d4e4b21",
-        "name": "debug 2",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 820,
-        "y": 80,
-        "wires": []
-    },
-    {
-        "id": "37ca62ed3c04fe30",
-        "type": "change",
-        "z": "288d161e4d4e4b21",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "homeassistant",
-                "tot": "global",
-                "dc": true
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 200,
-        "y": 300,
-        "wires": [
-            [
-                "1696fbdff68025a3"
+                "5edbdee36adabe60"
             ]
         ]
     }
