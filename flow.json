@@ -898,7 +898,8 @@
                 "fd5f42e6ece3987f",
                 "6e98c671124f8add",
                 "3ad027d7325d9ee8",
-                "3a41874a95c52439"
+                "3a41874a95c52439",
+                "88bafc330a77da8e"
             ]
         ]
     },
@@ -1002,7 +1003,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 1100,
-        "y": 240,
+        "y": 140,
         "wires": [
             []
         ]
@@ -1048,8 +1049,8 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 1580,
-        "y": 260,
+        "x": 1520,
+        "y": 240,
         "wires": [
             [
                 "674c6218a5597c64"
@@ -1061,7 +1062,7 @@
         "type": "function",
         "z": "3c13ea3309cc8221",
         "name": "openai",
-        "func": "const configuration = new oai.Configuration({\n    apiKey: msg.openapi_key,\n});\n\n\nlet messages = [\n    { role: \"system\", content: `\nI will give you a theme and a list of lights and you will generate a color in the rgb format for each light. \nProvide an explanation.\nYour output will be json\n` },\n    { role: \"user\", content: `${global.get(\"homeassistant\").homeAssistant.states[\"input_text.light_gpt_theme\"].state} \"light.alex_office_ceiling\",\"light.alex_office_lamp_desk\",\"light.alex_office_lamp_shelf\"` }\n]\n\n\nconst openai = new oai.OpenAIApi(configuration);\n\nnode.status({ fill: \"green\", shape: \"dot\", text: \"Querying openapi...\" });\n\ntry{\n    const completion = await openai.createChatCompletion({\n        model: \"gpt-3.5-turbo\",\n        messages: messages,\n        temperature: 0\n    });\n    \n    node.status({});\n    msg.completion = completion\n    let result = completion.data.choices[0].message.content.trim()\n    let jsonStart = result.indexOf(\"{\");\n    let jsonEnd = result.lastIndexOf(\"}\");\n\n    if (jsonStart !== -1 && jsonEnd !== -1) {\n        let jsonText = result.substring(jsonStart, jsonEnd + 1);\n        let otherText = result.substring(jsonEnd + 2, result.length)\n        msg.otherText = otherText\n        let parsedResult = JSON.parse(jsonText);\n        let payload = []\n        Object.keys(parsedResult).forEach(function(key) {\n            payload.push({ \"rgb_color\": msg.payload[key], \"brightness_pct\": 100, \"entity_id\": key })\n        });\n        msg.payload = payload\n    } else {\n        console.log(\"No JSON array found.\");\n    }\n} catch (error) {\n    if (error.response) {\n        msg.error_status = error.response.status\n        msg.error_data = error.response.data\n    } else {\n        msg.error_message = error.message\n    }\n}\n\n\n\nreturn msg",
+        "func": "const configuration = new oai.Configuration({\n    apiKey: msg.openapi_key,\n});\n\n\nlet messages = [\n    { role: \"system\", content: `Split the json array from the explanation in the user text.\nFormat the output with a \"#\" character between the array and the explanation\n` },\n    { role: \"user\", content: `${msg.completion.data.choices[0].message.content.trim()}` }\n]\n\n\nconst openai = new oai.OpenAIApi(configuration);\n\nnode.status({ fill: \"green\", shape: \"dot\", text: \"Querying openapi...\" });\n\ntry{\n    const completion = await openai.createChatCompletion({\n        model: \"gpt-3.5-turbo\",\n        messages: messages,\n        temperature: 0\n    });\n    \n    node.status({});\n    msg.completion_split = completion\n\n} catch (error) {\n    if (error.response) {\n        msg.error_status = error.response.status\n        msg.error_data = error.response.data\n    } else {\n        msg.error_message = error.message\n    }\n}\n\n\n\nreturn msg",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -1075,7 +1076,9 @@
         "x": 1270,
         "y": 600,
         "wires": [
-            []
+            [
+                "02cc04ee7f6eda6f"
+            ]
         ]
     },
     {
@@ -1344,8 +1347,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1810,
-        "y": 280,
+        "x": 1890,
+        "y": 260,
         "wires": [
             []
         ]
@@ -1580,6 +1583,23 @@
         "statusType": "auto",
         "x": 1450,
         "y": 140,
+        "wires": []
+    },
+    {
+        "id": "02cc04ee7f6eda6f",
+        "type": "debug",
+        "z": "3c13ea3309cc8221",
+        "name": "debug completion split",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "completion_split",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1520,
+        "y": 600,
         "wires": []
     },
     {
