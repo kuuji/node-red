@@ -922,7 +922,8 @@
         "y": 340,
         "wires": [
             [
-                "40555d80f9399c1e"
+                "40555d80f9399c1e",
+                "4a79aabe26de1ae5"
             ]
         ]
     },
@@ -1048,7 +1049,7 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 1520,
+        "x": 1640,
         "y": 240,
         "wires": [
             [
@@ -1061,7 +1062,7 @@
         "type": "function",
         "z": "3c13ea3309cc8221",
         "name": "openai",
-        "func": "const configuration = new oai.Configuration({\n    apiKey: msg.openapi_key,\n});\n\n\n\n\nlet messages = [\n    { role: \"system\", content: `Remove the json array from the user input and respond with only the explanation.\n` },\n    { role: \"user\", content: `${msg.completion.data.choices[0].message.content.trim()}` }\n]\n\n\nconst openai = new oai.OpenAIApi(configuration);\n\nnode.status({ fill: \"green\", shape: \"dot\", text: \"Querying openapi...\" });\n\ntry{\n    const completion = await openai.createChatCompletion({\n        model: \"gpt-3.5-turbo\",\n        messages: messages,\n        temperature: 0\n    });\n    \n    node.status({});\n    msg.completion_split = completion\n    let keep_history = global.get(\"homeassistant\").homeAssistant.states[\"input_boolean.light_gpt_history\"].state\n    let explanation_history = flow.get(\"explanation_history\")\n    if (keep_history == \"off\" || !explanation_history) {\n        explanation_history = [\n            completion.data.choices[0].message.content\n        ]\n    } else {\n        if (explanation_history) {\n            explanation_history.push(\"\\n\")\n            explanation_history.push(completion.data.choices[0].message.content)\n        }\n    }\n    msg.explanation_history = explanation_history\n\n} catch (error) {\n    if (error.response) {\n        msg.error_status = error.response.status\n        msg.error_data = error.response.data\n    } else {\n        msg.error_message = error.message\n    }\n}\n\n\n\nreturn msg",
+        "func": "const configuration = new oai.Configuration({\n    apiKey: msg.openapi_key,\n});\n\n\n\n\nlet messages = [\n    { role: \"system\", content: `Remove the json array from the user input and respond with only the explanation.\n` },\n    { role: \"user\", content: `${msg.completion.data.choices[0].message.content.trim()}` }\n]\n\n\nconst openai = new oai.OpenAIApi(configuration);\n\nnode.status({ fill: \"green\", shape: \"dot\", text: \"Querying openapi...\" });\n\ntry{\n    const completion = await openai.createChatCompletion({\n        model: \"gpt-3.5-turbo\",\n        messages: messages,\n        temperature: 0\n    });\n    \n    node.status({});\n    msg.completion_split = completion\n    let keep_history = global.get(\"homeassistant\").homeAssistant.states[\"input_boolean.light_gpt_history\"].state\n    let explanation_history = flow.get(\"explanation_history\")\n    if (keep_history == \"off\" || !explanation_history) {\n        explanation_history = [\n            completion.data.choices[0].message.content\n        ]\n    } else {\n        if (explanation_history) {\n            explanation_history.push(\"\\n\")\n            explanation_history.push(completion.data.choices[0].message.content)\n        }\n    }\n    flow.set(\"explanation_history\", explanation_history)\n    msg.explanation_history = explanation_history\n\n} catch (error) {\n    if (error.response) {\n        msg.error_status = error.response.status\n        msg.error_data = error.response.data\n    } else {\n        msg.error_message = error.message\n    }\n}\n\n\n\nreturn msg",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -1600,6 +1601,23 @@
         "wires": [
             []
         ]
+    },
+    {
+        "id": "4a79aabe26de1ae5",
+        "type": "debug",
+        "z": "3c13ea3309cc8221",
+        "name": "debug light payload",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1390,
+        "y": 260,
+        "wires": []
     },
     {
         "id": "8743110cd9408959",
