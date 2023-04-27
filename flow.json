@@ -1208,7 +1208,7 @@
         "propertyType": "msg",
         "rules": [
             {
-                "t": "nnull"
+                "t": "null"
             },
             {
                 "t": "else"
