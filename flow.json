@@ -879,7 +879,7 @@
         "type": "function",
         "z": "3c13ea3309cc8221",
         "name": "openai",
-        "func": "const configuration = new oai.Configuration({\n    apiKey: msg.openapi_key,\n});\n\nconst entity_ids = msg.payload\n\nlet messages = [\n    {\n        role: \"system\", content: `${msg.prompt}` },\n    { role: \"user\", content: `{   \"entity_id\": [${entity_ids}],   \"theme\": \"${global.get(\"homeassistant\").homeAssistant.states[\"input_text.light_gpt_theme\"].state}\" }` }\n]\n\n\nlet keep_history = global.get(\"homeassistant\").homeAssistant.states[\"input_boolean.light_gpt_history\"].state\nlet history = flow.get(\"history\")\nif (keep_history == \"off\" || !history) {\n    history = [\n        { role: \"system\", content: `${msg.prompt}`},\n        { role: \"user\", content: `{   \"entity_id\": [${entity_ids}],   \"theme\": \"${global.get(\"homeassistant\").homeAssistant.states[\"input_text.light_gpt_theme\"].state}\" }` }\n    ]\n} else {\n    if (history) {\n        history.push({ role: \"user\", content: `{   \"entity_id\": [${entity_ids}],   \"theme\": \"${global.get(\"homeassistant\").homeAssistant.states[\"input_text.light_gpt_theme\"].state}\" }` })\n    }\n}\n\n\nconst openai = new oai.OpenAIApi(configuration);\n\nnode.status({ fill: \"green\", shape: \"dot\", text: \"Querying openapi...\" });\n\ntry {\n    const completion = await openai.createChatCompletion({\n        model: \"gpt-3.5-turbo\",\n        messages: history,\n        temperature: 0\n    });\n\n    node.status({});\n    history.push(completion.data.choices[0].message)\n    flow.set(\"history\", history)\n    msg.history = history\n    msg.keep_history = keep_history\n    msg.completion = completion\n    let result = completion.data.choices[0].message.content.trim()\n    \n\n    \n    const extract = (string) => {\n        const regex = /```([\\s\\S]*)```/gm\n        const matches = regex.exec(string)\n        return matches[1]\n    }\n\n    msg.payload = JSON.parse(extract(result))\n\n    // let jsonStart = result.indexOf(\"```\");\n    // let jsonEnd = result.lastIndexOf(\"```\");\n\n    // if (jsonStart !== -1 && jsonEnd !== -1) {\n    //     let jsonText = result.substring(jsonStart, jsonEnd + 1);\n    //     msg.jsonText = jsonText\n    //     msg.payload = JSON.parse(jsonText);\n    //     // extract the text outside of the json array\n    //     msg.text = result.substring(0, jsonStart) + result.substring(jsonEnd + 1);\n    // } else {\n    //     throw new Error('No JSON array found.');\n    // }\n} catch (error) {\n    msg.error = error\n    if (error.response) {\n        msg.error_status = error.response.status\n        msg.error_data = error.response.data\n    } else {\n        msg.error_message = error.message\n    }\n}\n\n\n\nreturn msg",
+        "func": "const configuration = new oai.Configuration({\n    apiKey: msg.openapi_key,\n});\n\nconst entity_ids = msg.payload\n\nlet messages = [\n    {\n        role: \"system\", content: `${msg.prompt}` },\n    { role: \"user\", content: `{   \"entity_id\": [${entity_ids}],   \"theme\": \"${global.get(\"homeassistant\").homeAssistant.states[\"input_text.light_gpt_theme\"].state}\" }` }\n]\n\n\nlet keep_history = global.get(\"homeassistant\").homeAssistant.states[\"input_boolean.light_gpt_history\"].state\nlet history = flow.get(\"history\")\nif (keep_history == \"off\" || !history) {\n    history = [\n        { role: \"system\", content: `${msg.prompt}`},\n        { role: \"user\", content: `{   \"entity_id\": [${entity_ids}],   \"theme\": \"${global.get(\"homeassistant\").homeAssistant.states[\"input_text.light_gpt_theme\"].state}\" }` }\n    ]\n} else {\n    if (history) {\n        history.push({ role: \"user\", content: `{   \"entity_id\": [${entity_ids}],   \"theme\": \"${global.get(\"homeassistant\").homeAssistant.states[\"input_text.light_gpt_theme\"].state}\" }` })\n    }\n}\n\n\nconst openai = new oai.OpenAIApi(configuration);\n\nnode.status({ fill: \"green\", shape: \"dot\", text: \"Querying openapi...\" });\n\ntry {\n    const completion = await openai.createChatCompletion({\n        model: \"gpt-3.5-turbo\",\n        messages: history,\n        temperature: 0\n    });\n\n    node.status({});\n    history.push(completion.data.choices[0].message)\n    flow.set(\"history\", history)\n    msg.history = history\n    msg.keep_history = keep_history\n    msg.completion = completion\n    let result = completion.data.choices[0].message.content.trim()\n    \n    const extract = (string) => {\n        const regex = /`{3}[\\s\\S]*?`{3}/g\n        const matches = string.match(regex)\n        const result = string.replace(regex, '')\n        return { result, matches }\n    }\n\n    const { explanation, matches } = extract(result)\n    const matchesStripped = matches.map(match => match.replace(/`{3}/g, ''))\n    msg.text = explanation\n    msg.payload = JSON.parse(matchesStripped)\n} catch (error) {\n    msg.error = error\n    if (error.response) {\n        msg.error_status = error.response.status\n        msg.error_data = error.response.data\n    } else {\n        msg.error_message = error.message\n    }\n}\n\n\n\nreturn msg",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -894,8 +894,7 @@
         "y": 380,
         "wires": [
             [
-                "497987a43fc178b9",
-                "a13067386548f7e7"
+                "497987a43fc178b9"
             ]
         ]
     },
@@ -1601,26 +1600,10 @@
         ]
     },
     {
-        "id": "a13067386548f7e7",
-        "type": "debug",
-        "z": "3c13ea3309cc8221",
-        "name": "debug extract_2",
-        "active": true,
-        "tosidebar": true,
-        "console": true,
-        "tostatus": false,
-        "complete": "extract_2",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1510,
-        "y": 280,
-        "wires": []
-    },
-    {
         "id": "4c27055c0292e099",
         "type": "function",
         "z": "3c13ea3309cc8221",
+        "d": true,
         "name": "function 2",
         "func": "const string = msg.completion.data.choices[0].message.content\n\nconst extract = (string) => {\n    const regex = /`{3}[\\s\\S]*?`{3}/g\n    const matches = string.match(regex)\n    const result = string.replace(regex, '')\n    return { result, matches }\n}\n\nconst { result, matches } = extract(string)\nconst matchesStripped = matches.map(match => match.replace(/`{3}/g, ''))\nmsg.test = { \n    \"result\": result,\n    \"match\": JSON.parse(matchesStripped)\n }\n\nreturn msg",
         "outputs": 1,
