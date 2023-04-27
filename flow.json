@@ -1081,8 +1081,8 @@
                 "valueType": "str"
             },
             {
-                "property": "entitiy_id",
-                "logic": "is_not",
+                "property": "entity_id",
+                "logic": "does_not_include",
                 "value": "light.family_room",
                 "valueType": "str"
             }
