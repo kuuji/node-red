@@ -841,7 +841,7 @@
                 "valueType": "triggerId"
             }
         ],
-        "x": 180,
+        "x": 220,
         "y": 340,
         "wires": [
             [
@@ -865,8 +865,8 @@
                 "type": "msg"
             }
         ],
-        "x": 620,
-        "y": 340,
+        "x": 860,
+        "y": 300,
         "wires": [
             [
                 "d0d6184d241670dc",
@@ -890,8 +890,8 @@
                 "module": "openai"
             }
         ],
-        "x": 830,
-        "y": 340,
+        "x": 1470,
+        "y": 380,
         "wires": [
             [
                 "6efa97849e377240",
@@ -918,8 +918,8 @@
                 "module": "node-fetch"
             }
         ],
-        "x": 1210,
-        "y": 340,
+        "x": 1850,
+        "y": 380,
         "wires": [
             [
                 "40555d80f9399c1e",
@@ -948,7 +948,7 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 420,
+        "x": 620,
         "y": 460,
         "wires": [
             []
@@ -975,8 +975,8 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 740,
-        "y": 240,
+        "x": 1100,
+        "y": 260,
         "wires": [
             []
         ]
@@ -1002,8 +1002,8 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 1100,
-        "y": 140,
+        "x": 1740,
+        "y": 180,
         "wires": [
             []
         ]
@@ -1019,8 +1019,8 @@
         "arraySpltType": "len",
         "stream": false,
         "addname": "",
-        "x": 1030,
-        "y": 340,
+        "x": 1670,
+        "y": 380,
         "wires": [
             [
                 "c8d804b8b0d071f0",
@@ -1049,8 +1049,8 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 1640,
-        "y": 240,
+        "x": 2280,
+        "y": 280,
         "wires": [
             [
                 "674c6218a5597c64"
@@ -1061,9 +1061,8 @@
         "id": "88bafc330a77da8e",
         "type": "function",
         "z": "3c13ea3309cc8221",
-        "d": true,
         "name": "openai",
-        "func": "const configuration = new oai.Configuration({\n    apiKey: msg.openapi_key,\n});\n\n\n\n\nlet messages = [\n    { role: \"system\", content: `The user input will include a json array and an explanation for a choice of colors.\nYou will extract the explanation and output it. Exclude the json array from your response.\n` },\n    { role: \"user\", content: `${msg.completion.data.choices[0].message.content.trim()}` }\n]\n\n\nconst openai = new oai.OpenAIApi(configuration);\n\nnode.status({ fill: \"green\", shape: \"dot\", text: \"Querying openapi...\" });\n\ntry{\n    const completion = await openai.createChatCompletion({\n        model: \"gpt-3.5-turbo\",\n        messages: messages,\n        temperature: 0\n    });\n    \n    node.status({});\n    msg.completion_split = completion\n    let keep_history = global.get(\"homeassistant\").homeAssistant.states[\"input_boolean.light_gpt_history\"].state\n    let explanation_history = flow.get(\"explanation_history\")\n    if (keep_history == \"off\" || !explanation_history) {\n        explanation_history = [\n            completion.data.choices[0].message.content\n        ]\n    } else {\n        if (explanation_history) {\n            explanation_history.push(completion.data.choices[0].message.content)\n        }\n    }\n    flow.set(\"explanation_history\", explanation_history)\n    msg.explanation_history = explanation_history\n\n} catch (error) {\n    if (error.response) {\n        msg.error_status = error.response.status\n        msg.error_data = error.response.data\n    } else {\n        msg.error_message = error.message\n    }\n}\n\n\n\nreturn msg",
+        "func": "const configuration = new oai.Configuration({\n    apiKey: msg.openapi_key,\n});\n\n\n\n\nlet messages = [\n    { role: \"system\", content: `The user input will include a json array and an explanation for a choice of colors.\nExtract the explanation and output it as is. Exclude the json array from your response.\n` },\n    { role: \"user\", content: `${msg.completion.data.choices[0].message.content.trim()}` }\n]\n\n\nconst openai = new oai.OpenAIApi(configuration);\n\nnode.status({ fill: \"green\", shape: \"dot\", text: \"Querying openapi...\" });\n\ntry{\n    const completion = await openai.createChatCompletion({\n        model: \"gpt-3.5-turbo\",\n        messages: messages,\n        temperature: 0\n    });\n    \n    node.status({});\n    msg.completion_split = completion\n    let keep_history = global.get(\"homeassistant\").homeAssistant.states[\"input_boolean.light_gpt_history\"].state\n    let explanation_history = flow.get(\"explanation_history\")\n    if (keep_history == \"off\" || !explanation_history) {\n        explanation_history = [\n            completion.data.choices[0].message.content\n        ]\n    } else {\n        if (explanation_history) {\n            explanation_history.push(completion.data.choices[0].message.content)\n        }\n    }\n    flow.set(\"explanation_history\", explanation_history)\n    msg.explanation_history = explanation_history\n\n} catch (error) {\n    if (error.response) {\n        msg.error_status = error.response.status\n        msg.error_data = error.response.data\n    } else {\n        msg.error_message = error.message\n    }\n}\n\n\n\nreturn msg",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -1074,8 +1073,8 @@
                 "module": "openai"
             }
         ],
-        "x": 1270,
-        "y": 600,
+        "x": 1910,
+        "y": 640,
         "wires": [
             [
                 "02cc04ee7f6eda6f",
@@ -1109,8 +1108,8 @@
         "output_location_type": "msg",
         "output_location": "payload",
         "output_results_count": 1,
-        "x": 650,
-        "y": 600,
+        "x": 1030,
+        "y": 360,
         "wires": [
             [
                 "7ac4580bc60f964e"
@@ -1128,8 +1127,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 810,
-        "y": 500,
+        "x": 1230,
+        "y": 360,
         "wires": [
             [
                 "3026ce7534f85995"
@@ -1152,8 +1151,8 @@
                 "module": "node-fetch"
             }
         ],
-        "x": 1220,
-        "y": 500,
+        "x": 1860,
+        "y": 540,
         "wires": [
             []
         ]
@@ -1169,7 +1168,7 @@
         "syntax": "mustache",
         "template": "You will generate a json to configure a light.  Your answer has to be a valid json array. You will always respond following the format below.\n\n```\n[\n{\n\"rgb_color\": [<red>, <green>, <blue>],\n\"brightness_pct\": 100,\n\"entity_id\": \"<entity_id>\"\n}\n]\n```\n\nYou will only change the following values\n- <red>\n- <green>\n- <blue>\n- <entity_id>\n\n<red>, <green> and <blue> are each numbers between 0 and 255. Their combined value will define the colour of the light.\n<entity_id> will be provided by the user and is the id  of the light being changed. If there are multiple entity_id provided by the user you will provide multiple outputs in the json array.\nAvoid picking the same color for every light. Do not pick black.\n\nThe user input is a json and should look like the following\n\n{\n\"entity_id\": [\"test\"],\n\"theme\": \"halloween\"\n}\n\nYou will choose the color values based on what the user provides in the theme attribute. Explain your choice.",
         "output": "str",
-        "x": 300,
+        "x": 500,
         "y": 260,
         "wires": [
             [
@@ -1190,8 +1189,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1670,
-        "y": 340,
+        "x": 2310,
+        "y": 380,
         "wires": []
     },
     {
@@ -1212,8 +1211,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 1410,
-        "y": 340,
+        "x": 2050,
+        "y": 380,
         "wires": [
             [
                 "733881d525e4eb08"
@@ -1243,8 +1242,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 510,
-        "y": 240,
+        "x": 710,
+        "y": 260,
         "wires": [
             [
                 "6a852f333b61ab1b"
@@ -1269,7 +1268,7 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 410,
+        "x": 610,
         "y": 180,
         "wires": [
             [
@@ -1301,7 +1300,7 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 600,
+        "x": 800,
         "y": 20,
         "wires": [
             []
@@ -1326,8 +1325,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1890,
-        "y": 260,
+        "x": 2530,
+        "y": 300,
         "wires": [
             []
         ]
@@ -1543,8 +1542,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1440,
-        "y": 200,
+        "x": 2080,
+        "y": 240,
         "wires": []
     },
     {
@@ -1560,8 +1559,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1450,
-        "y": 140,
+        "x": 2090,
+        "y": 180,
         "wires": []
     },
     {
@@ -1577,8 +1576,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1520,
-        "y": 600,
+        "x": 2160,
+        "y": 640,
         "wires": []
     },
     {
@@ -1597,8 +1596,8 @@
                 "module": "node-fetch"
             }
         ],
-        "x": 1540,
-        "y": 520,
+        "x": 2180,
+        "y": 560,
         "wires": [
             []
         ]
@@ -1616,8 +1615,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1390,
-        "y": 260,
+        "x": 2030,
+        "y": 300,
         "wires": []
     },
     {
