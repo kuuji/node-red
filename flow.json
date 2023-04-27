@@ -1082,7 +1082,7 @@
             },
             {
                 "property": "entitiy_id",
-                "logic": "does_not_include",
+                "logic": "is_not",
                 "value": "light.family_room",
                 "valueType": "str"
             }
