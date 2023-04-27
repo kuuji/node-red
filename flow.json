@@ -1174,6 +1174,7 @@
         "id": "3ad027d7325d9ee8",
         "type": "function",
         "z": "3c13ea3309cc8221",
+        "d": true,
         "name": "notification ha",
         "func": "\n\ntry {\n    const response = await fetch(\"https://home.byeon.ca/api/services/persistent_notification/create\", {\n        method: \"POST\",\n        headers: {\n            \"Authorization\": `Bearer ${msg.ha_token}`,\n            \"Content-Type\": \"application/json\"\n        },\n        body: JSON.stringify({\n            \"notification_id\": 10,\n            \"title\": \"Light payload\",\n            \"message\": msg.payload\n        }),\n    })\n    const data = await response.json();\n    node.status({ fill: \"green\", shape: \"dot\", text: \"Request successful\" });\n    msg.rsp = data\n} catch (error) {\n    console.log(error);\n    msg.error = error\n}\nnode.status({});   // to clear the status\nreturn msg",
         "outputs": 1,
@@ -1343,6 +1344,204 @@
         "reg": false,
         "x": 1810,
         "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4a3d74f40397fd33",
+        "type": "credentials",
+        "z": "3c13ea3309cc8221",
+        "name": "api_keys",
+        "props": [
+            {
+                "value": "openapi_key",
+                "type": "msg"
+            },
+            {
+                "value": "ha_token",
+                "type": "msg"
+            }
+        ],
+        "x": 520,
+        "y": 780,
+        "wires": [
+            [
+                "d2a2101c4874a863"
+            ]
+        ]
+    },
+    {
+        "id": "8eb3ba5a823123ad",
+        "type": "server-state-changed",
+        "z": "3c13ea3309cc8221",
+        "name": "",
+        "server": "0c34728bb51d9c58",
+        "version": 4,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "input_button.light_gpt_reset",
+        "entityidfiltertype": "exact",
+        "outputinitially": false,
+        "state_type": "str",
+        "haltifstate": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 1,
+        "output_only_on_state_change": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 170,
+        "y": 780,
+        "wires": [
+            [
+                "7fc03833bf3ee150",
+                "ee9d30648aa14453",
+                "4a3d74f40397fd33"
+            ]
+        ]
+    },
+    {
+        "id": "7fc03833bf3ee150",
+        "type": "api-call-service",
+        "z": "3c13ea3309cc8221",
+        "name": "update_instructions",
+        "server": "0c34728bb51d9c58",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "input_text",
+        "service": "set_value",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "input_text.gpt_status",
+            "input_text.light_gpt_theme"
+        ],
+        "data": "{\"value\":\"\"}",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 570,
+        "y": 720,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ee9d30648aa14453",
+        "type": "api-call-service",
+        "z": "3c13ea3309cc8221",
+        "name": "update_status",
+        "server": "0c34728bb51d9c58",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "input_text",
+        "service": "set_value",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "input_text.gpt_status"
+        ],
+        "data": "{\"value\":\"Resetting history...\"}",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 500,
+        "y": 880,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d2a2101c4874a863",
+        "type": "function",
+        "z": "3c13ea3309cc8221",
+        "name": "reset history",
+        "func": "\nflow.set(\"history\", null)\n\ntry {\n    const response = await fetch(\"https://home.byeon.ca/api/services/persistent_notification/dismiss\", {\n        method: \"POST\",\n        headers: {\n            \"Authorization\": `Bearer ${msg.ha_token}`,\n            \"Content-Type\": \"application/json\"\n        },\n        body: JSON.stringify({\n            \"notification_id\": 2,\n        }),\n    })\n    const data = await response.text();\n    node.status({ fill: \"green\", shape: \"dot\", text: \"Request successful\" });\n    msg.rsp = data\n} catch (error) {\n    console.log(error);\n    msg.error = error\n}\nnode.status({});   // to clear the status\n\nreturn msg",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [
+            {
+                "var": "oai",
+                "module": "openai"
+            },
+            {
+                "var": "fetch",
+                "module": "node-fetch"
+            }
+        ],
+        "x": 730,
+        "y": 800,
+        "wires": [
+            [
+                "b6ee5892827cacf8"
+            ]
+        ]
+    },
+    {
+        "id": "b6ee5892827cacf8",
+        "type": "api-call-service",
+        "z": "3c13ea3309cc8221",
+        "name": "update_status",
+        "server": "0c34728bb51d9c58",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "input_text",
+        "service": "set_value",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "input_text.gpt_status"
+        ],
+        "data": "{\"value\":\"History reset!\"}",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 980,
+        "y": 800,
         "wires": [
             []
         ]
