@@ -919,8 +919,7 @@
         "y": 380,
         "wires": [
             [
-                "40555d80f9399c1e",
-                "4a79aabe26de1ae5"
+                "40555d80f9399c1e"
             ]
         ]
     },
@@ -1020,8 +1019,7 @@
         "y": 380,
         "wires": [
             [
-                "c8d804b8b0d071f0",
-                "b22cf8b094aff7f3"
+                "c8d804b8b0d071f0"
             ]
         ]
     },
@@ -1058,6 +1056,7 @@
         "id": "88bafc330a77da8e",
         "type": "function",
         "z": "3c13ea3309cc8221",
+        "d": true,
         "name": "openai",
         "func": "const configuration = new oai.Configuration({\n    apiKey: msg.openapi_key,\n});\n\n\n\n\nlet messages = [\n    { role: \"system\", content: `The user input will include a json array and an explanation for a choice of colors.\nExtract the explanation and output it as is. Exclude the json array from your response.\n` },\n    { role: \"user\", content: `${msg.completion.data.choices[0].message.content.trim()}` }\n]\n\n\nconst openai = new oai.OpenAIApi(configuration);\n\nnode.status({ fill: \"green\", shape: \"dot\", text: \"Querying openapi...\" });\n\ntry{\n    const completion = await openai.createChatCompletion({\n        model: \"gpt-3.5-turbo\",\n        messages: messages,\n        temperature: 0\n    });\n    \n    node.status({});\n    msg.completion_split = completion\n    let keep_history = global.get(\"homeassistant\").homeAssistant.states[\"input_boolean.light_gpt_history\"].state\n    let explanation_history = flow.get(\"explanation_history\")\n    if (keep_history == \"off\" || !explanation_history) {\n        explanation_history = [\n            completion.data.choices[0].message.content\n        ]\n    } else {\n        if (explanation_history) {\n            explanation_history.push(completion.data.choices[0].message.content)\n        }\n    }\n    flow.set(\"explanation_history\", explanation_history)\n    msg.explanation_history = explanation_history\n\n} catch (error) {\n    if (error.response) {\n        msg.error_status = error.response.status\n        msg.error_data = error.response.data\n    } else {\n        msg.error_message = error.message\n    }\n}\n\n\n\nreturn msg",
         "outputs": 1,
@@ -1174,23 +1173,6 @@
         ]
     },
     {
-        "id": "4bb2655202c35deb",
-        "type": "debug",
-        "z": "3c13ea3309cc8221",
-        "name": "debug error",
-        "active": true,
-        "tosidebar": true,
-        "console": true,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 2320,
-        "y": 400,
-        "wires": []
-    },
-    {
         "id": "40555d80f9399c1e",
         "type": "switch",
         "z": "3c13ea3309cc8221",
@@ -1215,8 +1197,8 @@
                 "733881d525e4eb08"
             ],
             [
-                "4bb2655202c35deb",
-                "674c6218a5597c64"
+                "674c6218a5597c64",
+                "4bb2655202c35deb"
             ]
         ]
     },
@@ -1527,23 +1509,6 @@
         ]
     },
     {
-        "id": "b22cf8b094aff7f3",
-        "type": "debug",
-        "z": "3c13ea3309cc8221",
-        "name": "debug payload",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 2080,
-        "y": 240,
-        "wires": []
-    },
-    {
         "id": "3a41874a95c52439",
         "type": "debug",
         "z": "3c13ea3309cc8221",
@@ -1600,23 +1565,6 @@
         ]
     },
     {
-        "id": "4a79aabe26de1ae5",
-        "type": "debug",
-        "z": "3c13ea3309cc8221",
-        "name": "debug light payload",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 2030,
-        "y": 300,
-        "wires": []
-    },
-    {
         "id": "497987a43fc178b9",
         "type": "switch",
         "z": "3c13ea3309cc8221",
@@ -1643,12 +1591,12 @@
                 "88bafc330a77da8e",
                 "6efa97849e377240",
                 "3a41874a95c52439",
-                "b22cf8b094aff7f3"
+                "4c27055c0292e099"
             ],
             [
-                "4bb2655202c35deb",
                 "d2a2101c4874a863",
-                "674c6218a5597c64"
+                "674c6218a5597c64",
+                "4bb2655202c35deb"
             ]
         ]
     },
@@ -1667,6 +1615,59 @@
         "statusType": "auto",
         "x": 1510,
         "y": 280,
+        "wires": []
+    },
+    {
+        "id": "4c27055c0292e099",
+        "type": "function",
+        "z": "3c13ea3309cc8221",
+        "name": "function 2",
+        "func": "const string = msg.completion.data.choices[0].message.content\n\nconst extract = (string) => {\n    const regex = /`{3}[\\s\\S]*?`{3}/g\n    const matches = string.match(regex)\n    const result = string.replace(regex, '')\n    return { result, matches }\n}\n\nconst { result, matches } = extract(string)\n\nmsg.test = { result, matches }\n\nreturn msg",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1580,
+        "y": 680,
+        "wires": [
+            [
+                "dd8e6e487d108c7b"
+            ]
+        ]
+    },
+    {
+        "id": "4bb2655202c35deb",
+        "type": "debug",
+        "z": "3c13ea3309cc8221",
+        "name": "debug error",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "error",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2330,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "dd8e6e487d108c7b",
+        "type": "debug",
+        "z": "3c13ea3309cc8221",
+        "name": "debug test",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "test",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1770,
+        "y": 720,
         "wires": []
     },
     {
