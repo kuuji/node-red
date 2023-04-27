@@ -1080,6 +1080,12 @@
                 "logic": "starts_with",
                 "value": "light.family",
                 "valueType": "str"
+            },
+            {
+                "property": "entitiy_id",
+                "logic": "does_not_include",
+                "value": "light.family_room",
+                "valueType": "str"
             }
         ],
         "output_type": "array",
@@ -1186,7 +1192,8 @@
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "false",
+        "complete": "true",
+        "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
         "x": 1360,
