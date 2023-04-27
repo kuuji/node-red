@@ -1071,10 +1071,7 @@
         "x": 1910,
         "y": 640,
         "wires": [
-            [
-                "02cc04ee7f6eda6f",
-                "f93fc67edb4d0939"
-            ]
+            []
         ]
     },
     {
@@ -1525,45 +1522,6 @@
         "wires": []
     },
     {
-        "id": "02cc04ee7f6eda6f",
-        "type": "debug",
-        "z": "3c13ea3309cc8221",
-        "name": "debug completion split",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "explanation_history",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 2160,
-        "y": 640,
-        "wires": []
-    },
-    {
-        "id": "f93fc67edb4d0939",
-        "type": "function",
-        "z": "3c13ea3309cc8221",
-        "name": "notification ha",
-        "func": "\n\ntry {\n    const response = await fetch(\"https://home.byeon.ca/api/services/persistent_notification/create\", {\n        method: \"POST\",\n        headers: {\n            \"Authorization\": `Bearer ${msg.ha_token}`,\n            \"Content-Type\": \"application/json\"\n        },\n        body: JSON.stringify({\n            \"notification_id\": 15,\n            \"title\": \"Debug completion\",\n            \"message\": msg.explanation_history.join(\"\\n\\n\\n\")\n        }),\n    })\n    const data = await response.json();\n    node.status({ fill: \"green\", shape: \"dot\", text: \"Request successful\" });\n    msg.rsp = data\n} catch (error) {\n    console.log(error);\n    msg.error = error\n}\nnode.status({});   // to clear the status\nreturn msg",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [
-            {
-                "var": "fetch",
-                "module": "node-fetch"
-            }
-        ],
-        "x": 2180,
-        "y": 560,
-        "wires": [
-            []
-        ]
-    },
-    {
         "id": "497987a43fc178b9",
         "type": "switch",
         "z": "3c13ea3309cc8221",
@@ -1589,8 +1547,7 @@
                 "88bafc330a77da8e",
                 "6efa97849e377240",
                 "3a41874a95c52439",
-                "4c27055c0292e099",
-                "dd8e6e487d108c7b"
+                "4c27055c0292e099"
             ],
             [
                 "d2a2101c4874a863",
@@ -1614,7 +1571,6 @@
         "y": 680,
         "wires": [
             [
-                "dd8e6e487d108c7b",
                 "6e98c671124f8add"
             ]
         ]
@@ -1634,23 +1590,6 @@
         "statusType": "auto",
         "x": 2330,
         "y": 400,
-        "wires": []
-    },
-    {
-        "id": "dd8e6e487d108c7b",
-        "type": "debug",
-        "z": "3c13ea3309cc8221",
-        "name": "debug all",
-        "active": true,
-        "tosidebar": true,
-        "console": true,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1890,
-        "y": 720,
         "wires": []
     },
     {
