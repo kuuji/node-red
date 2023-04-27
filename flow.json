@@ -1622,7 +1622,7 @@
         "type": "function",
         "z": "3c13ea3309cc8221",
         "name": "function 2",
-        "func": "const string = msg.completion.data.choices[0].message.content\n\nconst extract = (string) => {\n    const regex = /`{3}[\\s\\S]*?`{3}/g\n    const matches = string.match(regex)\n    const result = string.replace(regex, '')\n    return { result, matches }\n}\n\nconst { result, matches } = extract(string)\n\nmsg.test = { result, matches }\n\nreturn msg",
+        "func": "const string = msg.completion.data.choices[0].message.content\n\nconst extract = (string) => {\n    const regex = /`{3}[\\s\\S]*?`{3}/g\n    const matches = string.match(regex)\n    const result = string.replace(regex, '')\n    return { result, matches }\n}\n\nconst { result, matches } = extract(string)\nconst matchesStripped = matches.map(match => match.replace(/`{3}/g, ''))\nmsg.test = { \n    \"result\": result,\n    \"match\": JSON.parse(matchesStripped)\n }\n\nreturn msg",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
