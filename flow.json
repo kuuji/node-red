@@ -1186,7 +1186,7 @@
         "id": "4bb2655202c35deb",
         "type": "debug",
         "z": "3c13ea3309cc8221",
-        "name": "debug 2",
+        "name": "debug error",
         "active": true,
         "tosidebar": true,
         "console": false,
@@ -1195,7 +1195,7 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1580,
+        "x": 1590,
         "y": 340,
         "wires": []
     },
