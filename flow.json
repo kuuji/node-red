@@ -1164,7 +1164,8 @@
         "y": 260,
         "wires": [
             [
-                "9bf6185befa68120"
+                "9bf6185befa68120",
+                "7fc03833bf3ee150"
             ]
         ]
     },
@@ -1591,6 +1592,71 @@
         "x": 2330,
         "y": 400,
         "wires": []
+    },
+    {
+        "id": "013419284f4c6b1b",
+        "type": "server-state-changed",
+        "z": "3c13ea3309cc8221",
+        "name": "",
+        "server": "0c34728bb51d9c58",
+        "version": 4,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "input_text.light_gpt_theme",
+        "entityidfiltertype": "exact",
+        "outputinitially": false,
+        "state_type": "str",
+        "haltifstate": "^$",
+        "halt_if_type": "re",
+        "halt_if_compare": "is_not",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 200,
+        "y": 220,
+        "wires": [
+            [
+                "c957907d84faf49f",
+                "75c02e826e3fde75"
+            ],
+            []
+        ]
     },
     {
         "id": "8743110cd9408959",
