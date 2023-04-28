@@ -865,12 +865,12 @@
                 "type": "msg"
             }
         ],
-        "x": 860,
-        "y": 300,
+        "x": 780,
+        "y": 340,
         "wires": [
             [
                 "d0d6184d241670dc",
-                "b322cc5dcf057a0c"
+                "508f99c93026dd55"
             ]
         ]
     },
@@ -1100,8 +1100,8 @@
         "output_location_type": "msg",
         "output_location": "payload",
         "output_results_count": 1,
-        "x": 1030,
-        "y": 360,
+        "x": 1070,
+        "y": 380,
         "wires": [
             [
                 "7ac4580bc60f964e"
@@ -1656,6 +1656,79 @@
                 "75c02e826e3fde75"
             ],
             []
+        ]
+    },
+    {
+        "id": "508f99c93026dd55",
+        "type": "switch",
+        "z": "3c13ea3309cc8221",
+        "name": "",
+        "property": "homeassistant.homeAssistant.states[\"input_select.room\"]",
+        "propertyType": "global",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "Alex's Office",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "Family Room",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "Dining Room",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 3,
+        "x": 870,
+        "y": 420,
+        "wires": [
+            [
+                "acbcec9469999ec0"
+            ],
+            [
+                "b322cc5dcf057a0c"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "acbcec9469999ec0",
+        "type": "ha-get-entities",
+        "z": "3c13ea3309cc8221",
+        "name": "",
+        "server": "0c34728bb51d9c58",
+        "version": 0,
+        "rules": [
+            {
+                "property": "entity_id",
+                "logic": "starts_with",
+                "value": "light.alex",
+                "valueType": "str"
+            },
+            {
+                "property": "attributes.is_deconz_group",
+                "logic": "is",
+                "value": "false",
+                "valueType": "bool"
+            }
+        ],
+        "output_type": "array",
+        "output_empty_results": false,
+        "output_location_type": "msg",
+        "output_location": "payload",
+        "output_results_count": 1,
+        "x": 1070,
+        "y": 320,
+        "wires": [
+            [
+                "7ac4580bc60f964e"
+            ]
         ]
     },
     {
