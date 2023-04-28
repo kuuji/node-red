@@ -1783,7 +1783,7 @@
         "server": "0c34728bb51d9c58",
         "version": 5,
         "debugenabled": false,
-        "domain": "input_text",
+        "domain": "input_number",
         "service": "set_value",
         "areaId": [],
         "deviceId": [],
