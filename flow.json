@@ -894,7 +894,8 @@
         "y": 380,
         "wires": [
             [
-                "497987a43fc178b9"
+                "497987a43fc178b9",
+                "07b69d087b9b4dbc"
             ]
         ]
     },
@@ -1548,9 +1549,9 @@
             [
                 "fd5f42e6ece3987f",
                 "88bafc330a77da8e",
-                "6efa97849e377240",
                 "3a41874a95c52439",
-                "4c27055c0292e099"
+                "4c27055c0292e099",
+                "6efa97849e377240"
             ],
             [
                 "674c6218a5597c64",
@@ -1769,6 +1770,33 @@
         "output": "str",
         "x": 480,
         "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "07b69d087b9b4dbc",
+        "type": "api-call-service",
+        "z": "3c13ea3309cc8221",
+        "name": "update_status",
+        "server": "0c34728bb51d9c58",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "input_text",
+        "service": "set_value",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "input_number.light_gpt_token_usage"
+        ],
+        "data": "{\"value\":msg.completion.data.usage.total_tokens}",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1500,
+        "y": 220,
         "wires": [
             []
         ]
