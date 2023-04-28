@@ -1132,7 +1132,7 @@
         "type": "function",
         "z": "3c13ea3309cc8221",
         "name": "notification ha",
-        "func": "\n\ntry {\n    const response = await fetch(\"https://home.byeon.ca/api/services/persistent_notification/create\", {\n        method: \"POST\",\n        headers: {\n            \"Authorization\": `Bearer ${msg.ha_token}`,\n            \"Content-Type\": \"application/json\"\n        },\n        body: JSON.stringify({\n            \"notification_id\": 2,\n            \"title\": \"Ask GPT\",\n            \"message\": msg.text.join(\"\\n\\n\\n\")\n        }),\n    })\n    const data = await response.json();\n    node.status({ fill: \"green\", shape: \"dot\", text: \"Request successful\" });\n    msg.rsp = data\n} catch (error) {\n    console.log(error);\n    msg.error = error\n}\nnode.status({});   // to clear the status\nreturn msg",
+        "func": "\n\ntry {\n    const response = await fetch(\"https://home.byeon.ca/api/services/persistent_notification/create\", {\n        method: \"POST\",\n        headers: {\n            \"Authorization\": `Bearer ${msg.ha_token}`,\n            \"Content-Type\": \"application/json\"\n        },\n        body: JSON.stringify({\n            \"notification_id\": 2,\n            \"title\": \"Ask GPT\",\n            \"message\": msg.text.join(\"\\n___\\n\")\n        }),\n    })\n    const data = await response.json();\n    node.status({ fill: \"green\", shape: \"dot\", text: \"Request successful\" });\n    msg.rsp = data\n} catch (error) {\n    console.log(error);\n    msg.error = error\n}\nnode.status({});   // to clear the status\nreturn msg",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
