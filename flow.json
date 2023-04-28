@@ -1479,7 +1479,8 @@
         "wires": [
             [
                 "b6ee5892827cacf8",
-                "3df4f41dc1a822f4"
+                "486a77f879a33e03",
+                "81527365ee24380e"
             ]
         ]
     },
@@ -1806,33 +1807,6 @@
         ]
     },
     {
-        "id": "3df4f41dc1a822f4",
-        "type": "api-call-service",
-        "z": "3c13ea3309cc8221",
-        "name": "update_status",
-        "server": "0c34728bb51d9c58",
-        "version": 5,
-        "debugenabled": false,
-        "domain": "input_text",
-        "service": "set_value",
-        "areaId": [],
-        "deviceId": [],
-        "entityId": [
-            "input_number.light_gpt_token_usage"
-        ],
-        "data": "{\"value\":0}",
-        "dataType": "jsonata",
-        "mergeContext": "",
-        "mustacheAltTags": false,
-        "outputProperties": [],
-        "queue": "none",
-        "x": 960,
-        "y": 880,
-        "wires": [
-            []
-        ]
-    },
-    {
         "id": "620e5380f870b356",
         "type": "change",
         "z": "3c13ea3309cc8221",
@@ -1903,6 +1877,60 @@
         ],
         "x": 1660,
         "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "486a77f879a33e03",
+        "type": "api-call-service",
+        "z": "3c13ea3309cc8221",
+        "name": "update_status",
+        "server": "0c34728bb51d9c58",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "input_number",
+        "service": "set_value",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "input_number.light_gpt_token_usage"
+        ],
+        "data": "{\"value\":0}",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 980,
+        "y": 860,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "81527365ee24380e",
+        "type": "api-call-service",
+        "z": "3c13ea3309cc8221",
+        "name": "update_status",
+        "server": "0c34728bb51d9c58",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "input_number",
+        "service": "set_value",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "input_number.light_gpt_cost"
+        ],
+        "data": "{\"value\":0}",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 980,
+        "y": 900,
         "wires": [
             []
         ]
