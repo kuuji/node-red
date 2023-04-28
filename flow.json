@@ -1553,7 +1553,6 @@
                 "4c27055c0292e099"
             ],
             [
-                "d2a2101c4874a863",
                 "674c6218a5597c64",
                 "4bb2655202c35deb"
             ]
@@ -1564,7 +1563,7 @@
         "type": "function",
         "z": "3c13ea3309cc8221",
         "name": "explanation",
-        "func": "const string = msg.completion.data.choices[0].message.content\n\nconst extract = (string) => {\n    const regex = /`{3}[\\s\\S]*?`{3}/g\n    const matches = string.match(regex)\n    const result = string.replace(regex, '')\n    return { result, matches }\n}\n\nconst { result, matches } = extract(string)\nconst matchesStripped = matches.map(match => match.replace(/`{3}/g, ''))\n\n\nlet keep_history = global.get(\"homeassistant\").homeAssistant.states[\"input_boolean.light_gpt_history\"].state\nlet history = flow.get(\"explanation_history\")\nif (keep_history == \"off\" || !history) {\n    history = [\n        result\n    ]\n} else {\n    if (history) {\n        history.push(result)\n    }\n}\nflow.set(\"explanation_history\", history)\n\nmsg.text = history\nreturn msg",
+        "func": "const string = msg.completion.data.choices[0].message.content\nlet history_array, history\n\ntry {\n    const extract = (string) => {\n        const regex = /`{3}[\\s\\S]*?`{3}/g\n        const matches = string.match(regex)\n        const result = string.replace(regex, '')\n        return { result, matches }\n    }\n\n    const { result, matches } = extract(string)\n    const matchesStripped = matches.map(match => match.replace(/`{3}/g, ''))\n    history = result\n\n} catch {\n    history = string\n}\n\nlet keep_history = global.get(\"homeassistant\").homeAssistant.states[\"input_boolean.light_gpt_history\"].state\nhistory_array = flow.get(\"explanation_history\")\nif (keep_history == \"off\" || !history_array) {\n    history_array = [\n        history\n    ]\n} else {\n    if (history_array) {\n        history.push(history)\n    }\n    msg.text = history_array\n    flow.set(\"explanation_history\", history)\n}\n\nreturn msg",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -1591,8 +1590,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 2330,
-        "y": 400,
+        "x": 2410,
+        "y": 480,
         "wires": []
     },
     {
