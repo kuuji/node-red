@@ -895,7 +895,8 @@
         "wires": [
             [
                 "497987a43fc178b9",
-                "620e5380f870b356"
+                "620e5380f870b356",
+                "07b69d087b9b4dbc"
             ]
         ]
     },
@@ -1790,7 +1791,7 @@
         "entityId": [
             "input_number.light_gpt_token_usage"
         ],
-        "data": "{\"value\":payload.data.usage.total_tokens}",
+        "data": "{\"value\":completion.data.usage.total_tokens}",
         "dataType": "jsonata",
         "mergeContext": "",
         "mustacheAltTags": false,
@@ -1849,30 +1850,11 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1440,
-        "y": 140,
+        "x": 1360,
+        "y": 100,
         "wires": [
-            [
-                "07b69d087b9b4dbc",
-                "993b4e1412f0167f"
-            ]
+            []
         ]
-    },
-    {
-        "id": "993b4e1412f0167f",
-        "type": "debug",
-        "z": "3c13ea3309cc8221",
-        "name": "debug 2",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1620,
-        "y": 40,
-        "wires": []
     },
     {
         "id": "8743110cd9408959",
