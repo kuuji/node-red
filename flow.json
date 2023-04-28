@@ -870,7 +870,8 @@
         "wires": [
             [
                 "d0d6184d241670dc",
-                "508f99c93026dd55"
+                "508f99c93026dd55",
+                "33a3d98fc7cf62d9"
             ]
         ]
     },
@@ -1663,7 +1664,7 @@
         "type": "switch",
         "z": "3c13ea3309cc8221",
         "name": "",
-        "property": "homeassistant.homeAssistant.states[\"input_select.room\"]",
+        "property": "homeassistant.homeAssistant.states[\"input_select.room\"].state",
         "propertyType": "global",
         "rules": [
             {
@@ -1680,11 +1681,14 @@
                 "t": "eq",
                 "v": "Dining Room",
                 "vt": "str"
+            },
+            {
+                "t": "else"
             }
         ],
         "checkall": "true",
         "repair": false,
-        "outputs": 3,
+        "outputs": 4,
         "x": 870,
         "y": 420,
         "wires": [
@@ -1694,7 +1698,10 @@
             [
                 "b322cc5dcf057a0c"
             ],
-            []
+            [],
+            [
+                "12670b01ceff7755"
+            ]
         ]
     },
     {
@@ -1730,6 +1737,39 @@
                 "7ac4580bc60f964e"
             ]
         ]
+    },
+    {
+        "id": "12670b01ceff7755",
+        "type": "debug",
+        "z": "3c13ea3309cc8221",
+        "name": "debug otherwise",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1100,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "33a3d98fc7cf62d9",
+        "type": "debug",
+        "z": "3c13ea3309cc8221",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 840,
+        "y": 560,
+        "wires": []
     },
     {
         "id": "8743110cd9408959",
