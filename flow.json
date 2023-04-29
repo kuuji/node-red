@@ -3510,7 +3510,6 @@
         "y": 420,
         "wires": [
             [
-                "c113a98811f95ea0",
                 "6d328af2acbe7c5c"
             ],
             [
@@ -3629,25 +3628,6 @@
         ]
     },
     {
-        "id": "c113a98811f95ea0",
-        "type": "function",
-        "z": "949e88709af1312c",
-        "name": "create session",
-        "func": "let gpt_session = flow.get(msg.payload.userId)\n\ngpt_session = true\n\nflow.set(msg.payload.userId, gpt_session)\n\nlet convo = flow.get(\"convo\")\nif (!convo) {\n    convo = {}\n}\nif (!convo[msg.payload.userId]) {\n    convo[msg.payload.userId] = []\n} else {\n    convo[msg.payload.userId].push({\n        \"started\": Date.now(),\n    })\n}\n\nmsg.topic = `convo/${msg.payload.userId}`\nmsg.fb_payload = convo\n\nflow.set(\"convo\", convo)\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 540,
-        "y": 220,
-        "wires": [
-            [
-                "352041487226a6ab"
-            ]
-        ]
-    },
-    {
         "id": "520b5df01a227ffa",
         "type": "function",
         "z": "949e88709af1312c",
@@ -3688,33 +3668,19 @@
         "id": "08984126938d3f6f",
         "type": "chatbot-message",
         "z": "949e88709af1312c",
-        "name": "gptbyeonbot",
+        "name": "Started",
         "message": [
             {
                 "message": "Session started"
             }
         ],
         "language": "none",
-        "x": 1150,
-        "y": 200,
+        "x": 980,
+        "y": 120,
         "wires": [
             [
                 "09cc9403877a4d84"
             ]
-        ]
-    },
-    {
-        "id": "352041487226a6ab",
-        "type": "chatbot-authorized",
-        "z": "949e88709af1312c",
-        "d": true,
-        "x": 910,
-        "y": 220,
-        "wires": [
-            [
-                "08984126938d3f6f"
-            ],
-            []
         ]
     },
     {
@@ -4238,7 +4204,7 @@
         "type": "function",
         "z": "949e88709af1312c",
         "name": "new session for fb",
-        "func": "let all_convo = msg.payload\nif (!all_convo[msg.in_chat.userId]){\n    all_convo[msg.in_chat.userId] = {}\n} \nif (!all_convo[msg.in_chat.userId].is_session) {\n    all_convo[msg.in_chat.userId].is_session = true\n    if (!all_convo[msg.in_chat.userId].sessions){\n        all_convo[msg.in_chat.userId].sessions = []\n    }\n    all_convo[msg.in_chat.userId].sessions.push({\n        \"started\": Date.now(),\n    })\n}\nmsg.topic = `convo/${msg.in_chat.userId}`\nmsg.payload = all_convo[msg.in_chat.userId]\nreturn msg;",
+        "func": "let all_convo = msg.payload\nif (!all_convo[msg.in_chat.userId]){\n    all_convo[msg.in_chat.userId] = {}\n} \nif (!all_convo[msg.in_chat.userId].is_session) {\n    msg.new_session = true\n    all_convo[msg.in_chat.userId].is_session = true\n    if (!all_convo[msg.in_chat.userId].sessions){\n        all_convo[msg.in_chat.userId].sessions = []\n    }\n    all_convo[msg.in_chat.userId].sessions.push({\n        \"started\": Date.now(),\n    })\n}\nmsg.topic = `convo/${msg.in_chat.userId}`\nmsg.payload = all_convo[msg.in_chat.userId]\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -4249,7 +4215,7 @@
         "wires": [
             [
                 "c2d3733170484e13",
-                "08984126938d3f6f"
+                "cd6a53187ebb92ec"
             ]
         ]
     },
@@ -4291,8 +4257,8 @@
         "pathType": "msg",
         "priority": 1,
         "queryType": "set",
-        "x": 950,
-        "y": 280,
+        "x": 1030,
+        "y": 180,
         "wires": []
     },
     {
@@ -4312,6 +4278,55 @@
         "wires": [
             [
                 "5830cce1ba9aa88b"
+            ]
+        ]
+    },
+    {
+        "id": "cd6a53187ebb92ec",
+        "type": "switch",
+        "z": "949e88709af1312c",
+        "name": "",
+        "property": "new_session",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "true"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 810,
+        "y": 180,
+        "wires": [
+            [
+                "c2d3733170484e13",
+                "08984126938d3f6f"
+            ],
+            [
+                "628ced49786afebe"
+            ]
+        ]
+    },
+    {
+        "id": "628ced49786afebe",
+        "type": "chatbot-message",
+        "z": "949e88709af1312c",
+        "name": "Already started",
+        "message": [
+            {
+                "message": "Session already in progress"
+            }
+        ],
+        "language": "none",
+        "x": 1020,
+        "y": 240,
+        "wires": [
+            [
+                "09cc9403877a4d84"
             ]
         ]
     }
