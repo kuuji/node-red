@@ -2634,72 +2634,6 @@
         "wires": []
     },
     {
-        "id": "f50f4f45f08cd7d6",
-        "type": "firebase-get",
-        "z": "be9302db5cc86901",
-        "name": "",
-        "constraint": {},
-        "database": "276702a0fe306a8a",
-        "outputType": "auto",
-        "passThrough": true,
-        "path": "test",
-        "pathType": "str",
-        "useConstraint": false,
-        "x": 230,
-        "y": 180,
-        "wires": [
-            [
-                "82138c3b6f873a6e"
-            ]
-        ]
-    },
-    {
-        "id": "82138c3b6f873a6e",
-        "type": "debug",
-        "z": "be9302db5cc86901",
-        "name": "debug 5",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 440,
-        "y": 180,
-        "wires": []
-    },
-    {
-        "id": "a8cfec847dabe4fe",
-        "type": "inject",
-        "z": "be9302db5cc86901",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": true,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 110,
-        "y": 220,
-        "wires": [
-            [
-                "f50f4f45f08cd7d6"
-            ]
-        ]
-    },
-    {
         "id": "d0e69ca1fb33587f",
         "type": "chatbot-telegram-receive",
         "z": "5696f54716e2d43c",
@@ -3047,7 +2981,7 @@
         "type": "function",
         "z": "5696f54716e2d43c",
         "name": "openai",
-        "func": "const configuration = new oai.Configuration({\n    apiKey: msg.openapi_key,\n});\n\n\n\n\nconst openai = new oai.OpenAIApi(configuration);\n\nnode.status({ fill: \"green\", shape: \"dot\", text: \"Querying openapi...\" });\n\ntry {\n\n    // let system_prompt_obj = flow.get(\"system_prompt\")\n    let system_prompt = \"You are a helpful assistant.\"\n    // if (system_prompt_obj[msg.session]){\n    //     system_prompt = system_prompt_obj[msg.session]\n    // }\n\n    // let history = flow.get(\"history\")\n    // if (!history){\n    //     history = {}\n    // }\n    // if (!history[msg.session]) {\n    //     history[msg.session] = [\n    //         { role: \"system\", content: system_prompt },\n    //         { role: \"user\", content: msg.payload.content }\n    //     ]\n    // } else {\n    //     history[msg.session].push({ role: \"user\", content: msg.payload.content })\n    // }\n\n    let convo = flow.get(\"convo\")\n    if (convo[msg.session]) {\n        if (convo[msg.session].system_prompt){\n            system_prompt = convo[msg.session].system_prompt\n        }\n        if (convo[msg.session].history){\n            convo[msg.session].history.push({ role: \"user\", content: msg.payload.content })\n        } else {\n            convo[msg.session].history = [\n                { role: \"system\", content: system_prompt },\n                { role: \"user\", content: msg.payload.content }\n            ]\n        }\n    }\n\n\n    const completion = await openai.createChatCompletion({\n        model: \"gpt-3.5-turbo\",\n        messages: convo[msg.session].history\n    });\n\n    convo[msg.session].history.push(completion.data.choices[0].message)\n    msg.message = completion.data.choices[0].message.content\n    let token = completion.data.usage.total_tokens\n    let cost = token * 0.002 / 1000\n    flow.set(\"token\",token)\n    flow.set(\"cost\", cost)\n    flow.set(\"convo\", convo)\n    msg.convo = convo\n    node.status({});\n    msg.completion = completion\n} catch (error) {\n    if (error.response) {\n        msg.error_status = error.response.status\n        msg.error_data = error.response.data\n    } else {\n        msg.error_message = error.message\n    }\n}\n\n\n\nreturn msg",
+        "func": "const configuration = new oai.Configuration({\n    apiKey: msg.openapi_key,\n});\n\n\n\n\nconst openai = new oai.OpenAIApi(configuration);\n\nnode.status({ fill: \"green\", shape: \"dot\", text: \"Querying openapi...\" });\n\ntry {\n\n    // let system_prompt_obj = flow.get(\"system_prompt\")\n    let system_prompt = \"You are a helpful assistant.\"\n    // if (system_prompt_obj[msg.session]){\n    //     system_prompt = system_prompt_obj[msg.session]\n    // }\n\n    // let history = flow.get(\"history\")\n    // if (!history){\n    //     history = {}\n    // }\n    // if (!history[msg.session]) {\n    //     history[msg.session] = [\n    //         { role: \"system\", content: system_prompt },\n    //         { role: \"user\", content: msg.payload.content }\n    //     ]\n    // } else {\n    //     history[msg.session].push({ role: \"user\", content: msg.payload.content })\n    // }\n\n    let convo = flow.get(\"convo\")\n    if (convo[msg.session]) {\n        if (convo[msg.session].system_prompt){\n            system_prompt = convo[msg.session].system_prompt\n        }\n        if (convo[msg.session].history){\n            convo[msg.session].history.push({ role: \"user\", content: msg.payload.content })\n        } else {\n            convo[msg.session].history = [\n                { role: \"system\", content: system_prompt },\n                { role: \"user\", content: msg.payload.content }\n            ]\n        }\n    }\n\n\n    const completion = await openai.createChatCompletion({\n        model: \"gpt-3.5-turbo\",\n        messages: convo[msg.session].history\n    });\n\n    msg.session.history.push(completion.data.choices[0].message)\n    msg.message = completion.data.choices[0].message.content\n    let token = completion.data.usage.total_tokens\n    let cost = token * 0.002 / 1000\n    flow.set(\"token\",token)\n    flow.set(\"cost\", cost)\n    flow.set(\"convo\", convo)\n    msg.convo = convo\n    msg.session_convo = msg.session\n    msg.topic = `/topic/${msg.session}`\n    node.status({});\n    msg.completion = completion\n} catch (error) {\n    if (error.response) {\n        msg.error_status = error.response.status\n        msg.error_data = error.response.data\n    } else {\n        msg.error_message = error.message\n    }\n}\n\n\n\nreturn msg",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -3063,7 +2997,8 @@
         "wires": [
             [
                 "fa5973b3866ea2af",
-                "eeafa246c29cf57b"
+                "eeafa246c29cf57b",
+                "4f2bb69c4cd4be16"
             ]
         ]
     },
@@ -3444,5 +3379,47 @@
         "x": 240,
         "y": 60,
         "wires": []
+    },
+    {
+        "id": "d9deb004d757393b",
+        "type": "firebase-out",
+        "z": "5696f54716e2d43c",
+        "name": "",
+        "database": "276702a0fe306a8a",
+        "path": "topic",
+        "pathType": "msg",
+        "priority": 1,
+        "queryType": "set",
+        "x": 1630,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "4f2bb69c4cd4be16",
+        "type": "change",
+        "z": "5696f54716e2d43c",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "session_convo",
+                "tot": "msg",
+                "dc": true
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1440,
+        "y": 460,
+        "wires": [
+            [
+                "d9deb004d757393b"
+            ]
+        ]
     }
 ]
