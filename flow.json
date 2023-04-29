@@ -3137,7 +3137,7 @@
         "type": "function",
         "z": "5696f54716e2d43c",
         "name": "set system prompt",
-        "func": "\nconst join = (array, index, separator) => {\n    let result = \"\";\n    for (let i = index; i < array.length; i++) {\n        result += array[i] + separator;\n    }\n    return result;\n}\n\nlet convo = flow.get(\"convo\")\nif (!convo) {\n    convo = {}\n}\nif (!convo[msg.payload.userId]){\n    convo[msg.payload.userId] = {}\n}\nconvo[msg.payload.userId].system_prompt = join(msg.payload.arguments, 1, \" \")\n\nflow.set(\"convo\", convo)\n\nmsg.payload.system_prompt = join(msg.payload.arguments, 0, \" \")\n\nreturn msg;",
+        "func": "\nconst join = (array, index, separator) => {\n    let result = \"\";\n    for (let i = index; i < array.length; i++) {\n        result += array[i] + separator;\n    }\n    return result;\n}\n\nlet convo = flow.get(\"convo\")\nif (!convo) {\n    convo = {}\n}\nif (!convo[msg.payload.userId]){\n    convo[msg.payload.userId] = {}\n}\nconvo[msg.payload.userId].system_prompt = join(msg.payload.arguments, 0, \" \")\n\nflow.set(\"convo\", convo)\n\nmsg.payload.system_prompt = join(msg.payload.arguments, 0, \" \")\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
