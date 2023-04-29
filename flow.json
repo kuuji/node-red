@@ -3305,5 +3305,65 @@
                 "edf8d4cb21432ace"
             ]
         ]
+    },
+    {
+        "id": "1801d5dc62295898",
+        "type": "inject",
+        "z": "5696f54716e2d43c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 70,
+        "y": 60,
+        "wires": [
+            [
+                "bb2a15c596710fd6"
+            ]
+        ]
+    },
+    {
+        "id": "bb2a15c596710fd6",
+        "type": "chatbot-telegram-menu",
+        "z": "5696f54716e2d43c",
+        "bot": "",
+        "items": [
+            {
+                "command": "start",
+                "description": "start a session"
+            },
+            {
+                "command": "stop",
+                "description": "stop a session and reset history"
+            },
+            {
+                "command": "reset",
+                "description": "reset history and restart session"
+            },
+            {
+                "command": "token",
+                "description": "show amount of token used so far"
+            },
+            {
+                "command": "system",
+                "description": "set a system prompt"
+            }
+        ],
+        "x": 240,
+        "y": 60,
+        "wires": []
     }
 ]
