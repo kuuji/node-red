@@ -3259,7 +3259,7 @@
         "name": "gptbyeonbot",
         "message": [
             {
-                "message": "This conversation has consumed \"{{payload.token}}\" so far. That's ${{payload.cost}}"
+                "message": "This conversation has consumed {{payload.token}} tokens so far. That's ${{payload.cost}}"
             }
         ],
         "language": "none",
