@@ -2647,20 +2647,27 @@
         "propertyType": "msg",
         "rules": [
             {
-                "t": "regex",
-                "v": "^/gpt start",
-                "vt": "str",
-                "case": false
+                "t": "eq",
+                "v": "/gpt start",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "/gpt stop",
+                "vt": "str"
             }
         ],
         "checkall": "true",
         "repair": false,
-        "outputs": 1,
+        "outputs": 2,
         "x": 450,
         "y": 220,
         "wires": [
             [
                 "26a08da50a3f0106"
+            ],
+            [
+                "83194e7d74022db6"
             ]
         ]
     },
@@ -2682,8 +2689,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 630,
-        "y": 180,
+        "x": 970,
+        "y": 600,
         "wires": [
             [],
             [
@@ -2710,8 +2717,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 730,
-        "y": 240,
+        "x": 1070,
+        "y": 400,
         "wires": [
             [
                 "6eb92626351cb793"
@@ -2767,10 +2774,10 @@
         "rules": [
             {
                 "t": "set",
-                "p": "gpt_session",
+                "p": "gpt_session[5528324687]",
                 "pt": "flow",
-                "to": "payload.arguments[1]",
-                "tot": "msg"
+                "to": "true",
+                "tot": "bool"
             }
         ],
         "action": "",
@@ -2778,16 +2785,43 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 700,
+        "x": 740,
         "y": 100,
         "wires": [
             [
-                "5e24100c63335730"
+                "02602c9bb8671a54"
             ]
         ]
     },
     {
-        "id": "5e24100c63335730",
+        "id": "83194e7d74022db6",
+        "type": "change",
+        "z": "5696f54716e2d43c",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "gpt_session[5528324687]",
+                "pt": "flow",
+                "to": "false",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 740,
+        "y": 160,
+        "wires": [
+            [
+                "02602c9bb8671a54"
+            ]
+        ]
+    },
+    {
+        "id": "02602c9bb8671a54",
         "type": "debug",
         "z": "5696f54716e2d43c",
         "name": "debug 4",
@@ -2795,11 +2829,12 @@
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "false",
+        "complete": "payload",
+        "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 900,
-        "y": 100,
+        "x": 1040,
+        "y": 120,
         "wires": []
     }
 ]
