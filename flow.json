@@ -88,6 +88,23 @@
         "chatbotId": ""
     },
     {
+        "id": "7cf31403b2d243a2",
+        "type": "chatbot-telegram-node",
+        "botname": "My Bot",
+        "usernames": "",
+        "polling": "1000",
+        "store": "",
+        "log": "",
+        "debug": false,
+        "skipMediaFiles": false,
+        "webHook": "",
+        "connectMode": "polling",
+        "storeMessages": true,
+        "enableMissionControl": false,
+        "inspectMessages": true,
+        "chatbotId": ""
+    },
+    {
         "id": "3b77e42fb1341f12",
         "type": "inject",
         "z": "95ab365c95ad6815",
@@ -2611,7 +2628,7 @@
         "id": "d0e69ca1fb33587f",
         "type": "chatbot-telegram-receive",
         "z": "5696f54716e2d43c",
-        "bot": "d1d223ae7f73128c",
+        "bot": "7cf31403b2d243a2",
         "botProduction": "",
         "x": 130,
         "y": 320,
@@ -2839,7 +2856,7 @@
         "id": "edf8d4cb21432ace",
         "type": "chatbot-telegram-send",
         "z": "5696f54716e2d43c",
-        "bot": "d1d223ae7f73128c",
+        "bot": "7cf31403b2d243a2",
         "botProduction": "",
         "track": false,
         "passThrough": true,
@@ -3051,58 +3068,6 @@
         "wires": [
             [
                 "edf8d4cb21432ace"
-            ]
-        ]
-    },
-    {
-        "id": "ad86aea08501e58d",
-        "type": "chatbot-telegram-menu",
-        "z": "5696f54716e2d43c",
-        "bot": "d1d223ae7f73128c",
-        "items": [
-            {
-                "command": "/start",
-                "description": "start a session with chatgpt"
-            },
-            {
-                "command": "/stop",
-                "description": "stop a session and reset the history"
-            },
-            {
-                "command": "reset",
-                "description": "reset a session"
-            }
-        ],
-        "x": 300,
-        "y": 60,
-        "wires": []
-    },
-    {
-        "id": "4e796cbe7729f438",
-        "type": "inject",
-        "z": "5696f54716e2d43c",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": true,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 130,
-        "y": 60,
-        "wires": [
-            [
-                "ad86aea08501e58d"
             ]
         ]
     },
