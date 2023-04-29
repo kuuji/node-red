@@ -2635,7 +2635,7 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 480,
+        "x": 400,
         "y": 440,
         "wires": []
     },
@@ -2663,6 +2663,11 @@
                 "vt": "str"
             },
             {
+                "t": "eq",
+                "v": "/token",
+                "vt": "str"
+            },
+            {
                 "t": "regex",
                 "v": "^/system",
                 "vt": "str",
@@ -2674,8 +2679,8 @@
         ],
         "checkall": "true",
         "repair": false,
-        "outputs": 5,
-        "x": 470,
+        "outputs": 6,
+        "x": 450,
         "y": 200,
         "wires": [
             [
@@ -2686,6 +2691,9 @@
             ],
             [
                 "f36ff25e103894cc"
+            ],
+            [
+                "b830e9a8c573721a"
             ],
             [
                 "1282967faa7b88b4"
@@ -2758,8 +2766,8 @@
                 "type": "msg"
             }
         ],
-        "x": 940,
-        "y": 280,
+        "x": 1000,
+        "y": 400,
         "wires": [
             [
                 "2240a689d69c3786",
@@ -2899,8 +2907,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 590,
-        "y": 320,
+        "x": 650,
+        "y": 440,
         "wires": [
             [
                 "f9e0d2aea06cbdc1",
@@ -2926,8 +2934,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 770,
-        "y": 320,
+        "x": 830,
+        "y": 440,
         "wires": [
             [
                 "6eb92626351cb793"
@@ -2942,7 +2950,7 @@
         "type": "function",
         "z": "5696f54716e2d43c",
         "name": "openai",
-        "func": "const configuration = new oai.Configuration({\n    apiKey: msg.openapi_key,\n});\n\n\n\n\nconst openai = new oai.OpenAIApi(configuration);\n\nnode.status({ fill: \"green\", shape: \"dot\", text: \"Querying openapi...\" });\n\ntry {\n\n    // let system_prompt_obj = flow.get(\"system_prompt\")\n    let system_prompt = \"You are a helpful assistant.\"\n    // if (system_prompt_obj[msg.session]){\n    //     system_prompt = system_prompt_obj[msg.session]\n    // }\n\n    // let history = flow.get(\"history\")\n    // if (!history){\n    //     history = {}\n    // }\n    // if (!history[msg.session]) {\n    //     history[msg.session] = [\n    //         { role: \"system\", content: system_prompt },\n    //         { role: \"user\", content: msg.payload.content }\n    //     ]\n    // } else {\n    //     history[msg.session].push({ role: \"user\", content: msg.payload.content })\n    // }\n\n    let convo = flow.get(\"convo\")\n    if (convo[msg.session]) {\n        if (convo[msg.session].system_prompt){\n            system_prompt = convo[msg.session].system_prompt\n        }\n        if (convo[msg.session].history){\n            convo[msg.session].history.push({ role: \"user\", content: msg.payload.content })\n        } else {\n            convo[msg.session].history = [\n                { role: \"system\", content: system_prompt },\n                { role: \"user\", content: msg.payload.content }\n            ]\n        }\n    }\n\n\n    const completion = await openai.createChatCompletion({\n        model: \"gpt-3.5-turbo\",\n        messages: convo[msg.session].history\n    });\n\n    convo[msg.session].history.push(completion.data.choices[0].message)\n    msg.message = completion.data.choices[0].message.content\n    flow.set(\"convo\", convo)\n    msg.convo = convo\n    node.status({});\n    msg.completion = completion\n} catch (error) {\n    if (error.response) {\n        msg.error_status = error.response.status\n        msg.error_data = error.response.data\n    } else {\n        msg.error_message = error.message\n    }\n}\n\n\n\nreturn msg",
+        "func": "const configuration = new oai.Configuration({\n    apiKey: msg.openapi_key,\n});\n\n\n\n\nconst openai = new oai.OpenAIApi(configuration);\n\nnode.status({ fill: \"green\", shape: \"dot\", text: \"Querying openapi...\" });\n\ntry {\n\n    // let system_prompt_obj = flow.get(\"system_prompt\")\n    let system_prompt = \"You are a helpful assistant.\"\n    // if (system_prompt_obj[msg.session]){\n    //     system_prompt = system_prompt_obj[msg.session]\n    // }\n\n    // let history = flow.get(\"history\")\n    // if (!history){\n    //     history = {}\n    // }\n    // if (!history[msg.session]) {\n    //     history[msg.session] = [\n    //         { role: \"system\", content: system_prompt },\n    //         { role: \"user\", content: msg.payload.content }\n    //     ]\n    // } else {\n    //     history[msg.session].push({ role: \"user\", content: msg.payload.content })\n    // }\n\n    let convo = flow.get(\"convo\")\n    if (convo[msg.session]) {\n        if (convo[msg.session].system_prompt){\n            system_prompt = convo[msg.session].system_prompt\n        }\n        if (convo[msg.session].history){\n            convo[msg.session].history.push({ role: \"user\", content: msg.payload.content })\n        } else {\n            convo[msg.session].history = [\n                { role: \"system\", content: system_prompt },\n                { role: \"user\", content: msg.payload.content }\n            ]\n        }\n    }\n\n\n    const completion = await openai.createChatCompletion({\n        model: \"gpt-3.5-turbo\",\n        messages: convo[msg.session].history\n    });\n\n    convo[msg.session].history.push(completion.data.choices[0].message)\n    msg.message = completion.data.choices[0].message.content\n    let token = completion.data.usage.total_tokens\n    let cost = token * 0.002 / 1000\n    flow.set(\"token\",token)\n    flow.set(\"cost\", cost)\n    flow.set(\"convo\", convo)\n    msg.convo = convo\n    node.status({});\n    msg.completion = completion\n} catch (error) {\n    if (error.response) {\n        msg.error_status = error.response.status\n        msg.error_data = error.response.data\n    } else {\n        msg.error_message = error.message\n    }\n}\n\n\n\nreturn msg",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -2953,8 +2961,8 @@
                 "module": "openai"
             }
         ],
-        "x": 1130,
-        "y": 280,
+        "x": 1190,
+        "y": 400,
         "wires": [
             [
                 "fa5973b3866ea2af",
@@ -2993,8 +3001,8 @@
             }
         ],
         "language": "none",
-        "x": 1070,
-        "y": 380,
+        "x": 1130,
+        "y": 500,
         "wires": [
             [
                 "edf8d4cb21432ace"
@@ -3014,8 +3022,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 740,
-        "y": 400,
+        "x": 800,
+        "y": 520,
         "wires": []
     },
     {
@@ -3040,8 +3048,8 @@
         "type": "chatbot-waiting",
         "z": "5696f54716e2d43c",
         "waitingType": "typing",
-        "x": 1080,
-        "y": 220,
+        "x": 1140,
+        "y": 340,
         "wires": [
             [
                 "edf8d4cb21432ace"
@@ -3143,8 +3151,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 650,
-        "y": 240,
+        "x": 710,
+        "y": 360,
         "wires": [
             [
                 "27b8abdc3f527cbf",
@@ -3163,8 +3171,8 @@
             }
         ],
         "language": "none",
-        "x": 870,
-        "y": 240,
+        "x": 930,
+        "y": 360,
         "wires": [
             [
                 "edf8d4cb21432ace",
@@ -3223,8 +3231,78 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 740,
-        "y": 280,
+        "x": 800,
+        "y": 400,
         "wires": []
+    },
+    {
+        "id": "f19e746df8687c38",
+        "type": "chatbot-message",
+        "z": "5696f54716e2d43c",
+        "name": "gptbyeonbot",
+        "message": [
+            {
+                "message": "System prompt set to \"{{payload.system_prompt}}\""
+            }
+        ],
+        "language": "none",
+        "x": 950,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "192a6b8b02c9402b",
+        "type": "chatbot-message",
+        "z": "5696f54716e2d43c",
+        "name": "gptbyeonbot",
+        "message": [
+            {
+                "message": "This conversation has consumed \"{{payload.token}}\" so far. That's ${{payload.cost}}"
+            }
+        ],
+        "language": "none",
+        "x": 970,
+        "y": 260,
+        "wires": [
+            [
+                "edf8d4cb21432ace"
+            ]
+        ]
+    },
+    {
+        "id": "b830e9a8c573721a",
+        "type": "change",
+        "z": "5696f54716e2d43c",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.token",
+                "pt": "msg",
+                "to": "token",
+                "tot": "flow"
+            },
+            {
+                "t": "set",
+                "p": "payload.cost",
+                "pt": "msg",
+                "to": "cost",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 680,
+        "y": 300,
+        "wires": [
+            [
+                "192a6b8b02c9402b"
+            ]
+        ]
     }
 ]
