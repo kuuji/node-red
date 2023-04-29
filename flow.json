@@ -3439,8 +3439,8 @@
         "z": "949e88709af1312c",
         "bot": "7cf31403b2d243a2",
         "botProduction": "7cf31403b2d243a2",
-        "x": 90,
-        "y": 320,
+        "x": 110,
+        "y": 520,
         "wires": [
             [
                 "bb5430a0d9a60f5a",
@@ -3461,8 +3461,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 460,
-        "y": 440,
+        "x": 480,
+        "y": 640,
         "wires": []
     },
     {
@@ -3506,13 +3506,12 @@
         "checkall": "true",
         "repair": false,
         "outputs": 6,
-        "x": 270,
-        "y": 220,
+        "x": 290,
+        "y": 420,
         "wires": [
             [
                 "c113a98811f95ea0",
-                "6d328af2acbe7c5c",
-                "bb5430a0d9a60f5a"
+                "6d328af2acbe7c5c"
             ],
             [
                 "520b5df01a227ffa"
@@ -3527,7 +3526,7 @@
                 "307a053ba284fbf5"
             ],
             [
-                "5830cce1ba9aa88b"
+                "ca6a1d4733fea483"
             ]
         ]
     },
@@ -3549,8 +3548,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 1170,
-        "y": 820,
+        "x": 1190,
+        "y": 1020,
         "wires": [
             [],
             [
@@ -3577,8 +3576,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1270,
-        "y": 620,
+        "x": 1290,
+        "y": 820,
         "wires": [
             []
         ]
@@ -3598,8 +3597,8 @@
                 "type": "msg"
             }
         ],
-        "x": 1060,
-        "y": 400,
+        "x": 1080,
+        "y": 600,
         "wires": [
             [
                 "298a46c9b12bb753",
@@ -3623,8 +3622,8 @@
                 "module": "openai"
             }
         ],
-        "x": 950,
-        "y": 700,
+        "x": 970,
+        "y": 900,
         "wires": [
             []
         ]
@@ -3640,8 +3639,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 520,
-        "y": 20,
+        "x": 540,
+        "y": 220,
         "wires": [
             [
                 "352041487226a6ab"
@@ -3659,8 +3658,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 500,
-        "y": 140,
+        "x": 520,
+        "y": 340,
         "wires": [
             [
                 "dec718e567cbe124"
@@ -3677,8 +3676,8 @@
         "passThrough": true,
         "errorOutput": false,
         "outputs": 1,
-        "x": 1490,
-        "y": 80,
+        "x": 1510,
+        "y": 280,
         "wires": [
             [
                 "03e7156c574cf1eb"
@@ -3696,8 +3695,8 @@
             }
         ],
         "language": "none",
-        "x": 1050,
-        "y": 20,
+        "x": 1150,
+        "y": 200,
         "wires": [
             [
                 "09cc9403877a4d84"
@@ -3709,8 +3708,8 @@
         "type": "chatbot-authorized",
         "z": "949e88709af1312c",
         "d": true,
-        "x": 890,
-        "y": 20,
+        "x": 910,
+        "y": 220,
         "wires": [
             [
                 "08984126938d3f6f"
@@ -3723,14 +3722,14 @@
         "type": "function",
         "z": "949e88709af1312c",
         "name": "set session",
-        "func": "let gpt_session = flow.get(msg.payload.userId)\n \nif (gpt_session){\n    msg.session = msg.payload.userId\n}\n\nreturn msg;",
+        "func": "let all_convo = msg.payload\nif (all_convo[msg.in_chat.userId] && all_convo[msg.in_chat.userId].is_session){\n    msg.session = all_convo[msg.in_chat.userId].sessions[-1]\n}\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 710,
-        "y": 440,
+        "x": 730,
+        "y": 640,
         "wires": [
             [
                 "d604021e7b154fd9"
@@ -3755,8 +3754,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 890,
-        "y": 440,
+        "x": 910,
+        "y": 640,
         "wires": [
             [
                 "c3887ad3f4b1a105"
@@ -3771,7 +3770,7 @@
         "type": "function",
         "z": "949e88709af1312c",
         "name": "openai",
-        "func": "const configuration = new oai.Configuration({\n    apiKey: msg.openapi_key,\n});\n\n\n\n\nconst openai = new oai.OpenAIApi(configuration);\n\nnode.status({ fill: \"green\", shape: \"dot\", text: \"Querying openapi...\" });\n\ntry {\n\n    // let system_prompt_obj = flow.get(\"system_prompt\")\n    let system_prompt = \"You are a helpful assistant.\"\n    // if (system_prompt_obj[msg.session]){\n    //     system_prompt = system_prompt_obj[msg.session]\n    // }\n\n    // let history = flow.get(\"history\")\n    // if (!history){\n    //     history = {}\n    // }\n    // if (!history[msg.session]) {\n    //     history[msg.session] = [\n    //         { role: \"system\", content: system_prompt },\n    //         { role: \"user\", content: msg.payload.content }\n    //     ]\n    // } else {\n    //     history[msg.session].push({ role: \"user\", content: msg.payload.content })\n    // }\n\n    let convo = flow.get(\"convo\")\n    if (convo[msg.session]) {\n        if (convo[msg.session].system_prompt){\n            system_prompt = convo[msg.session].system_prompt\n        }\n        if (convo[msg.session].history){\n            convo[msg.session].history.push({ role: \"user\", content: msg.payload.content })\n        } else {\n            convo[msg.session].history = [\n                { role: \"system\", content: system_prompt },\n                { role: \"user\", content: msg.payload.content }\n            ]\n        }\n    }\n\n\n    const completion = await openai.createChatCompletion({\n        model: \"gpt-3.5-turbo\",\n        messages: convo[msg.session].history\n    });\n\n    convo[msg.session].history.push(completion.data.choices[0].message)\n    msg.message = completion.data.choices[0].message.content\n    let token = completion.data.usage.total_tokens\n    let cost = token * 0.002 / 1000\n    flow.set(\"token\",token)\n    flow.set(\"cost\", cost)\n    flow.set(\"convo\", convo)\n    msg.topic = `convo/${msg.session}`\n    msg.session_convo = convo[msg.session]\n    msg.convo = convo\n    node.status({});\n    msg.completion = completion\n} catch (error) {\n    msg.error = error\n    if (error.response) {\n        msg.error_status = error.response.status\n        msg.error_data = error.response.data\n    } else {\n        msg.error_message = error.message\n    }\n}\n\n\n\nreturn msg",
+        "func": "const configuration = new oai.Configuration({\n    apiKey: msg.openapi_key,\n});\n\n\n\n\nconst openai = new oai.OpenAIApi(configuration);\n\nnode.status({ fill: \"green\", shape: \"dot\", text: \"Querying openapi...\" });\n\ntry {\n    let system_prompt = \"You are a helpful assistant.\"\n    let all_convo = msg.payload\n    let convo = all_convo[msg.in_chat.userId].sessions[-1]\n    if (convo.system_prompt){\n        system_prompt = convo.system_prompt\n    }\n    if (convo.history){\n        convo.history.push({ role: \"user\", content: msg.payload.content })\n    } else {\n        convo.history = [\n            { role: \"system\", content: system_prompt },\n            { role: \"user\", content: msg.payload.content }\n        ]\n    }\n\n\n\n    const completion = await openai.createChatCompletion({\n        model: \"gpt-3.5-turbo\",\n        messages: convo.history\n    });\n\n    convo.history.push(completion.data.choices[0].message)\n    msg.message = completion.data.choices[0].message.content\n    let token = completion.data.usage.total_tokens\n    let cost = token * 0.002 / 1000\n    convo.cost = cost\n    convo.token = token\n    msg.topic = `convo/${msg.in_chat.userId}`\n    msg.session_convo = all_convo[msg.in_chat.userId]\n    node.status({});\n    msg.completion = completion\n} catch (error) {\n    msg.error = error\n    if (error.response) {\n        msg.error_status = error.response.status\n        msg.error_data = error.response.data\n    } else {\n        msg.error_message = error.message\n    }\n}\n\n\n\nreturn msg",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -3782,8 +3781,8 @@
                 "module": "openai"
             }
         ],
-        "x": 1250,
-        "y": 400,
+        "x": 1270,
+        "y": 600,
         "wires": [
             [
                 "23a6f857d05a1843",
@@ -3804,8 +3803,8 @@
             }
         ],
         "language": "none",
-        "x": 1430,
-        "y": 300,
+        "x": 1450,
+        "y": 500,
         "wires": [
             [
                 "41c0d0629c138efa"
@@ -3823,8 +3822,8 @@
             }
         ],
         "language": "none",
-        "x": 1190,
-        "y": 500,
+        "x": 1210,
+        "y": 700,
         "wires": [
             [
                 "4465724f97c52c3f"
@@ -3836,8 +3835,8 @@
         "type": "chatbot-waiting",
         "z": "949e88709af1312c",
         "waitingType": "typing",
-        "x": 1200,
-        "y": 340,
+        "x": 1220,
+        "y": 540,
         "wires": [
             [
                 "09cc9403877a4d84"
@@ -3849,8 +3848,8 @@
         "type": "chatbot-waiting",
         "z": "949e88709af1312c",
         "waitingType": "typing",
-        "x": 1360,
-        "y": 240,
+        "x": 1380,
+        "y": 440,
         "wires": [
             [
                 "09cc9403877a4d84"
@@ -3868,8 +3867,8 @@
             }
         ],
         "language": "none",
-        "x": 910,
-        "y": 120,
+        "x": 930,
+        "y": 320,
         "wires": [
             [
                 "09cc9403877a4d84"
@@ -3887,8 +3886,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 770,
-        "y": 360,
+        "x": 790,
+        "y": 560,
         "wires": [
             [
                 "1d4a79ea641cb6c3",
@@ -3907,8 +3906,8 @@
             }
         ],
         "language": "none",
-        "x": 990,
-        "y": 360,
+        "x": 1010,
+        "y": 560,
         "wires": [
             [
                 "09cc9403877a4d84"
@@ -3926,8 +3925,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 510,
-        "y": 180,
+        "x": 530,
+        "y": 380,
         "wires": [
             [
                 "2165fcb9c92be312"
@@ -3945,8 +3944,8 @@
             }
         ],
         "language": "none",
-        "x": 1150,
-        "y": 140,
+        "x": 1170,
+        "y": 340,
         "wires": [
             [
                 "09cc9403877a4d84"
@@ -3964,8 +3963,8 @@
             }
         ],
         "language": "none",
-        "x": 790,
-        "y": 220,
+        "x": 810,
+        "y": 420,
         "wires": [
             [
                 "09cc9403877a4d84"
@@ -3998,8 +3997,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 530,
-        "y": 220,
+        "x": 550,
+        "y": 420,
         "wires": [
             [
                 "d4da30f187b95524"
@@ -4017,8 +4016,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 990,
-        "y": 320,
+        "x": 1010,
+        "y": 520,
         "wires": [
             []
         ]
@@ -4036,8 +4035,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1680,
-        "y": 160,
+        "x": 1700,
+        "y": 360,
         "wires": []
     },
     {
@@ -4059,8 +4058,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1250,
-        "y": 440,
+        "x": 1270,
+        "y": 640,
         "wires": [
             [
                 "09cc9403877a4d84"
@@ -4071,7 +4070,7 @@
         "id": "41c0d0629c138efa",
         "type": "change",
         "z": "949e88709af1312c",
-        "name": "",
+        "name": "parsemode",
         "rules": [
             {
                 "t": "set",
@@ -4086,8 +4085,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1290,
-        "y": 20,
+        "x": 1510,
+        "y": 360,
         "wires": [
             [
                 "09cc9403877a4d84"
@@ -4115,8 +4114,8 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 130,
-        "y": 60,
+        "x": 150,
+        "y": 260,
         "wires": [
             [
                 "cf702dfed67e1359"
@@ -4150,8 +4149,8 @@
                 "description": "set a system prompt"
             }
         ],
-        "x": 300,
-        "y": 60,
+        "x": 320,
+        "y": 260,
         "wires": []
     },
     {
@@ -4167,8 +4166,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1660,
-        "y": 340,
+        "x": 1680,
+        "y": 540,
         "wires": []
     },
     {
@@ -4191,8 +4190,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1500,
-        "y": 400,
+        "x": 1520,
+        "y": 600,
         "wires": [
             [
                 "b959be4579531d26"
@@ -4209,8 +4208,8 @@
         "pathType": "msg",
         "priority": 1,
         "queryType": "set",
-        "x": 1670,
-        "y": 400,
+        "x": 1690,
+        "y": 600,
         "wires": []
     },
     {
@@ -4225,12 +4224,11 @@
         "path": "convo",
         "pathType": "str",
         "useConstraint": false,
-        "x": 470,
-        "y": 80,
+        "x": 490,
+        "y": 280,
         "wires": [
             [
-                "02104600e4073b02",
-                "bb5430a0d9a60f5a"
+                "02104600e4073b02"
             ]
         ]
     },
@@ -4245,11 +4243,12 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 670,
-        "y": 80,
+        "x": 690,
+        "y": 280,
         "wires": [
             [
-                "c2d3733170484e13"
+                "c2d3733170484e13",
+                "08984126938d3f6f"
             ]
         ]
     },
@@ -4273,12 +4272,11 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 140,
-        "y": 140,
+        "x": 160,
+        "y": 340,
         "wires": [
             [
-                "7de94992a0384246",
-                "bb5430a0d9a60f5a"
+                "7de94992a0384246"
             ]
         ]
     },
@@ -4292,8 +4290,28 @@
         "pathType": "msg",
         "priority": 1,
         "queryType": "set",
-        "x": 930,
-        "y": 80,
+        "x": 950,
+        "y": 280,
         "wires": []
+    },
+    {
+        "id": "ca6a1d4733fea483",
+        "type": "firebase-get",
+        "z": "949e88709af1312c",
+        "name": "",
+        "constraint": {},
+        "database": "276702a0fe306a8a",
+        "outputType": "auto",
+        "passThrough": true,
+        "path": "convo",
+        "pathType": "str",
+        "useConstraint": false,
+        "x": 410,
+        "y": 580,
+        "wires": [
+            [
+                "5830cce1ba9aa88b"
+            ]
+        ]
     }
 ]
