@@ -2629,7 +2629,7 @@
         "type": "chatbot-telegram-receive",
         "z": "5696f54716e2d43c",
         "bot": "7cf31403b2d243a2",
-        "botProduction": "",
+        "botProduction": "7cf31403b2d243a2",
         "x": 130,
         "y": 320,
         "wires": [
@@ -2857,7 +2857,7 @@
         "type": "chatbot-telegram-send",
         "z": "5696f54716e2d43c",
         "bot": "7cf31403b2d243a2",
-        "botProduction": "",
+        "botProduction": "7cf31403b2d243a2",
         "track": false,
         "passThrough": true,
         "errorOutput": false,
