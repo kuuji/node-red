@@ -3156,7 +3156,8 @@
         "wires": [
             [
                 "27b8abdc3f527cbf",
-                "92da4b31d347b704"
+                "92da4b31d347b704",
+                "95bc5b101e46ce06"
             ]
         ]
     },
@@ -3175,8 +3176,7 @@
         "y": 360,
         "wires": [
             [
-                "edf8d4cb21432ace",
-                "f36ff25e103894cc"
+                "edf8d4cb21432ace"
             ]
         ]
     },
@@ -3185,7 +3185,7 @@
         "type": "function",
         "z": "5696f54716e2d43c",
         "name": "destroy session",
-        "func": "let convo = flow.get(\"convo\")\nif (convo){\n    delete convo[msg.payload.userId].history\n}\nflow.set(\"convo\",convo)\n\nreturn msg;",
+        "func": "let convo = flow.get(\"convo\")\nif (convo){\n    delete convo[msg.payload.userId].history\n    delete convo[msg.payload.userId].system_prompt\n}\nflow.set(\"convo\",convo)\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -3303,6 +3303,23 @@
             [
                 "192a6b8b02c9402b"
             ]
+        ]
+    },
+    {
+        "id": "95bc5b101e46ce06",
+        "type": "function",
+        "z": "5696f54716e2d43c",
+        "name": "reset history",
+        "func": "let convo = flow.get(\"convo\")\nif (convo){\n    delete convo[msg.payload.userId].history\n}\nflow.set(\"convo\",convo)\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 930,
+        "y": 320,
+        "wires": [
+            []
         ]
     }
 ]
