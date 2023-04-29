@@ -2887,7 +2887,7 @@
         "id": "3a09f926213586a6",
         "type": "chatbot-authorized",
         "z": "5696f54716e2d43c",
-        "x": 330,
+        "x": 310,
         "y": 200,
         "wires": [
             [
@@ -2997,7 +2997,7 @@
         "name": "gptbyeonbot",
         "message": [
             {
-                "message": "No session running. Type /start to get started"
+                "message": "No session running. Type /start to get started\n\n```javascript\nconsole.log(\"test\");\n```"
             }
         ],
         "language": "none",
