@@ -48,6 +48,14 @@
         "env": []
     },
     {
+        "id": "949e88709af1312c",
+        "type": "tab",
+        "label": "Flow 2",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "0c34728bb51d9c58",
         "type": "server",
         "name": "Home Assistant",
@@ -69,23 +77,6 @@
         "statusHourCycle": "h23",
         "statusTimeFormat": "h:m",
         "enableGlobalContextStore": true
-    },
-    {
-        "id": "d1d223ae7f73128c",
-        "type": "chatbot-telegram-node",
-        "botname": "gptbyeonbot",
-        "usernames": "tidhilm",
-        "polling": "1000",
-        "store": "",
-        "log": "",
-        "debug": true,
-        "skipMediaFiles": false,
-        "webHook": "",
-        "connectMode": "polling",
-        "storeMessages": true,
-        "enableMissionControl": false,
-        "inspectMessages": true,
-        "chatbotId": ""
     },
     {
         "id": "7cf31403b2d243a2",
@@ -2637,6 +2628,7 @@
         "id": "d0e69ca1fb33587f",
         "type": "chatbot-telegram-receive",
         "z": "5696f54716e2d43c",
+        "d": true,
         "bot": "7cf31403b2d243a2",
         "botProduction": "7cf31403b2d243a2",
         "x": 130,
@@ -3325,6 +3317,7 @@
         "id": "1801d5dc62295898",
         "type": "inject",
         "z": "5696f54716e2d43c",
+        "d": true,
         "name": "",
         "props": [
             {
@@ -3437,6 +3430,783 @@
         "priority": 1,
         "queryType": "set",
         "x": 1610,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "167a1b6bfeecfd96",
+        "type": "chatbot-telegram-receive",
+        "z": "949e88709af1312c",
+        "bot": "7cf31403b2d243a2",
+        "botProduction": "7cf31403b2d243a2",
+        "x": 90,
+        "y": 320,
+        "wires": [
+            [
+                "bb5430a0d9a60f5a",
+                "7de94992a0384246"
+            ]
+        ]
+    },
+    {
+        "id": "bb5430a0d9a60f5a",
+        "type": "debug",
+        "z": "949e88709af1312c",
+        "name": "debug 6",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 460,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "7de94992a0384246",
+        "type": "switch",
+        "z": "949e88709af1312c",
+        "name": "",
+        "property": "payload.content",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "/start",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "/stop",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "/reset",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "/token",
+                "vt": "str"
+            },
+            {
+                "t": "regex",
+                "v": "^/system",
+                "vt": "str",
+                "case": false
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 6,
+        "x": 270,
+        "y": 220,
+        "wires": [
+            [
+                "c113a98811f95ea0"
+            ],
+            [
+                "520b5df01a227ffa"
+            ],
+            [
+                "816063376a53ee0c"
+            ],
+            [
+                "990379d3b88534ad"
+            ],
+            [
+                "307a053ba284fbf5"
+            ],
+            [
+                "5830cce1ba9aa88b"
+            ]
+        ]
+    },
+    {
+        "id": "acad0146bdb66767",
+        "type": "switch",
+        "z": "949e88709af1312c",
+        "name": "",
+        "property": "is_running",
+        "propertyType": "flow",
+        "rules": [
+            {
+                "t": "true"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1170,
+        "y": 820,
+        "wires": [
+            [],
+            [
+                "e86b7e0f01141d84"
+            ]
+        ]
+    },
+    {
+        "id": "e86b7e0f01141d84",
+        "type": "change",
+        "z": "949e88709af1312c",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "is_running",
+                "pt": "flow",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1270,
+        "y": 620,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c3887ad3f4b1a105",
+        "type": "credentials",
+        "z": "949e88709af1312c",
+        "name": "api_keys",
+        "props": [
+            {
+                "value": "openapi_key",
+                "type": "msg"
+            },
+            {
+                "value": "ha_token",
+                "type": "msg"
+            }
+        ],
+        "x": 1060,
+        "y": 400,
+        "wires": [
+            [
+                "298a46c9b12bb753",
+                "b64a9786f52d38b0"
+            ]
+        ]
+    },
+    {
+        "id": "0cfde5e02b033171",
+        "type": "function",
+        "z": "949e88709af1312c",
+        "name": "openai",
+        "func": "const configuration = new oai.Configuration({\n    apiKey: msg.openapi_key,\n});\n\nlet keep_history = global.get(\"homeassistant\").homeAssistant.states[\"input_boolean.gpt_history\"].state\nlet history = flow.get(\"history\")\nif (keep_history == \"off\" || !history){\n    history = [\n        { role: \"system\", content: global.get(\"homeassistant\").homeAssistant.states[\"input_text.gpt_system_prompt\"].state },\n        { role: \"user\", content: global.get(\"homeassistant\").homeAssistant.states[\"input_text.gpt_instructions\"].state }\n    ]\n} else {\n    if (history) {\n        history.push({ role: \"user\", content: global.get(\"homeassistant\").homeAssistant.states[\"input_text.gpt_instructions\"].state })\n    }\n}\n\nconst openai = new oai.OpenAIApi(configuration);\n\nnode.status({ fill: \"green\", shape: \"dot\", text: \"Querying openapi...\" });\n\ntry{\n    const completion = await openai.createChatCompletion({\n        model: \"gpt-3.5-turbo\",\n        messages: history\n    });\n\n    history.push(completion.data.choices[0].message)\n    flow.set(\"history\", history)\n    node.status({});\n    msg.history = history\n    msg.keep_history = keep_history\n    msg.completion = completion    \n} catch (error) {\n    if (error.response) {\n        msg.error_status = error.response.status\n        msg.error_data = error.response.data\n    } else {\n        msg.error_message = error.message\n    }\n}\n\n\n\nreturn msg",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [
+            {
+                "var": "oai",
+                "module": "openai"
+            }
+        ],
+        "x": 950,
+        "y": 700,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c113a98811f95ea0",
+        "type": "function",
+        "z": "949e88709af1312c",
+        "name": "create session",
+        "func": "let gpt_session = flow.get(msg.payload.userId)\n\ngpt_session = true\n\nflow.set(msg.payload.userId, gpt_session)\n\nlet convo = flow.get(\"convo\")\nif (!convo) {\n    convo = {}\n}\nconvo[msg.payload.userId] = {}\nflow.set(\"convo\", convo)\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 500,
+        "y": 60,
+        "wires": [
+            [
+                "352041487226a6ab"
+            ]
+        ]
+    },
+    {
+        "id": "520b5df01a227ffa",
+        "type": "function",
+        "z": "949e88709af1312c",
+        "name": "destroy session",
+        "func": "flow.set(msg.payload.userId)\nlet convo = flow.get(\"convo\")\nif (convo) {\n    delete convo[msg.payload.userId]\n}\nflow.set(\"convo\", convo)\n// let history = flow.get(\"history\")\n// if (history){\n//     if (history[msg.payload.userId]){\n//         delete history[msg.payload.userId]\n//         flow.set(\"history\", history)\n//     }\n// }\n// let system_prompt = flow.get(\"system_prompt\")\n// if (system_prompt) {\n//     if (system_prompt[msg.payload.userId]) {\n//         delete system_prompt[msg.payload.userId]\n//         flow.set(\"system_prompt\", system_prompt)\n//     }\n// }\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 500,
+        "y": 120,
+        "wires": [
+            [
+                "dec718e567cbe124"
+            ]
+        ]
+    },
+    {
+        "id": "09cc9403877a4d84",
+        "type": "chatbot-telegram-send",
+        "z": "949e88709af1312c",
+        "bot": "7cf31403b2d243a2",
+        "botProduction": "7cf31403b2d243a2",
+        "track": false,
+        "passThrough": true,
+        "errorOutput": false,
+        "outputs": 1,
+        "x": 1490,
+        "y": 80,
+        "wires": [
+            [
+                "03e7156c574cf1eb"
+            ]
+        ]
+    },
+    {
+        "id": "08984126938d3f6f",
+        "type": "chatbot-message",
+        "z": "949e88709af1312c",
+        "name": "gptbyeonbot",
+        "message": [
+            {
+                "message": "Session started"
+            }
+        ],
+        "language": "none",
+        "x": 1070,
+        "y": 60,
+        "wires": [
+            [
+                "09cc9403877a4d84"
+            ]
+        ]
+    },
+    {
+        "id": "352041487226a6ab",
+        "type": "chatbot-authorized",
+        "z": "949e88709af1312c",
+        "x": 890,
+        "y": 60,
+        "wires": [
+            [
+                "08984126938d3f6f"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "5830cce1ba9aa88b",
+        "type": "function",
+        "z": "949e88709af1312c",
+        "name": "set session",
+        "func": "let gpt_session = flow.get(msg.payload.userId)\n \nif (gpt_session){\n    msg.session = msg.payload.userId\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 710,
+        "y": 440,
+        "wires": [
+            [
+                "d604021e7b154fd9"
+            ]
+        ]
+    },
+    {
+        "id": "d604021e7b154fd9",
+        "type": "switch",
+        "z": "949e88709af1312c",
+        "name": "",
+        "property": "session",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "nnull"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 890,
+        "y": 440,
+        "wires": [
+            [
+                "c3887ad3f4b1a105"
+            ],
+            [
+                "8fb8ef66d821c768"
+            ]
+        ]
+    },
+    {
+        "id": "b64a9786f52d38b0",
+        "type": "function",
+        "z": "949e88709af1312c",
+        "name": "openai",
+        "func": "const configuration = new oai.Configuration({\n    apiKey: msg.openapi_key,\n});\n\n\n\n\nconst openai = new oai.OpenAIApi(configuration);\n\nnode.status({ fill: \"green\", shape: \"dot\", text: \"Querying openapi...\" });\n\ntry {\n\n    // let system_prompt_obj = flow.get(\"system_prompt\")\n    let system_prompt = \"You are a helpful assistant.\"\n    // if (system_prompt_obj[msg.session]){\n    //     system_prompt = system_prompt_obj[msg.session]\n    // }\n\n    // let history = flow.get(\"history\")\n    // if (!history){\n    //     history = {}\n    // }\n    // if (!history[msg.session]) {\n    //     history[msg.session] = [\n    //         { role: \"system\", content: system_prompt },\n    //         { role: \"user\", content: msg.payload.content }\n    //     ]\n    // } else {\n    //     history[msg.session].push({ role: \"user\", content: msg.payload.content })\n    // }\n\n    let convo = flow.get(\"convo\")\n    if (convo[msg.session]) {\n        if (convo[msg.session].system_prompt){\n            system_prompt = convo[msg.session].system_prompt\n        }\n        if (convo[msg.session].history){\n            convo[msg.session].history.push({ role: \"user\", content: msg.payload.content })\n        } else {\n            convo[msg.session].history = [\n                { role: \"system\", content: system_prompt },\n                { role: \"user\", content: msg.payload.content }\n            ]\n        }\n    }\n\n\n    const completion = await openai.createChatCompletion({\n        model: \"gpt-3.5-turbo\",\n        messages: convo[msg.session].history\n    });\n\n    convo[msg.session].history.push(completion.data.choices[0].message)\n    msg.message = completion.data.choices[0].message.content\n    let token = completion.data.usage.total_tokens\n    let cost = token * 0.002 / 1000\n    flow.set(\"token\",token)\n    flow.set(\"cost\", cost)\n    flow.set(\"convo\", convo)\n    msg.topic = `convo/${msg.session}`\n    msg.session_convo = convo[msg.session]\n    msg.convo = convo\n    node.status({});\n    msg.completion = completion\n} catch (error) {\n    msg.error = error\n    if (error.response) {\n        msg.error_status = error.response.status\n        msg.error_data = error.response.data\n    } else {\n        msg.error_message = error.message\n    }\n}\n\n\n\nreturn msg",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [
+            {
+                "var": "oai",
+                "module": "openai"
+            }
+        ],
+        "x": 1250,
+        "y": 400,
+        "wires": [
+            [
+                "23a6f857d05a1843",
+                "b351d6c5b7c5b126",
+                "80e3ba5d7dad92cb",
+                "54c2f389f39cbe3d"
+            ]
+        ]
+    },
+    {
+        "id": "23a6f857d05a1843",
+        "type": "chatbot-message",
+        "z": "949e88709af1312c",
+        "name": "gptbyeonbot",
+        "message": [
+            {
+                "message": ""
+            }
+        ],
+        "language": "none",
+        "x": 1430,
+        "y": 300,
+        "wires": [
+            [
+                "41c0d0629c138efa"
+            ]
+        ]
+    },
+    {
+        "id": "8fb8ef66d821c768",
+        "type": "chatbot-message",
+        "z": "949e88709af1312c",
+        "name": "No session warning",
+        "message": [
+            {
+                "message": "No session running. Type /start to get started"
+            }
+        ],
+        "language": "none",
+        "x": 1190,
+        "y": 500,
+        "wires": [
+            [
+                "4465724f97c52c3f"
+            ]
+        ]
+    },
+    {
+        "id": "298a46c9b12bb753",
+        "type": "chatbot-waiting",
+        "z": "949e88709af1312c",
+        "waitingType": "typing",
+        "x": 1200,
+        "y": 340,
+        "wires": [
+            [
+                "09cc9403877a4d84"
+            ]
+        ]
+    },
+    {
+        "id": "b351d6c5b7c5b126",
+        "type": "chatbot-waiting",
+        "z": "949e88709af1312c",
+        "waitingType": "typing",
+        "x": 1360,
+        "y": 240,
+        "wires": [
+            [
+                "09cc9403877a4d84"
+            ]
+        ]
+    },
+    {
+        "id": "dec718e567cbe124",
+        "type": "chatbot-message",
+        "z": "949e88709af1312c",
+        "name": "gptbyeonbot",
+        "message": [
+            {
+                "message": "Session over"
+            }
+        ],
+        "language": "none",
+        "x": 910,
+        "y": 120,
+        "wires": [
+            [
+                "09cc9403877a4d84"
+            ]
+        ]
+    },
+    {
+        "id": "307a053ba284fbf5",
+        "type": "function",
+        "z": "949e88709af1312c",
+        "name": "set system prompt",
+        "func": "\nconst join = (array, index, separator) => {\n    let result = \"\";\n    for (let i = index; i < array.length; i++) {\n        result += array[i] + separator;\n    }\n    return result;\n}\n\nlet convo = flow.get(\"convo\")\nif (!convo) {\n    convo = {}\n}\nif (!convo[msg.payload.userId]){\n    convo[msg.payload.userId] = {}\n}\nconvo[msg.payload.userId].system_prompt = join(msg.payload.arguments, 0, \" \")\n\nflow.set(\"convo\", convo)\n\nmsg.payload.system_prompt = join(msg.payload.arguments, 0, \" \")\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 770,
+        "y": 360,
+        "wires": [
+            [
+                "1d4a79ea641cb6c3",
+                "499e17073691c098"
+            ]
+        ]
+    },
+    {
+        "id": "1d4a79ea641cb6c3",
+        "type": "chatbot-message",
+        "z": "949e88709af1312c",
+        "name": "gptbyeonbot",
+        "message": [
+            {
+                "message": "System prompt set to \"{{payload.system_prompt}}\""
+            }
+        ],
+        "language": "none",
+        "x": 990,
+        "y": 360,
+        "wires": [
+            [
+                "09cc9403877a4d84"
+            ]
+        ]
+    },
+    {
+        "id": "816063376a53ee0c",
+        "type": "function",
+        "z": "949e88709af1312c",
+        "name": "reset history and prompt",
+        "func": "let convo = flow.get(\"convo\")\nif (convo){\n    delete convo[msg.payload.userId].history\n    delete convo[msg.payload.userId].system_prompt\n}\nflow.set(\"convo\",convo)\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 510,
+        "y": 180,
+        "wires": [
+            [
+                "2165fcb9c92be312"
+            ]
+        ]
+    },
+    {
+        "id": "2165fcb9c92be312",
+        "type": "chatbot-message",
+        "z": "949e88709af1312c",
+        "name": "gptbyeonbot",
+        "message": [
+            {
+                "message": "Session reset"
+            }
+        ],
+        "language": "none",
+        "x": 1150,
+        "y": 140,
+        "wires": [
+            [
+                "09cc9403877a4d84"
+            ]
+        ]
+    },
+    {
+        "id": "d4da30f187b95524",
+        "type": "chatbot-message",
+        "z": "949e88709af1312c",
+        "name": "show token usage",
+        "message": [
+            {
+                "message": "This conversation has consumed {{payload.token}} tokens so far. That's ${{payload.cost}}"
+            }
+        ],
+        "language": "none",
+        "x": 790,
+        "y": 220,
+        "wires": [
+            [
+                "09cc9403877a4d84"
+            ]
+        ]
+    },
+    {
+        "id": "990379d3b88534ad",
+        "type": "change",
+        "z": "949e88709af1312c",
+        "name": "prepare token and cost payload",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.token",
+                "pt": "msg",
+                "to": "token",
+                "tot": "flow"
+            },
+            {
+                "t": "set",
+                "p": "payload.cost",
+                "pt": "msg",
+                "to": "cost",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 530,
+        "y": 220,
+        "wires": [
+            [
+                "d4da30f187b95524"
+            ]
+        ]
+    },
+    {
+        "id": "499e17073691c098",
+        "type": "function",
+        "z": "949e88709af1312c",
+        "name": "reset history",
+        "func": "let convo = flow.get(\"convo\")\nif (convo){\n    delete convo[msg.payload.userId].history\n}\nflow.set(\"convo\",convo)\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 990,
+        "y": 320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "03e7156c574cf1eb",
+        "type": "debug",
+        "z": "949e88709af1312c",
+        "name": "debug 7",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1680,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "4465724f97c52c3f",
+        "type": "change",
+        "z": "949e88709af1312c",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.params[\"parseMode\"]",
+                "pt": "msg",
+                "to": "Markdown",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1250,
+        "y": 440,
+        "wires": [
+            [
+                "09cc9403877a4d84"
+            ]
+        ]
+    },
+    {
+        "id": "41c0d0629c138efa",
+        "type": "change",
+        "z": "949e88709af1312c",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.params[\"parseMode\"]",
+                "pt": "msg",
+                "to": "Markdown",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1290,
+        "y": 20,
+        "wires": [
+            [
+                "09cc9403877a4d84"
+            ]
+        ]
+    },
+    {
+        "id": "48b718e2ed97cade",
+        "type": "inject",
+        "z": "949e88709af1312c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 130,
+        "y": 60,
+        "wires": [
+            [
+                "cf702dfed67e1359"
+            ]
+        ]
+    },
+    {
+        "id": "cf702dfed67e1359",
+        "type": "chatbot-telegram-menu",
+        "z": "949e88709af1312c",
+        "bot": "7cf31403b2d243a2",
+        "items": [
+            {
+                "command": "/start",
+                "description": "start a session"
+            },
+            {
+                "command": "/stop",
+                "description": "stop a session and reset history"
+            },
+            {
+                "command": "/reset",
+                "description": "reset history and restart session"
+            },
+            {
+                "command": "/token",
+                "description": "show amount of token used so far"
+            },
+            {
+                "command": "/system",
+                "description": "set a system prompt"
+            }
+        ],
+        "x": 300,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "80e3ba5d7dad92cb",
+        "type": "debug",
+        "z": "949e88709af1312c",
+        "name": "debug 8",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1660,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "54c2f389f39cbe3d",
+        "type": "change",
+        "z": "949e88709af1312c",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "session_convo",
+                "tot": "msg",
+                "dc": true
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1500,
+        "y": 400,
+        "wires": [
+            [
+                "b959be4579531d26"
+            ]
+        ]
+    },
+    {
+        "id": "b959be4579531d26",
+        "type": "firebase-out",
+        "z": "949e88709af1312c",
+        "name": "",
+        "database": "276702a0fe306a8a",
+        "path": "topic",
+        "pathType": "msg",
+        "priority": 1,
+        "queryType": "set",
+        "x": 1670,
         "y": 400,
         "wires": []
     }
