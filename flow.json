@@ -3022,7 +3022,7 @@
         "y": 500,
         "wires": [
             [
-                "edf8d4cb21432ace"
+                "6fa32b81ad8d0ddb"
             ]
         ]
     },
@@ -3262,7 +3262,7 @@
                 "t": "set",
                 "p": "payload.params[\"parseMode\"]",
                 "pt": "msg",
-                "to": "Markdown",
+                "to": "MarkdownV2 ",
                 "tot": "str"
             }
         ],
@@ -3277,6 +3277,33 @@
             [
                 "9fc68f6da806636c",
                 "aaa2a5dff6a87c09"
+            ]
+        ]
+    },
+    {
+        "id": "6fa32b81ad8d0ddb",
+        "type": "change",
+        "z": "5696f54716e2d43c",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.params[\"parseMode\"]",
+                "pt": "msg",
+                "to": "MarkdownV2 ",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1170,
+        "y": 440,
+        "wires": [
+            [
+                "edf8d4cb21432ace"
             ]
         ]
     }
