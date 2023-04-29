@@ -2630,12 +2630,12 @@
         "z": "5696f54716e2d43c",
         "bot": "d1d223ae7f73128c",
         "botProduction": "",
-        "x": 230,
+        "x": 130,
         "y": 320,
         "wires": [
             [
                 "aaa2a5dff6a87c09",
-                "482a229702a131ab"
+                "3a09f926213586a6"
             ]
         ]
     },
@@ -2672,19 +2672,25 @@
                 "t": "eq",
                 "v": "/gpt stop",
                 "vt": "str"
+            },
+            {
+                "t": "else"
             }
         ],
         "checkall": "true",
         "repair": false,
-        "outputs": 2,
-        "x": 450,
-        "y": 220,
+        "outputs": 3,
+        "x": 470,
+        "y": 200,
         "wires": [
             [
                 "34df10fb7e00e120"
             ],
             [
                 "dd2f6c5c07a34a71"
+            ],
+            [
+                "c5167ff5a46eb34b"
             ]
         ]
     },
@@ -2737,9 +2743,7 @@
         "x": 1210,
         "y": 620,
         "wires": [
-            [
-                "6eb92626351cb793"
-            ]
+            []
         ]
     },
     {
@@ -2753,11 +2757,11 @@
                 "type": "msg"
             }
         ],
-        "x": 1240,
-        "y": 520,
+        "x": 940,
+        "y": 280,
         "wires": [
             [
-                "702c22b2165e2fd4"
+                "169c0b0bbedaac8f"
             ]
         ]
     },
@@ -2777,8 +2781,8 @@
                 "module": "openai"
             }
         ],
-        "x": 1030,
-        "y": 560,
+        "x": 890,
+        "y": 700,
         "wires": [
             []
         ]
@@ -2798,7 +2802,6 @@
         "y": 180,
         "wires": [
             [
-                "b741cfbc572cdc11",
                 "223a1785d6af5509"
             ]
         ]
@@ -2830,8 +2833,8 @@
         "passThrough": true,
         "errorOutput": false,
         "outputs": 1,
-        "x": 1050,
-        "y": 180,
+        "x": 1270,
+        "y": 100,
         "wires": [
             [
                 "92974aa8258f8ddf"
@@ -2850,7 +2853,7 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1240,
+        "x": 1380,
         "y": 180,
         "wires": []
     },
@@ -2865,8 +2868,8 @@
             }
         ],
         "language": "none",
-        "x": 890,
-        "y": 140,
+        "x": 990,
+        "y": 180,
         "wires": [
             [
                 "edf8d4cb21432ace"
@@ -2877,30 +2880,132 @@
         "id": "223a1785d6af5509",
         "type": "chatbot-authorized",
         "z": "5696f54716e2d43c",
-        "x": 850,
-        "y": 240,
+        "x": 810,
+        "y": 180,
         "wires": [
             [
                 "b741cfbc572cdc11"
             ],
+            []
+        ]
+    },
+    {
+        "id": "3a09f926213586a6",
+        "type": "chatbot-authorized",
+        "z": "5696f54716e2d43c",
+        "x": 330,
+        "y": 200,
+        "wires": [
             [
-                "8a4705df535a534c"
+                "482a229702a131ab"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "c5167ff5a46eb34b",
+        "type": "function",
+        "z": "5696f54716e2d43c",
+        "name": "set session",
+        "func": "let gpt_session = flow.get(msg.payload.userId)\n \nif (gpt_session){\n    msg.session = msg.payload.userId\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 590,
+        "y": 320,
+        "wires": [
+            [
+                "f9e0d2aea06cbdc1"
             ]
         ]
     },
     {
-        "id": "8a4705df535a534c",
+        "id": "f9e0d2aea06cbdc1",
+        "type": "switch",
+        "z": "5696f54716e2d43c",
+        "name": "",
+        "property": "session",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "nnull"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 770,
+        "y": 320,
+        "wires": [
+            [
+                "6eb92626351cb793"
+            ],
+            [
+                "9fc68f6da806636c"
+            ]
+        ]
+    },
+    {
+        "id": "169c0b0bbedaac8f",
+        "type": "function",
+        "z": "5696f54716e2d43c",
+        "name": "openai",
+        "func": "const configuration = new oai.Configuration({\n    apiKey: msg.openapi_key,\n});\n\n\nlet history = flow.get(\"history\")\n\nif (!history[msg.session]) {\n    history = [\n        { role: \"system\", content: \"You are a helpful assistant\" },\n        { role: \"user\", content: msg.payload.content }\n    ]\n} else {\n    history[msg.session].push({ role: \"user\", content: msg.payload.content })\n}\n\nconst openai = new oai.OpenAIApi(configuration);\n\nnode.status({ fill: \"green\", shape: \"dot\", text: \"Querying openapi...\" });\n\ntry {\n    const completion = await openai.createChatCompletion({\n        model: \"gpt-3.5-turbo\",\n        messages: history\n    });\n\n    history.push(completion.data.choices[0].message)\n    msg.message = completion.data.choices[0].message\n    flow.set(\"history\", history)\n    node.status({});\n    msg.completion = completion\n} catch (error) {\n    if (error.response) {\n        msg.error_status = error.response.status\n        msg.error_data = error.response.data\n    } else {\n        msg.error_message = error.message\n    }\n}\n\n\n\nreturn msg",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [
+            {
+                "var": "oai",
+                "module": "openai"
+            }
+        ],
+        "x": 1090,
+        "y": 280,
+        "wires": [
+            [
+                "fa5973b3866ea2af"
+            ]
+        ]
+    },
+    {
+        "id": "fa5973b3866ea2af",
         "type": "chatbot-message",
         "z": "5696f54716e2d43c",
         "name": "gptbyeonbot",
         "message": [
             {
-                "message": "Not authorized"
+                "message": ""
             }
         ],
         "language": "none",
-        "x": 990,
-        "y": 320,
+        "x": 1270,
+        "y": 280,
+        "wires": [
+            [
+                "edf8d4cb21432ace"
+            ]
+        ]
+    },
+    {
+        "id": "9fc68f6da806636c",
+        "type": "chatbot-message",
+        "z": "5696f54716e2d43c",
+        "name": "gptbyeonbot",
+        "message": [
+            {
+                "message": "No session running. Type `/gpt start` to get started"
+            }
+        ],
+        "language": "none",
+        "x": 950,
+        "y": 360,
         "wires": [
             [
                 "edf8d4cb21432ace"
