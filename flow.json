@@ -3262,7 +3262,7 @@
                 "t": "set",
                 "p": "payload.params[\"parseMode\"]",
                 "pt": "msg",
-                "to": "MarkdownV2 ",
+                "to": "MarkdownV2",
                 "tot": "str"
             }
         ],
