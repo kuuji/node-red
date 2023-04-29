@@ -3510,7 +3510,8 @@
         "y": 220,
         "wires": [
             [
-                "c113a98811f95ea0"
+                "c113a98811f95ea0",
+                "6d328af2acbe7c5c"
             ],
             [
                 "520b5df01a227ffa"
@@ -3632,7 +3633,7 @@
         "type": "function",
         "z": "949e88709af1312c",
         "name": "create session",
-        "func": "let gpt_session = flow.get(msg.payload.userId)\n\ngpt_session = true\n\nflow.set(msg.payload.userId, gpt_session)\n\nlet convo = flow.get(\"convo\")\nif (!convo) {\n    convo = {}\n}\nconvo[msg.payload.userId] = {}\nflow.set(\"convo\", convo)\n\nreturn msg;",
+        "func": "let gpt_session = flow.get(msg.payload.userId)\n\ngpt_session = true\n\nflow.set(msg.payload.userId, gpt_session)\n\nlet convo = flow.get(\"convo\")\nif (!convo) {\n    convo = {}\n}\nif (!convo[msg.payload.userId]) {\n    convo[msg.payload.userId] = []\n} else {\n    convo[msg.payload.userId].push({\n        \"started\": Date.now(),\n    })\n}\n\nmsg.topic = `convo/${msg.payload.userId}`\nmsg.fb_payload = convo\n\nflow.set(\"convo\", convo)\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -3658,7 +3659,7 @@
         "finalize": "",
         "libs": [],
         "x": 500,
-        "y": 120,
+        "y": 140,
         "wires": [
             [
                 "dec718e567cbe124"
@@ -3706,6 +3707,7 @@
         "id": "352041487226a6ab",
         "type": "chatbot-authorized",
         "z": "949e88709af1312c",
+        "d": true,
         "x": 890,
         "y": 60,
         "wires": [
@@ -4208,6 +4210,62 @@
         "queryType": "set",
         "x": 1670,
         "y": 400,
+        "wires": []
+    },
+    {
+        "id": "6d328af2acbe7c5c",
+        "type": "firebase-get",
+        "z": "949e88709af1312c",
+        "name": "",
+        "constraint": {},
+        "database": "276702a0fe306a8a",
+        "outputType": "auto",
+        "passThrough": false,
+        "path": "convo",
+        "pathType": "str",
+        "useConstraint": false,
+        "x": 490,
+        "y": 100,
+        "wires": [
+            [
+                "02104600e4073b02"
+            ]
+        ]
+    },
+    {
+        "id": "02104600e4073b02",
+        "type": "function",
+        "z": "949e88709af1312c",
+        "name": "new session for fb",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 670,
+        "y": 100,
+        "wires": [
+            [
+                "6fda8663bb5cdc92"
+            ]
+        ]
+    },
+    {
+        "id": "6fda8663bb5cdc92",
+        "type": "debug",
+        "z": "949e88709af1312c",
+        "name": "debug 9",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 840,
+        "y": 100,
         "wires": []
     }
 ]
