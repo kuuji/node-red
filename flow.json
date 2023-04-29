@@ -3506,11 +3506,11 @@
         "checkall": "true",
         "repair": false,
         "outputs": 6,
-        "x": 290,
+        "x": 330,
         "y": 420,
         "wires": [
             [
-                "6d328af2acbe7c5c"
+                "02104600e4073b02"
             ],
             [
                 "520b5df01a227ffa"
@@ -3525,7 +3525,7 @@
                 "307a053ba284fbf5"
             ],
             [
-                "ca6a1d4733fea483"
+                "5830cce1ba9aa88b"
             ]
         ]
     },
@@ -4180,26 +4180,6 @@
         "wires": []
     },
     {
-        "id": "6d328af2acbe7c5c",
-        "type": "firebase-get",
-        "z": "949e88709af1312c",
-        "name": "",
-        "constraint": {},
-        "database": "276702a0fe306a8a",
-        "outputType": "auto",
-        "passThrough": true,
-        "path": "convo",
-        "pathType": "str",
-        "useConstraint": false,
-        "x": 490,
-        "y": 280,
-        "wires": [
-            [
-                "02104600e4073b02"
-            ]
-        ]
-    },
-    {
         "id": "02104600e4073b02",
         "type": "function",
         "z": "949e88709af1312c",
@@ -4243,7 +4223,7 @@
         "y": 340,
         "wires": [
             [
-                "7de94992a0384246"
+                "89ada88918bc3494"
             ]
         ]
     },
@@ -4260,26 +4240,6 @@
         "x": 1030,
         "y": 180,
         "wires": []
-    },
-    {
-        "id": "ca6a1d4733fea483",
-        "type": "firebase-get",
-        "z": "949e88709af1312c",
-        "name": "",
-        "constraint": {},
-        "database": "276702a0fe306a8a",
-        "outputType": "auto",
-        "passThrough": true,
-        "path": "convo",
-        "pathType": "str",
-        "useConstraint": false,
-        "x": 410,
-        "y": 580,
-        "wires": [
-            [
-                "5830cce1ba9aa88b"
-            ]
-        ]
     },
     {
         "id": "cd6a53187ebb92ec",
@@ -4327,6 +4287,26 @@
         "wires": [
             [
                 "09cc9403877a4d84"
+            ]
+        ]
+    },
+    {
+        "id": "89ada88918bc3494",
+        "type": "firebase-get",
+        "z": "949e88709af1312c",
+        "name": "",
+        "constraint": {},
+        "database": "276702a0fe306a8a",
+        "outputType": "auto",
+        "passThrough": true,
+        "path": "convo",
+        "pathType": "str",
+        "useConstraint": false,
+        "x": 170,
+        "y": 380,
+        "wires": [
+            [
+                "7de94992a0384246"
             ]
         ]
     }
