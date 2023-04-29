@@ -4221,7 +4221,7 @@
         "constraint": {},
         "database": "276702a0fe306a8a",
         "outputType": "auto",
-        "passThrough": false,
+        "passThrough": true,
         "path": "convo",
         "pathType": "str",
         "useConstraint": false,
