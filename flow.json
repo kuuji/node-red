@@ -3444,7 +3444,7 @@
         "wires": [
             [
                 "bb5430a0d9a60f5a",
-                "7de94992a0384246"
+                "ecfc14fbf7a36c3e"
             ]
         ]
     },
@@ -3470,7 +3470,7 @@
         "type": "switch",
         "z": "949e88709af1312c",
         "name": "",
-        "property": "payload.content",
+        "property": "in_chat.content",
         "propertyType": "msg",
         "rules": [
             {
@@ -3639,8 +3639,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 500,
-        "y": 60,
+        "x": 520,
+        "y": 20,
         "wires": [
             [
                 "352041487226a6ab"
@@ -3695,8 +3695,8 @@
             }
         ],
         "language": "none",
-        "x": 1070,
-        "y": 60,
+        "x": 1050,
+        "y": 20,
         "wires": [
             [
                 "09cc9403877a4d84"
@@ -3709,7 +3709,7 @@
         "z": "949e88709af1312c",
         "d": true,
         "x": 890,
-        "y": 60,
+        "y": 20,
         "wires": [
             [
                 "08984126938d3f6f"
@@ -4224,8 +4224,8 @@
         "path": "convo",
         "pathType": "str",
         "useConstraint": false,
-        "x": 490,
-        "y": 100,
+        "x": 470,
+        "y": 80,
         "wires": [
             [
                 "02104600e4073b02"
@@ -4237,35 +4237,60 @@
         "type": "function",
         "z": "949e88709af1312c",
         "name": "new session for fb",
-        "func": "\nreturn msg;",
+        "func": "let all_convo = msg.payload\nif (!all_convo[msg.in_chat.userId]){\n    all_convo[msg.in_chat.userId] = {}\n} \nif (!all_convo[msg.in_chat.userId].is_session) {\n    all_convo[msg.in_chat.userId].is_session = true\n    if (!all_convo[msg.in_chat.userId].sessions){\n        all_convo[msg.in_chat.userId].sessions = []\n    }\n    all_convo[msg.in_chat.userId].sessions.push({\n        \"started\": Date.now(),\n    })\n}\nmsg.topic = `convo/${msg.in_chat.userId}`\nmsg.payload = all_convo[msg.in_chat.userId]\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
         "x": 670,
-        "y": 100,
+        "y": 80,
         "wires": [
             [
-                "6fda8663bb5cdc92"
+                "c2d3733170484e13"
             ]
         ]
     },
     {
-        "id": "6fda8663bb5cdc92",
-        "type": "debug",
+        "id": "ecfc14fbf7a36c3e",
+        "type": "change",
         "z": "949e88709af1312c",
-        "name": "debug 9",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 840,
-        "y": 100,
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "in_chat",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg",
+                "dc": true
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 140,
+        "y": 140,
+        "wires": [
+            [
+                "7de94992a0384246"
+            ]
+        ]
+    },
+    {
+        "id": "c2d3733170484e13",
+        "type": "firebase-out",
+        "z": "949e88709af1312c",
+        "name": "create the session in fb",
+        "database": "276702a0fe306a8a",
+        "path": "topic",
+        "pathType": "msg",
+        "priority": 1,
+        "queryType": "set",
+        "x": 930,
+        "y": 80,
         "wires": []
     }
 ]
