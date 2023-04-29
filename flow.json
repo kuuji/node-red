@@ -3177,32 +3177,13 @@
         "type": "function",
         "z": "5696f54716e2d43c",
         "name": "destroy session",
-        "func": "flow.set(msg.payload.userId)\nlet convo = flow.get(\"convo\")\nif (convo){\n    delete convo[msg.payload.userId]\n}\nflow.set(\"convo\",convo)\n// let history = flow.get(\"history\")\n// if (history){\n//     if (history[msg.payload.userId]){\n//         delete history[msg.payload.userId]\n//         flow.set(\"history\", history)\n//     }\n// }\n// let system_prompt = flow.get(\"system_prompt\")\n// if (system_prompt) {\n//     if (system_prompt[msg.payload.userId]) {\n//         delete system_prompt[msg.payload.userId]\n//         flow.set(\"system_prompt\", system_prompt)\n//     }\n// }\n\nreturn msg;",
+        "func": "let convo = flow.get(\"convo\")\nif (convo){\n    delete convo[msg.payload.userId].history\n}\nflow.set(\"convo\",convo)\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
         "x": 700,
-        "y": 180,
-        "wires": [
-            [
-                "6ce863174122d4eb"
-            ]
-        ]
-    },
-    {
-        "id": "6ce863174122d4eb",
-        "type": "function",
-        "z": "5696f54716e2d43c",
-        "name": "create session",
-        "func": "let gpt_session = flow.get(msg.payload.userId)\n\ngpt_session = true\n\nflow.set(msg.payload.userId, gpt_session)\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 900,
         "y": 180,
         "wires": [
             [
