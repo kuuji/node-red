@@ -2618,8 +2618,7 @@
         "wires": [
             [
                 "aaa2a5dff6a87c09",
-                "3a09f926213586a6",
-                "ad86aea08501e58d"
+                "3a09f926213586a6"
             ]
         ]
     },
@@ -3131,8 +3130,37 @@
                 "description": "stop a session and reset the history"
             }
         ],
-        "x": 360,
-        "y": 320,
+        "x": 300,
+        "y": 60,
         "wires": []
+    },
+    {
+        "id": "4e796cbe7729f438",
+        "type": "inject",
+        "z": "5696f54716e2d43c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 130,
+        "y": 60,
+        "wires": [
+            [
+                "ad86aea08501e58d"
+            ]
+        ]
     }
 ]
