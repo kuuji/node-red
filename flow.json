@@ -2514,15 +2514,16 @@
         "type": "http in",
         "z": "be9302db5cc86901",
         "name": "",
-        "url": "/flow_1",
+        "url": "/flow_1/hello",
         "method": "get",
         "upload": false,
         "swaggerDoc": "",
-        "x": 270,
+        "x": 280,
         "y": 420,
         "wires": [
             [
-                "4112ae4215303ed8"
+                "4112ae4215303ed8",
+                "b3732fa3cf5b1843"
             ]
         ]
     },
@@ -2541,5 +2542,43 @@
         "x": 520,
         "y": 420,
         "wires": []
+    },
+    {
+        "id": "e1e83eaa85b0e273",
+        "type": "http response",
+        "z": "be9302db5cc86901",
+        "name": "",
+        "statusCode": "200",
+        "headers": {},
+        "x": 900,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "b3732fa3cf5b1843",
+        "type": "change",
+        "z": "be9302db5cc86901",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "world",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 540,
+        "y": 340,
+        "wires": [
+            [
+                "e1e83eaa85b0e273"
+            ]
+        ]
     }
 ]
