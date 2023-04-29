@@ -3342,23 +3342,23 @@
         "bot": "7cf31403b2d243a2",
         "items": [
             {
-                "command": "start",
+                "command": "/start",
                 "description": "start a session"
             },
             {
-                "command": "stop",
+                "command": "/stop",
                 "description": "stop a session and reset history"
             },
             {
-                "command": "reset",
+                "command": "/reset",
                 "description": "reset history and restart session"
             },
             {
-                "command": "token",
+                "command": "/token",
                 "description": "show amount of token used so far"
             },
             {
-                "command": "system",
+                "command": "/system",
                 "description": "set a system prompt"
             }
         ],
