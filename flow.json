@@ -2647,9 +2647,10 @@
         "propertyType": "msg",
         "rules": [
             {
-                "t": "cont",
+                "t": "regex",
                 "v": "^/gpt start",
-                "vt": "str"
+                "vt": "str",
+                "case": false
             }
         ],
         "checkall": "true",
