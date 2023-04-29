@@ -2989,7 +2989,7 @@
         "name": "gptbyeonbot",
         "message": [
             {
-                "message": "No session running. Type `/gpt start` to get started"
+                "message": "No session running. Type /start to get started"
             }
         ],
         "language": "none",
@@ -3223,7 +3223,7 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 780,
+        "x": 740,
         "y": 280,
         "wires": []
     }
