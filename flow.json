@@ -2508,5 +2508,38 @@
         "wires": [
             []
         ]
+    },
+    {
+        "id": "521f3898fc1f46dd",
+        "type": "http in",
+        "z": "be9302db5cc86901",
+        "name": "",
+        "url": "/flow_1",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 270,
+        "y": 420,
+        "wires": [
+            [
+                "4112ae4215303ed8"
+            ]
+        ]
+    },
+    {
+        "id": "4112ae4215303ed8",
+        "type": "debug",
+        "z": "be9302db5cc86901",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 520,
+        "y": 420,
+        "wires": []
     }
 ]
