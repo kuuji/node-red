@@ -2798,7 +2798,8 @@
         "y": 180,
         "wires": [
             [
-                "b741cfbc572cdc11"
+                "b741cfbc572cdc11",
+                "223a1785d6af5509"
             ]
         ]
     },
@@ -2829,8 +2830,8 @@
         "passThrough": true,
         "errorOutput": false,
         "outputs": 1,
-        "x": 1030,
-        "y": 160,
+        "x": 1050,
+        "y": 180,
         "wires": [
             [
                 "92974aa8258f8ddf"
@@ -2849,8 +2850,8 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1200,
-        "y": 160,
+        "x": 1240,
+        "y": 180,
         "wires": []
     },
     {
@@ -2864,8 +2865,42 @@
             }
         ],
         "language": "none",
-        "x": 830,
-        "y": 180,
+        "x": 890,
+        "y": 140,
+        "wires": [
+            [
+                "edf8d4cb21432ace"
+            ]
+        ]
+    },
+    {
+        "id": "223a1785d6af5509",
+        "type": "chatbot-authorized",
+        "z": "5696f54716e2d43c",
+        "x": 850,
+        "y": 240,
+        "wires": [
+            [
+                "b741cfbc572cdc11"
+            ],
+            [
+                "8a4705df535a534c"
+            ]
+        ]
+    },
+    {
+        "id": "8a4705df535a534c",
+        "type": "chatbot-message",
+        "z": "5696f54716e2d43c",
+        "name": "gptbyeonbot",
+        "message": [
+            {
+                "message": "Not authorized"
+            }
+        ],
+        "language": "none",
+        "x": 990,
+        "y": 320,
         "wires": [
             [
                 "edf8d4cb21432ace"
