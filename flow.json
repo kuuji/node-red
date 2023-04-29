@@ -2564,8 +2564,9 @@
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "world",
-                "tot": "str"
+                "to": "homeassitant",
+                "tot": "global",
+                "dc": true
             }
         ],
         "action": "",
