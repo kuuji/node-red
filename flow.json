@@ -2664,10 +2664,10 @@
         "y": 220,
         "wires": [
             [
-                "26a08da50a3f0106"
+                "34df10fb7e00e120"
             ],
             [
-                "83194e7d74022db6"
+                "dd2f6c5c07a34a71"
             ]
         ]
     },
@@ -2736,8 +2736,8 @@
                 "type": "msg"
             }
         ],
-        "x": 900,
-        "y": 200,
+        "x": 1100,
+        "y": 300,
         "wires": [
             [
                 "702c22b2165e2fd4"
@@ -2767,60 +2767,6 @@
         ]
     },
     {
-        "id": "26a08da50a3f0106",
-        "type": "change",
-        "z": "5696f54716e2d43c",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "gpt_session[5528324687]",
-                "pt": "flow",
-                "to": "true",
-                "tot": "bool"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 740,
-        "y": 100,
-        "wires": [
-            [
-                "02602c9bb8671a54"
-            ]
-        ]
-    },
-    {
-        "id": "83194e7d74022db6",
-        "type": "change",
-        "z": "5696f54716e2d43c",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "gpt_session[5528324687]",
-                "pt": "flow",
-                "to": "false",
-                "tot": "bool"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 740,
-        "y": 160,
-        "wires": [
-            [
-                "02602c9bb8671a54"
-            ]
-        ]
-    },
-    {
         "id": "02602c9bb8671a54",
         "type": "debug",
         "z": "5696f54716e2d43c",
@@ -2833,8 +2779,46 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1040,
-        "y": 120,
+        "x": 860,
+        "y": 200,
         "wires": []
+    },
+    {
+        "id": "34df10fb7e00e120",
+        "type": "function",
+        "z": "5696f54716e2d43c",
+        "name": "create session",
+        "func": "let gpt_session = flow.get(msg.payload.chatId)\n\ngpt_session = true\n\nflow.set(msg.payload.chatId)\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 640,
+        "y": 180,
+        "wires": [
+            [
+                "02602c9bb8671a54"
+            ]
+        ]
+    },
+    {
+        "id": "dd2f6c5c07a34a71",
+        "type": "function",
+        "z": "5696f54716e2d43c",
+        "name": "destroy session",
+        "func": "let gpt_session = flow.get(msg.payload.chatId)\n\ngpt_session = false\n\nflow.set(msg.payload.chatId)\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 640,
+        "y": 240,
+        "wires": [
+            [
+                "02602c9bb8671a54"
+            ]
+        ]
     }
 ]
