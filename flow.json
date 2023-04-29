@@ -2680,7 +2680,7 @@
                 "dd2f6c5c07a34a71"
             ],
             [
-                "ba6d7055cac2b5c5"
+                "1282967faa7b88b4"
             ],
             [
                 "c5167ff5a46eb34b"
@@ -2805,7 +2805,7 @@
         "type": "function",
         "z": "5696f54716e2d43c",
         "name": "destroy session",
-        "func": "flow.set(msg.payload.userId)\nlet history = flow.get(\"history\")\nif (history){\n    if (history[msg.payload.userId]){\n        delete history[msg.payload.userId]\n        flow.set(\"history\", history)\n    }\n}\nreturn msg;",
+        "func": "flow.set(msg.payload.userId)\nlet history = flow.get(\"history\")\nif (history){\n    if (history[msg.payload.userId]){\n        delete history[msg.payload.userId]\n        flow.set(\"history\", history)\n    }\n}\nlet system_prompt = flow.get(\"system_prompt\")\nif (system_prompt) {\n    if (system_prompt[msg.payload.userId]) {\n        delete system_prompt[msg.payload.userId]\n        flow.set(\"system_prompt\", system_prompt)\n    }\n}\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -3091,31 +3091,6 @@
         ]
     },
     {
-        "id": "ba6d7055cac2b5c5",
-        "type": "change",
-        "z": "5696f54716e2d43c",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "",
-                "tot": "str"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 660,
-        "y": 180,
-        "wires": [
-            []
-        ]
-    },
-    {
         "id": "ad86aea08501e58d",
         "type": "chatbot-telegram-menu",
         "z": "5696f54716e2d43c",
@@ -3161,6 +3136,42 @@
             [
                 "ad86aea08501e58d"
             ]
+        ]
+    },
+    {
+        "id": "1282967faa7b88b4",
+        "type": "function",
+        "z": "5696f54716e2d43c",
+        "name": "set system prompt",
+        "func": "\nconst join = (array, index, separator) => {\n    let result = \"\";\n    for (let i = index; i < array.length; i++) {\n        result += array[i] + separator;\n    }\n    return result;\n}\n\nlet system_prompt = flow.get(\"system_prompt\")\nif (!system_prompt) {\n    system_prompt = {}\n}\nsystem_prompt[msg.payload.userId] = join(msg.payload.arguments, 1, \" \")\n\nflow.set(\"system_prompt\", system_prompt)\n\nmsg.payload.system_prompt = join(msg.payload.arguments, 1, \" \")\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 680.25,
+        "y": 202.74998474121094,
+        "wires": [
+            [
+                "27b8abdc3f527cbf"
+            ]
+        ]
+    },
+    {
+        "id": "27b8abdc3f527cbf",
+        "type": "chatbot-message",
+        "z": "5696f54716e2d43c",
+        "name": "gptbyeonbot",
+        "message": [
+            {
+                "message": "System prompt set to \"{{payload.system_prompt}}\""
+            }
+        ],
+        "language": "none",
+        "x": 870,
+        "y": 200,
+        "wires": [
+            []
         ]
     }
 ]
