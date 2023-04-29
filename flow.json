@@ -2812,7 +2812,7 @@
         "type": "function",
         "z": "5696f54716e2d43c",
         "name": "destroy session",
-        "func": "flow.set(msg.payload.userId, null)\nlet history = flow.get(\"history\")\nif (history){\n    if (history[msg.payload.userId]){\n        history[msg.payload.userId] = null\n        flow.set(\"history\", history)\n    }\n}\nreturn msg;",
+        "func": "flow.set(msg.payload.userId)\nlet history = flow.get(\"history\")\nif (history){\n    if (history[msg.payload.userId]){\n        delete history[msg.payload.userId]\n        flow.set(\"history\", history)\n    }\n}\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
