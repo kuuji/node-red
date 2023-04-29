@@ -74,7 +74,7 @@
         "id": "d1d223ae7f73128c",
         "type": "chatbot-telegram-node",
         "botname": "gptbyeonbot",
-        "usernames": "tidhilm",
+        "usernames": "",
         "polling": "1000",
         "store": "",
         "log": "",
@@ -2649,22 +2649,22 @@
         "rules": [
             {
                 "t": "eq",
-                "v": "/gpt start",
+                "v": "/start",
                 "vt": "str"
             },
             {
                 "t": "eq",
-                "v": "/gpt stop",
+                "v": "/stop",
                 "vt": "str"
             },
             {
                 "t": "eq",
-                "v": "/gpt reset",
+                "v": "/reset",
                 "vt": "str"
             },
             {
                 "t": "regex",
-                "v": "^/gpt system",
+                "v": "^/system",
                 "vt": "str",
                 "case": false
             },
@@ -3111,6 +3111,10 @@
             {
                 "command": "/gpt stop",
                 "description": "stop a session and reset the history"
+            },
+            {
+                "command": "/help",
+                "description": "test"
             }
         ],
         "x": 300,
@@ -3151,7 +3155,7 @@
         "type": "function",
         "z": "5696f54716e2d43c",
         "name": "set system prompt",
-        "func": "\nconst join = (array, index, separator) => {\n    let result = \"\";\n    for (let i = index; i < array.length; i++) {\n        result += array[i] + separator;\n    }\n    return result;\n}\n\nlet system_prompt = flow.get(\"system_prompt\")\nif (!system_prompt) {\n    system_prompt = {}\n}\nsystem_prompt[msg.payload.userId] = join(msg.payload.arguments, 1, \" \")\n\nflow.set(\"system_prompt\", system_prompt)\n\nmsg.payload.system_prompt = join(msg.payload.arguments, 1, \" \")\n\nreturn msg;",
+        "func": "\nconst join = (array, index, separator) => {\n    let result = \"\";\n    for (let i = index; i < array.length; i++) {\n        result += array[i] + separator;\n    }\n    return result;\n}\n\nlet system_prompt = flow.get(\"system_prompt\")\nif (!system_prompt) {\n    system_prompt = {}\n}\nsystem_prompt[msg.payload.userId] = join(msg.payload.arguments, 1, \" \")\n\nflow.set(\"system_prompt\", system_prompt)\n\nmsg.payload.system_prompt = join(msg.payload.arguments, 0, \" \")\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
