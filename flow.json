@@ -91,7 +91,7 @@
         "id": "7cf31403b2d243a2",
         "type": "chatbot-telegram-node",
         "botname": "My Bot",
-        "usernames": "tidhilm",
+        "usernames": "",
         "polling": "1000",
         "store": "",
         "log": "",
