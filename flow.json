@@ -2762,7 +2762,7 @@
         "y": 280,
         "wires": [
             [
-                "169c0b0bbedaac8f"
+                "2240a689d69c3786"
             ]
         ]
     },
@@ -2968,12 +2968,13 @@
                 "module": "openai"
             }
         ],
-        "x": 1090,
+        "x": 1130,
         "y": 280,
         "wires": [
             [
                 "fa5973b3866ea2af",
-                "54be79d368bbff64"
+                "54be79d368bbff64",
+                "eeafa246c29cf57b"
             ]
         ]
     },
@@ -3048,5 +3049,32 @@
         "x": 1320,
         "y": 360,
         "wires": []
+    },
+    {
+        "id": "2240a689d69c3786",
+        "type": "chatbot-waiting",
+        "z": "5696f54716e2d43c",
+        "waitingType": "typing",
+        "x": 1020,
+        "y": 220,
+        "wires": [
+            [
+                "169c0b0bbedaac8f",
+                "edf8d4cb21432ace"
+            ]
+        ]
+    },
+    {
+        "id": "eeafa246c29cf57b",
+        "type": "chatbot-waiting",
+        "z": "5696f54716e2d43c",
+        "waitingType": "",
+        "x": 1200,
+        "y": 220,
+        "wires": [
+            [
+                "edf8d4cb21432ace"
+            ]
+        ]
     }
 ]
