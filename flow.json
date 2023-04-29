@@ -3105,16 +3105,16 @@
         "bot": "d1d223ae7f73128c",
         "items": [
             {
-                "command": "/gpt start",
+                "command": "/start",
                 "description": "start a session with chatgpt"
             },
             {
-                "command": "/gpt stop",
+                "command": "/stop",
                 "description": "stop a session and reset the history"
             },
             {
-                "command": "/help",
-                "description": "test"
+                "command": "reset",
+                "description": "reset a session"
             }
         ],
         "x": 300,
