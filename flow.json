@@ -42,7 +42,7 @@
     {
         "id": "5696f54716e2d43c",
         "type": "tab",
-        "label": "Flow 2",
+        "label": "GPT byeon telegram bot",
         "disabled": false,
         "info": "",
         "env": []
@@ -103,6 +103,15 @@
         "enableMissionControl": false,
         "inspectMessages": true,
         "chatbotId": ""
+    },
+    {
+        "id": "276702a0fe306a8a",
+        "type": "database-config",
+        "name": "My Database",
+        "authType": "anonymous",
+        "claims": {},
+        "createUser": false,
+        "useClaims": false
     },
     {
         "id": "3b77e42fb1341f12",
@@ -2625,6 +2634,42 @@
         "wires": []
     },
     {
+        "id": "f50f4f45f08cd7d6",
+        "type": "firebase-get",
+        "z": "be9302db5cc86901",
+        "name": "",
+        "constraint": {},
+        "database": "276702a0fe306a8a",
+        "outputType": "auto",
+        "passThrough": true,
+        "path": "test",
+        "pathType": "str",
+        "useConstraint": false,
+        "x": 230,
+        "y": 180,
+        "wires": [
+            [
+                "82138c3b6f873a6e"
+            ]
+        ]
+    },
+    {
+        "id": "82138c3b6f873a6e",
+        "type": "debug",
+        "z": "be9302db5cc86901",
+        "name": "debug 5",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 440,
+        "y": 180,
+        "wires": []
+    },
+    {
         "id": "d0e69ca1fb33587f",
         "type": "chatbot-telegram-receive",
         "z": "5696f54716e2d43c",
@@ -2780,6 +2825,10 @@
         "props": [
             {
                 "value": "openapi_key",
+                "type": "msg"
+            },
+            {
+                "value": "ha_token",
                 "type": "msg"
             }
         ],
