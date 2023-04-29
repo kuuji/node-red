@@ -40,6 +40,14 @@
         "env": []
     },
     {
+        "id": "5696f54716e2d43c",
+        "type": "tab",
+        "label": "Flow 2",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "0c34728bb51d9c58",
         "type": "server",
         "name": "Home Assistant",
@@ -61,6 +69,23 @@
         "statusHourCycle": "h23",
         "statusTimeFormat": "h:m",
         "enableGlobalContextStore": true
+    },
+    {
+        "id": "d1d223ae7f73128c",
+        "type": "chatbot-telegram-node",
+        "botname": "gptbyeonbot",
+        "usernames": "tidhilm",
+        "polling": "1000",
+        "store": "",
+        "log": "",
+        "debug": true,
+        "skipMediaFiles": false,
+        "webHook": "",
+        "connectMode": "polling",
+        "storeMessages": true,
+        "enableMissionControl": false,
+        "inspectMessages": true,
+        "chatbotId": ""
     },
     {
         "id": "3b77e42fb1341f12",
@@ -2580,6 +2605,36 @@
         "statusType": "auto",
         "x": 640,
         "y": 420,
+        "wires": []
+    },
+    {
+        "id": "d0e69ca1fb33587f",
+        "type": "chatbot-telegram-receive",
+        "z": "5696f54716e2d43c",
+        "bot": "d1d223ae7f73128c",
+        "botProduction": "",
+        "x": 270,
+        "y": 320,
+        "wires": [
+            [
+                "aaa2a5dff6a87c09"
+            ]
+        ]
+    },
+    {
+        "id": "aaa2a5dff6a87c09",
+        "type": "debug",
+        "z": "5696f54716e2d43c",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 480,
+        "y": 320,
         "wires": []
     }
 ]
