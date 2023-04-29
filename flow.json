@@ -3043,8 +3043,8 @@
         "id": "eeafa246c29cf57b",
         "type": "chatbot-waiting",
         "z": "5696f54716e2d43c",
-        "waitingType": "",
-        "x": 1340,
+        "waitingType": "typing",
+        "x": 1300,
         "y": 240,
         "wires": [
             [
