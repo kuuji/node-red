@@ -2671,6 +2671,35 @@
         "wires": []
     },
     {
+        "id": "a8cfec847dabe4fe",
+        "type": "inject",
+        "z": "be9302db5cc86901",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 110,
+        "y": 220,
+        "wires": [
+            [
+                "f50f4f45f08cd7d6"
+            ]
+        ]
+    },
+    {
         "id": "d0e69ca1fb33587f",
         "type": "chatbot-telegram-receive",
         "z": "5696f54716e2d43c",
