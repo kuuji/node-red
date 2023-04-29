@@ -2642,7 +2642,7 @@
         "database": "276702a0fe306a8a",
         "outputType": "auto",
         "passThrough": true,
-        "path": "test",
+        "path": "/test",
         "pathType": "str",
         "useConstraint": false,
         "x": 230,
