@@ -3014,7 +3014,7 @@
         "name": "gptbyeonbot",
         "message": [
             {
-                "message": "No session running\\. Type /start to get started\n\n```javascript\nconsole.log(\"test\");\n```"
+                "message": "No session running. Type /start to get started\n\n```javascript\nconsole.log(\"test\");\n```"
             }
         ],
         "language": "none",
