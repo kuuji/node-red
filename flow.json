@@ -2706,8 +2706,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 970,
-        "y": 600,
+        "x": 1110,
+        "y": 820,
         "wires": [
             [],
             [
@@ -2734,8 +2734,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1070,
-        "y": 400,
+        "x": 1210,
+        "y": 620,
         "wires": [
             [
                 "6eb92626351cb793"
@@ -2753,8 +2753,8 @@
                 "type": "msg"
             }
         ],
-        "x": 1100,
-        "y": 300,
+        "x": 1240,
+        "y": 520,
         "wires": [
             [
                 "702c22b2165e2fd4"
@@ -2777,8 +2777,8 @@
                 "module": "openai"
             }
         ],
-        "x": 1070,
-        "y": 200,
+        "x": 1030,
+        "y": 560,
         "wires": [
             []
         ]
@@ -2788,7 +2788,7 @@
         "type": "function",
         "z": "5696f54716e2d43c",
         "name": "create session",
-        "func": "let gpt_session = flow.get(msg.payload.userId)\n\ngpt_session = true\n\nflow.set(msg.payload.userId, gpt_session)\nmsg.payload = \"session started\"\n\nreturn msg;",
+        "func": "let gpt_session = flow.get(msg.payload.userId)\n\ngpt_session = true\n\nflow.set(msg.payload.userId, gpt_session)\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -2798,7 +2798,7 @@
         "y": 180,
         "wires": [
             [
-                "edf8d4cb21432ace"
+                "b741cfbc572cdc11"
             ]
         ]
     },
@@ -2829,8 +2829,8 @@
         "passThrough": true,
         "errorOutput": false,
         "outputs": 1,
-        "x": 930,
-        "y": 140,
+        "x": 1030,
+        "y": 160,
         "wires": [
             [
                 "92974aa8258f8ddf"
@@ -2849,8 +2849,27 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1140,
-        "y": 140,
+        "x": 1200,
+        "y": 160,
         "wires": []
+    },
+    {
+        "id": "b741cfbc572cdc11",
+        "type": "chatbot-message",
+        "z": "5696f54716e2d43c",
+        "name": "gptbyeonbot",
+        "message": [
+            {
+                "message": "Session started"
+            }
+        ],
+        "language": "none",
+        "x": 830,
+        "y": 180,
+        "wires": [
+            [
+                "edf8d4cb21432ace"
+            ]
+        ]
     }
 ]
