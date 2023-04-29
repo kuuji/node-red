@@ -3339,7 +3339,7 @@
         "id": "bb2a15c596710fd6",
         "type": "chatbot-telegram-menu",
         "z": "5696f54716e2d43c",
-        "bot": "",
+        "bot": "7cf31403b2d243a2",
         "items": [
             {
                 "command": "start",
