@@ -2658,6 +2658,11 @@
                 "vt": "str"
             },
             {
+                "t": "eq",
+                "v": "/gpt reset",
+                "vt": "str"
+            },
+            {
                 "t": "regex",
                 "v": "^/gpt system",
                 "vt": "str",
@@ -2669,7 +2674,7 @@
         ],
         "checkall": "true",
         "repair": false,
-        "outputs": 4,
+        "outputs": 5,
         "x": 470,
         "y": 200,
         "wires": [
@@ -2678,6 +2683,9 @@
             ],
             [
                 "dd2f6c5c07a34a71"
+            ],
+            [
+                "f36ff25e103894cc"
             ],
             [
                 "1282967faa7b88b4"
@@ -3149,8 +3157,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 680.25,
-        "y": 202.74998474121094,
+        "x": 650,
+        "y": 240,
         "wires": [
             [
                 "27b8abdc3f527cbf"
@@ -3169,7 +3177,64 @@
         ],
         "language": "none",
         "x": 870,
-        "y": 200,
+        "y": 240,
+        "wires": [
+            [
+                "edf8d4cb21432ace"
+            ]
+        ]
+    },
+    {
+        "id": "f36ff25e103894cc",
+        "type": "function",
+        "z": "5696f54716e2d43c",
+        "name": "destroy session",
+        "func": "flow.set(msg.payload.userId)\nlet history = flow.get(\"history\")\nif (history){\n    if (history[msg.payload.userId]){\n        delete history[msg.payload.userId]\n        flow.set(\"history\", history)\n    }\n}\nlet system_prompt = flow.get(\"system_prompt\")\nif (system_prompt) {\n    if (system_prompt[msg.payload.userId]) {\n        delete system_prompt[msg.payload.userId]\n        flow.set(\"system_prompt\", system_prompt)\n    }\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 700,
+        "y": 180,
+        "wires": [
+            [
+                "6ce863174122d4eb"
+            ]
+        ]
+    },
+    {
+        "id": "6ce863174122d4eb",
+        "type": "function",
+        "z": "5696f54716e2d43c",
+        "name": "create session",
+        "func": "let gpt_session = flow.get(msg.payload.userId)\n\ngpt_session = true\n\nflow.set(msg.payload.userId, gpt_session)\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 900,
+        "y": 180,
+        "wires": [
+            [
+                "7d2e289b69f59352"
+            ]
+        ]
+    },
+    {
+        "id": "7d2e289b69f59352",
+        "type": "chatbot-message",
+        "z": "5696f54716e2d43c",
+        "name": "gptbyeonbot",
+        "message": [
+            {
+                "message": "Session reset"
+            }
+        ],
+        "language": "none",
+        "x": 1090,
+        "y": 140,
         "wires": [
             [
                 "edf8d4cb21432ace"
