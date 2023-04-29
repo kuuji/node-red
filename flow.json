@@ -74,7 +74,7 @@
         "id": "d1d223ae7f73128c",
         "type": "chatbot-telegram-node",
         "botname": "gptbyeonbot",
-        "usernames": "",
+        "usernames": "tidhilm",
         "polling": "1000",
         "store": "",
         "log": "",
@@ -3184,7 +3184,8 @@
         "y": 240,
         "wires": [
             [
-                "edf8d4cb21432ace"
+                "edf8d4cb21432ace",
+                "f36ff25e103894cc"
             ]
         ]
     },
