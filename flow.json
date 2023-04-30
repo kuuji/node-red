@@ -4340,7 +4340,7 @@
         "name": "list",
         "message": [
             {
-                "message": "set"
+                "message": "list"
             }
         ],
         "language": "none",
@@ -4359,7 +4359,7 @@
         "name": "show",
         "message": [
             {
-                "message": "set"
+                "message": "show"
             }
         ],
         "language": "none",
