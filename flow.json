@@ -4582,14 +4582,14 @@
         "id": "a3aeca7e7588f306",
         "type": "function",
         "z": "949e88709af1312c",
-        "name": "set",
+        "name": "remove",
         "func": "const session_index = msg.in_chat.arguments[1]\n\nlet all_convo = msg.payload\nlet session_to_be_removed = all_convo[msg.in_chat.userId].sessions[session_index]\nlet sessions = all_convo[msg.in_chat.userId].sessions\n\nsessions.splice(session_index,1)\n\nmsg.topic = `convo/${msg.in_chat.userId}`\nmsg.payload = all_convo[msg.in_chat.userId]\n\nmsg.session_to_be_removed = session_to_be_removed\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 620.25,
+        "x": 630.25,
         "y": 867.75,
         "wires": [
             [
