@@ -4440,7 +4440,7 @@
         "type": "function",
         "z": "949e88709af1312c",
         "name": "list",
-        "func": "let all_convo = msg.payload\nlet sessions = all_convo[msg.in_chat.userId].sessions\n\n// loop through session and build a string of the forn index:session_name, one per line\nlet session_list = \"```\\n\"\nfor (let i = 0; i < sessions.length; i++) {\n    if (i == all_convo[msg.in_chat.userId].current_session_index) {\n        session_list = + \"> \"\n    } else {\n        session_list = + \"  \"\n    }\n    session_list += `${i} : ${sessions[i].name}\\n`\n}\nsession_list += \"```\\n\"\n\nmsg.payload.list = session_list\n\nreturn msg;",
+        "func": "let all_convo = msg.payload\nlet sessions = all_convo[msg.in_chat.userId].sessions\n\n// loop through session and build a string of the forn index:session_name, one per line\nlet session_list = \"```\\n\"\nfor (let i = 0; i < sessions.length; i++) {\n    if (i == all_convo[msg.in_chat.userId].current_session_index) {\n        session_list += \"> \"\n    } else {\n        session_list += \"  \"\n    }\n    session_list += `${i} : ${sessions[i].name}\\n`\n}\nsession_list += \"```\\n\"\n\nmsg.payload.list = session_list\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
