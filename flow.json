@@ -4421,7 +4421,7 @@
         "type": "function",
         "z": "949e88709af1312c",
         "name": "name",
-        "func": "\n\nlet all_convo = msg.payload\nlet session = all_convo[msg.in_chat.userId].sessions.at(all_convo[msg.in_chat.userId].current_session_index)\n\nmsg.payload.name = session.name\nmsg.payload.system_prompt = session.history[0].content\nmsg.payload.number = all_convo[msg.in_chat.userId].current_session_index\nmsg.payload.last_message = session.history.at(-1).content\n\nreturn msg;",
+        "func": "\n\nlet all_convo = msg.payload\nlet session = all_convo[msg.in_chat.userId].sessions.at(all_convo[msg.in_chat.userId].current_session_index)\n\nmsg.payload.name = session.name\nif (session.system_prompt){\n    msg.payload.system_prompt = session.system_prompt\n}\nif (session.history){\n    msg.payload.system_prompt = session.history[0].content\n    msg.payload.last_message = session.history.at(-1).content\n}\n\nmsg.payload.number = all_convo[msg.in_chat.userId].current_session_index\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
