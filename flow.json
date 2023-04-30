@@ -4480,8 +4480,7 @@
         "y": 720,
         "wires": [
             [
-                "05a50c8fe5937177",
-                "bb5430a0d9a60f5a"
+                "05a50c8fe5937177"
             ]
         ]
     },
@@ -4509,7 +4508,7 @@
         "type": "function",
         "z": "949e88709af1312c",
         "name": "rename",
-        "func": "const name = msg.in_chat.arguments[1]\n\nlet all_convo = msg.payload\nlet session = all_convo[msg.in_chat.userId].sessions.at(all_convo[msg.in_chat.userId].current_session_index)\n\nsession.name = name\n\nmsg.topic = `convo/${msg.in_chat.userId}`\nmsg.payload = all_convo[msg.in_chat.userId]\nmsg.new_name = name\nreturn msg;",
+        "func": "const join = (array, index, separator) => {\n    let result = \"\";\n    for (let i = index; i < array.length; i++) {\n        result += array[i] + separator;\n    }\n    return result;\n}\n\nconst name = join(msg.in_chat.arguments, 1, \" \")\n\nlet all_convo = msg.payload\nlet session = all_convo[msg.in_chat.userId].sessions.at(all_convo[msg.in_chat.userId].current_session_index)\n\nsession.name = name\n\nmsg.topic = `convo/${msg.in_chat.userId}`\nmsg.payload = all_convo[msg.in_chat.userId]\nmsg.new_name = name\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -4538,7 +4537,9 @@
         "x": 1110,
         "y": 800,
         "wires": [
-            []
+            [
+                "09cc9403877a4d84"
+            ]
         ]
     },
     {
