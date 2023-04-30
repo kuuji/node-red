@@ -4341,7 +4341,7 @@
         "name": "list",
         "message": [
             {
-                "message": "list"
+                "message": "List of sessions:\n{{payload.list}}\nChose by number via /session set <number>"
             }
         ],
         "language": "none",
