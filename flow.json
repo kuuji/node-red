@@ -4661,7 +4661,8 @@
         "y": 280,
         "wires": [
             [
-                "e2d99765ac24ce04"
+                "e2d99765ac24ce04",
+                "8d09d8657d0b6076"
             ]
         ]
     },
@@ -4693,6 +4694,41 @@
         "y": 260,
         "wires": [
             []
+        ]
+    },
+    {
+        "id": "8d09d8657d0b6076",
+        "type": "change",
+        "z": "68e879ad42e9213e",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "user",
+                "pt": "msg",
+                "to": "author",
+                "tot": "msg",
+                "dc": true
+            },
+            {
+                "t": "set",
+                "p": "message",
+                "pt": "msg",
+                "to": "Hello!",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 520,
+        "y": 200,
+        "wires": [
+            [
+                "55d965f1614c16bb"
+            ]
         ]
     }
 ]
