@@ -4713,13 +4713,8 @@
                 "dc": true
             },
             {
-                "t": "delete",
-                "p": "message",
-                "pt": "msg"
-            },
-            {
                 "t": "set",
-                "p": "message",
+                "p": "payload",
                 "pt": "msg",
                 "to": "Hello!",
                 "tot": "str"
