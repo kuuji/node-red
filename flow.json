@@ -56,6 +56,14 @@
         "env": []
     },
     {
+        "id": "414b89bb7b683ca2",
+        "type": "tab",
+        "label": "Flow 2",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "0c34728bb51d9c58",
         "type": "server",
         "name": "Home Assistant",
@@ -103,6 +111,16 @@
         "claims": {},
         "createUser": false,
         "useClaims": false
+    },
+    {
+        "id": "6919b42e62733343",
+        "type": "chatbot-discord-node",
+        "botname": "tidhilmbot",
+        "usernames": "Tidhilm#5613",
+        "clientId": "1102344992908914698",
+        "store": "",
+        "log": "",
+        "debug": false
     },
     {
         "id": "3b77e42fb1341f12",
@@ -4634,6 +4652,52 @@
         "wires": [
             [
                 "09cc9403877a4d84"
+            ]
+        ]
+    },
+    {
+        "id": "b2624770f736b598",
+        "type": "chatbot-discord-receive",
+        "z": "414b89bb7b683ca2",
+        "bot": "6919b42e62733343",
+        "botProduction": "",
+        "x": 200,
+        "y": 200,
+        "wires": [
+            [
+                "83e9cf08583ada16"
+            ]
+        ]
+    },
+    {
+        "id": "1a720d8afa15effc",
+        "type": "chatbot-discord-send",
+        "z": "414b89bb7b683ca2",
+        "bot": "6919b42e62733343",
+        "botProduction": "",
+        "track": false,
+        "passThrough": false,
+        "outputs": 0,
+        "x": 760,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "83e9cf08583ada16",
+        "type": "chatbot-message",
+        "z": "414b89bb7b683ca2",
+        "name": "",
+        "message": [
+            {
+                "message": "Hello!"
+            }
+        ],
+        "language": "none",
+        "x": 470,
+        "y": 200,
+        "wires": [
+            [
+                "1a720d8afa15effc"
             ]
         ]
     }
