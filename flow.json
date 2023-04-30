@@ -4302,14 +4302,20 @@
                 "vt": "str"
             },
             {
+                "t": "regex",
+                "v": "^remove",
+                "vt": "str",
+                "case": false
+            },
+            {
                 "t": "else"
             }
         ],
         "checkall": "true",
         "repair": false,
-        "outputs": 6,
+        "outputs": 7,
         "x": 510,
-        "y": 440,
+        "y": 460,
         "wires": [
             [
                 "327f16a4c7ab1c11"
@@ -4325,6 +4331,9 @@
             ],
             [
                 "d790b172d1bdfa61"
+            ],
+            [
+                "a3aeca7e7588f306"
             ],
             [
                 "b4fd325aee909d5a"
@@ -4527,14 +4536,14 @@
         "id": "9160ce65a531169d",
         "type": "chatbot-message",
         "z": "949e88709af1312c",
-        "name": "show",
+        "name": "rename",
         "message": [
             {
                 "message": "Session renamed to : {{payload}}"
             }
         ],
         "language": "none",
-        "x": 1110,
+        "x": 1120,
         "y": 800,
         "wires": [
             [
@@ -4566,6 +4575,72 @@
         "wires": [
             [
                 "9160ce65a531169d"
+            ]
+        ]
+    },
+    {
+        "id": "a3aeca7e7588f306",
+        "type": "function",
+        "z": "949e88709af1312c",
+        "name": "set",
+        "func": "const session_index = msg.in_chat.arguments[1]\n\nlet all_convo = msg.payload\nlet session_to_be_removed = all_convo[msg.in_chat.userId].sessions[session_index]\nlet sessions = all_convo[msg.in_chat.userId].sessions\n\nsessions.splice(session_index,1)\n\nmsg.topic = `convo/${msg.in_chat.userId}`\nmsg.payload = all_convo[msg.in_chat.userId]\n\nmsg.session_to_be_removed = session_to_be_removed\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 620.25,
+        "y": 867.75,
+        "wires": [
+            [
+                "c1a206e84bee19bc",
+                "c2d3733170484e13"
+            ]
+        ]
+    },
+    {
+        "id": "c1a206e84bee19bc",
+        "type": "change",
+        "z": "949e88709af1312c",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "session_to_be_removed",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 840,
+        "y": 880,
+        "wires": [
+            [
+                "8e374b5c8ba6a66b"
+            ]
+        ]
+    },
+    {
+        "id": "8e374b5c8ba6a66b",
+        "type": "chatbot-message",
+        "z": "949e88709af1312c",
+        "name": "delete",
+        "message": [
+            {
+                "message": "Session {{payload.name}} removed"
+            }
+        ],
+        "language": "none",
+        "x": 1120.25,
+        "y": 876.5,
+        "wires": [
+            [
+                "09cc9403877a4d84"
             ]
         ]
     }
