@@ -4680,5 +4680,29 @@
         "x": 580,
         "y": 280,
         "wires": []
+    },
+    {
+        "id": "1b556188fc06bce8",
+        "type": "discordPermissions",
+        "z": "68e879ad42e9213e",
+        "name": "",
+        "token": "0eb218dbf9195653",
+        "x": 430,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a03d0191859318ed",
+        "type": "discordClient",
+        "z": "68e879ad42e9213e",
+        "name": "",
+        "token": "",
+        "x": 870,
+        "y": 240,
+        "wires": [
+            []
+        ]
     }
 ]
