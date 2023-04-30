@@ -4360,7 +4360,7 @@
         "name": "show",
         "message": [
             {
-                "message": "Session name : {{name}}"
+                "message": "Session name : {{payload.name}}"
             }
         ],
         "language": "none",
@@ -4396,7 +4396,7 @@
         "type": "function",
         "z": "949e88709af1312c",
         "name": "name",
-        "func": "\n\nlet all_convo = msg.payload\nlet session = all_convo[msg.in_chat.userId].sessions.at(all_convo[msg.in_chat.userId].current_session_index)\n\nmsg.name = session.name\n\nreturn msg;",
+        "func": "\n\nlet all_convo = msg.payload\nlet session = all_convo[msg.in_chat.userId].sessions.at(all_convo[msg.in_chat.userId].current_session_index)\n\nmsg.payload.name = session.name\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
