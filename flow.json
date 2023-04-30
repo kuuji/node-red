@@ -4720,7 +4720,7 @@
         "type": "switch",
         "z": "68e879ad42e9213e",
         "name": "",
-        "property": "user.id",
+        "property": "author.id",
         "propertyType": "msg",
         "rules": [
             {
