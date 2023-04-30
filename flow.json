@@ -4660,7 +4660,7 @@
         "type": "chatbot-discord-receive",
         "z": "414b89bb7b683ca2",
         "bot": "6919b42e62733343",
-        "botProduction": "",
+        "botProduction": "6919b42e62733343",
         "x": 200,
         "y": 200,
         "wires": [
@@ -4674,7 +4674,7 @@
         "type": "chatbot-discord-send",
         "z": "414b89bb7b683ca2",
         "bot": "6919b42e62733343",
-        "botProduction": "",
+        "botProduction": "6919b42e62733343",
         "track": false,
         "passThrough": false,
         "outputs": 0,
