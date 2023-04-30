@@ -4292,12 +4292,22 @@
                 "vt": "str"
             },
             {
+                "t": "eq",
+                "v": "last_message",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "rename",
+                "vt": "str"
+            },
+            {
                 "t": "else"
             }
         ],
         "checkall": "true",
         "repair": false,
-        "outputs": 4,
+        "outputs": 6,
         "x": 510,
         "y": 440,
         "wires": [
@@ -4309,6 +4319,12 @@
             ],
             [
                 "7db956cbe3f63b5a"
+            ],
+            [
+                "290acee0a5d27d05"
+            ],
+            [
+                "d790b172d1bdfa61"
             ],
             [
                 "b4fd325aee909d5a"
@@ -4446,6 +4462,108 @@
             [
                 "67e1fd7677be3c66",
                 "c2d3733170484e13"
+            ]
+        ]
+    },
+    {
+        "id": "290acee0a5d27d05",
+        "type": "function",
+        "z": "949e88709af1312c",
+        "name": "last_message",
+        "func": "\n\nlet all_convo = msg.payload\nlet session = all_convo[msg.in_chat.userId].sessions.at(all_convo[msg.in_chat.userId].current_session_index)\n\nmsg.payload.last_message = session.history.at(-1).content\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 680,
+        "y": 720,
+        "wires": [
+            [
+                "05a50c8fe5937177"
+            ]
+        ]
+    },
+    {
+        "id": "05a50c8fe5937177",
+        "type": "chatbot-message",
+        "z": "949e88709af1312c",
+        "name": "last_message",
+        "message": [
+            {
+                "message": "{{payload.last_message}}"
+            }
+        ],
+        "language": "none",
+        "x": 920,
+        "y": 720,
+        "wires": [
+            [
+                "41c0d0629c138efa"
+            ]
+        ]
+    },
+    {
+        "id": "d790b172d1bdfa61",
+        "type": "function",
+        "z": "949e88709af1312c",
+        "name": "rename",
+        "func": "const name = msg.in_chat.arguments[1]\n\nlet all_convo = msg.payload\nlet session = all_convo[msg.in_chat.userId].sessions.at(all_convo[msg.in_chat.userId].current_session_index)\n\nsession.name = name\n\nmsg.topic = `convo/${msg.in_chat.userId}`\nmsg.payload = all_convo[msg.in_chat.userId]\nmsg.new_name = name\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 620,
+        "y": 800,
+        "wires": [
+            [
+                "c2d3733170484e13",
+                "cfd811317779fa57"
+            ]
+        ]
+    },
+    {
+        "id": "9160ce65a531169d",
+        "type": "chatbot-message",
+        "z": "949e88709af1312c",
+        "name": "show",
+        "message": [
+            {
+                "message": "Session renamed to : {{payload}}"
+            }
+        ],
+        "language": "none",
+        "x": 1110,
+        "y": 800,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "cfd811317779fa57",
+        "type": "change",
+        "z": "949e88709af1312c",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "new_name",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 864,
+        "y": 809,
+        "wires": [
+            [
+                "9160ce65a531169d"
             ]
         ]
     }
