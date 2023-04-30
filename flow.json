@@ -3494,9 +3494,10 @@
                 "vt": "str"
             },
             {
-                "t": "eq",
-                "v": "/session",
-                "vt": "str"
+                "t": "regex",
+                "v": "^/session",
+                "vt": "str",
+                "case": false
             },
             {
                 "t": "regex",
