@@ -2564,7 +2564,8 @@
         "y": 420,
         "wires": [
             [
-                "b3732fa3cf5b1843"
+                "b3732fa3cf5b1843",
+                "1371401ef1098820"
             ]
         ]
     },
@@ -2589,8 +2590,8 @@
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "homeassistant",
-                "tot": "global",
+                "to": "Hello Nick!",
+                "tot": "str",
                 "dc": true
             }
         ],
@@ -2617,7 +2618,8 @@
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "false",
+        "complete": "payload",
+        "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
         "x": 640,
