@@ -3828,7 +3828,7 @@
         "type": "function",
         "z": "949e88709af1312c",
         "name": "set system prompt",
-        "func": "\nconst join = (array, index, separator) => {\n    let result = \"\";\n    for (let i = index; i < array.length; i++) {\n        result += array[i] + separator;\n    }\n    return result;\n}\n\nlet all_convo = msg.payload\nif (all_convo[msg.in_chat.userId] && all_convo[msg.in_chat.userId].is_session) {\n    all_convo[msg.in_chat.userId].sessions.push({\n        \"started\": Date.now(),\n    })\n    let session = all_convo[msg.in_chat.userId].sessions.at(-1)\n    session.system_prompt = join(msg.in_chat.arguments, 0, \" \")\n}\n\nmsg.topic = `convo/${msg.in_chat.userId}`\nmsg.payload = all_convo[msg.in_chat.userId]\n\nreturn msg;",
+        "func": "\nconst join = (array, index, separator) => {\n    let result = \"\";\n    for (let i = index; i < array.length; i++) {\n        result += array[i] + separator;\n    }\n    return result;\n}\n\nlet all_convo = msg.payload\nif (all_convo[msg.in_chat.userId] && all_convo[msg.in_chat.userId].is_session) {\n    all_convo[msg.in_chat.userId].sessions.push({\n        \"started\": Date.now(),\n    })\n    let session = all_convo[msg.in_chat.userId].sessions.at(-1)\n    session.system_prompt = join(msg.in_chat.arguments, 0, \" \")\n    msg.payload.system_prompt = join(msg.in_chat.arguments, 0, \" \")\n}\n\nmsg.topic = `convo/${msg.in_chat.userId}`\nmsg.payload = all_convo[msg.in_chat.userId]\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
