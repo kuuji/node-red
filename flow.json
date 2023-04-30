@@ -56,9 +56,9 @@
         "env": []
     },
     {
-        "id": "414b89bb7b683ca2",
+        "id": "68e879ad42e9213e",
         "type": "tab",
-        "label": "Flow 2",
+        "label": "Flow 3",
         "disabled": false,
         "info": "",
         "env": []
@@ -113,21 +113,9 @@
         "useClaims": false
     },
     {
-        "id": "6919b42e62733343",
-        "type": "chatbot-discord-node",
-        "botname": "tidhilmbot",
-        "usernames": "Tidhilm#5613",
-        "clientId": "1102344992908914698",
-        "store": "a582a2f3e8cd2e9d",
-        "log": "test",
-        "debug": true
-    },
-    {
-        "id": "a582a2f3e8cd2e9d",
-        "type": "chatbot-context-store",
-        "name": "",
-        "contextStorage": "memory",
-        "contextParams": ""
+        "id": "0eb218dbf9195653",
+        "type": "discord-token",
+        "name": "tidhilmbot"
     },
     {
         "id": "3b77e42fb1341f12",
@@ -4663,56 +4651,24 @@
         ]
     },
     {
-        "id": "b2624770f736b598",
-        "type": "chatbot-discord-receive",
-        "z": "414b89bb7b683ca2",
-        "bot": "6919b42e62733343",
-        "botProduction": "6919b42e62733343",
-        "x": 200,
-        "y": 200,
-        "wires": [
-            [
-                "83e9cf08583ada16",
-                "062d268a6ed31726"
-            ]
-        ]
-    },
-    {
-        "id": "1a720d8afa15effc",
-        "type": "chatbot-discord-send",
-        "z": "414b89bb7b683ca2",
-        "bot": "6919b42e62733343",
-        "botProduction": "6919b42e62733343",
-        "track": false,
-        "passThrough": false,
-        "outputs": 0,
-        "x": 760,
-        "y": 200,
-        "wires": []
-    },
-    {
-        "id": "83e9cf08583ada16",
-        "type": "chatbot-message",
-        "z": "414b89bb7b683ca2",
+        "id": "a7a5d18b3afb9e69",
+        "type": "discordMessage",
+        "z": "68e879ad42e9213e",
         "name": "",
-        "message": [
-            {
-                "message": "Hello!"
-            }
-        ],
-        "language": "none",
-        "x": 470,
-        "y": 200,
+        "channelIdFilter": "",
+        "token": "0eb218dbf9195653",
+        "x": 260,
+        "y": 260,
         "wires": [
             [
-                "1a720d8afa15effc"
+                "e2d99765ac24ce04"
             ]
         ]
     },
     {
-        "id": "062d268a6ed31726",
+        "id": "e2d99765ac24ce04",
         "type": "debug",
-        "z": "414b89bb7b683ca2",
+        "z": "68e879ad42e9213e",
         "name": "debug 7",
         "active": true,
         "tosidebar": true,
@@ -4721,8 +4677,8 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 360,
-        "y": 120,
+        "x": 580,
+        "y": 280,
         "wires": []
     }
 ]
