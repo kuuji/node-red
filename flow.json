@@ -4385,7 +4385,7 @@
         "name": "show",
         "message": [
             {
-                "message": "Session name : {{payload.name}}\nSession number: {{payload.number}}"
+                "message": "```\nSession name : {{payload.name}}\nSession number : {{payload.number}}\nSystem prompt : {{payload.system_prompt}}\n```\n\n{{payload.last_message}}"
             }
         ],
         "language": "none",
@@ -4421,7 +4421,7 @@
         "type": "function",
         "z": "949e88709af1312c",
         "name": "name",
-        "func": "\n\nlet all_convo = msg.payload\nlet session = all_convo[msg.in_chat.userId].sessions.at(all_convo[msg.in_chat.userId].current_session_index)\n\nmsg.payload.name = session.name\nmsg.payload.number = all_convo[msg.in_chat.userId].current_session_index\n\nreturn msg;",
+        "func": "\n\nlet all_convo = msg.payload\nlet session = all_convo[msg.in_chat.userId].sessions.at(all_convo[msg.in_chat.userId].current_session_index)\n\nmsg.payload.name = session.name\nmsg.payload.system_prompt = session.history[0].content\nmsg.payload.number = all_convo[msg.in_chat.userId].current_session_index\nmsg.payload.last_message = session.history.at(-1).content\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
