@@ -3461,8 +3461,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 480,
-        "y": 660,
+        "x": 240,
+        "y": 640,
         "wires": []
     },
     {
@@ -3494,6 +3494,11 @@
                 "vt": "str"
             },
             {
+                "t": "eq",
+                "v": "/session",
+                "vt": "str"
+            },
+            {
                 "t": "regex",
                 "v": "^/system",
                 "vt": "str",
@@ -3505,7 +3510,7 @@
         ],
         "checkall": "true",
         "repair": false,
-        "outputs": 6,
+        "outputs": 7,
         "x": 350,
         "y": 420,
         "wires": [
@@ -3522,63 +3527,14 @@
                 "b6d1c40ce3a32f90"
             ],
             [
+                "398f994360e7317c"
+            ],
+            [
                 "307a053ba284fbf5"
             ],
             [
                 "5830cce1ba9aa88b"
             ]
-        ]
-    },
-    {
-        "id": "acad0146bdb66767",
-        "type": "switch",
-        "z": "949e88709af1312c",
-        "name": "",
-        "property": "is_running",
-        "propertyType": "flow",
-        "rules": [
-            {
-                "t": "true"
-            },
-            {
-                "t": "else"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 2,
-        "x": 1190,
-        "y": 1020,
-        "wires": [
-            [],
-            [
-                "e86b7e0f01141d84"
-            ]
-        ]
-    },
-    {
-        "id": "e86b7e0f01141d84",
-        "type": "change",
-        "z": "949e88709af1312c",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "is_running",
-                "pt": "flow",
-                "to": "true",
-                "tot": "bool"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 1290,
-        "y": 820,
-        "wires": [
-            []
         ]
     },
     {
@@ -3603,28 +3559,6 @@
                 "298a46c9b12bb753",
                 "b64a9786f52d38b0"
             ]
-        ]
-    },
-    {
-        "id": "0cfde5e02b033171",
-        "type": "function",
-        "z": "949e88709af1312c",
-        "name": "openai",
-        "func": "const configuration = new oai.Configuration({\n    apiKey: msg.openapi_key,\n});\n\nlet keep_history = global.get(\"homeassistant\").homeAssistant.states[\"input_boolean.gpt_history\"].state\nlet history = flow.get(\"history\")\nif (keep_history == \"off\" || !history){\n    history = [\n        { role: \"system\", content: global.get(\"homeassistant\").homeAssistant.states[\"input_text.gpt_system_prompt\"].state },\n        { role: \"user\", content: global.get(\"homeassistant\").homeAssistant.states[\"input_text.gpt_instructions\"].state }\n    ]\n} else {\n    if (history) {\n        history.push({ role: \"user\", content: global.get(\"homeassistant\").homeAssistant.states[\"input_text.gpt_instructions\"].state })\n    }\n}\n\nconst openai = new oai.OpenAIApi(configuration);\n\nnode.status({ fill: \"green\", shape: \"dot\", text: \"Querying openapi...\" });\n\ntry{\n    const completion = await openai.createChatCompletion({\n        model: \"gpt-3.5-turbo\",\n        messages: history\n    });\n\n    history.push(completion.data.choices[0].message)\n    flow.set(\"history\", history)\n    node.status({});\n    msg.history = history\n    msg.keep_history = keep_history\n    msg.completion = completion    \n} catch (error) {\n    if (error.response) {\n        msg.error_status = error.response.status\n        msg.error_data = error.response.data\n    } else {\n        msg.error_message = error.message\n    }\n}\n\n\n\nreturn msg",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [
-            {
-                "var": "oai",
-                "module": "openai"
-            }
-        ],
-        "x": 970,
-        "y": 900,
-        "wires": [
-            []
         ]
     },
     {
@@ -3659,9 +3593,7 @@
         "x": 1510,
         "y": 280,
         "wires": [
-            [
-                "03e7156c574cf1eb"
-            ]
+            []
         ]
     },
     {
@@ -3698,8 +3630,7 @@
         "y": 640,
         "wires": [
             [
-                "d604021e7b154fd9",
-                "bb5430a0d9a60f5a"
+                "d604021e7b154fd9"
             ]
         ]
     },
@@ -3754,7 +3685,6 @@
             [
                 "23a6f857d05a1843",
                 "b351d6c5b7c5b126",
-                "80e3ba5d7dad92cb",
                 "54c2f389f39cbe3d"
             ]
         ]
@@ -3835,7 +3765,7 @@
         "finalize": "",
         "libs": [],
         "x": 790,
-        "y": 560,
+        "y": 580,
         "wires": [
             [
                 "c2d3733170484e13",
@@ -3920,23 +3850,6 @@
         ]
     },
     {
-        "id": "03e7156c574cf1eb",
-        "type": "debug",
-        "z": "949e88709af1312c",
-        "name": "debug 7",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1700,
-        "y": 360,
-        "wires": []
-    },
-    {
         "id": "41c0d0629c138efa",
         "type": "change",
         "z": "949e88709af1312c",
@@ -4017,27 +3930,14 @@
             {
                 "command": "/system",
                 "description": "set a system prompt"
+            },
+            {
+                "command": "/session",
+                "description": "session operations. valid options are set|show|list"
             }
         ],
         "x": 160,
         "y": 200,
-        "wires": []
-    },
-    {
-        "id": "80e3ba5d7dad92cb",
-        "type": "debug",
-        "z": "949e88709af1312c",
-        "name": "debug 8",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1680,
-        "y": 540,
         "wires": []
     },
     {
@@ -4363,6 +4263,129 @@
         "wires": [
             [
                 "1d4a79ea641cb6c3"
+            ]
+        ]
+    },
+    {
+        "id": "398f994360e7317c",
+        "type": "switch",
+        "z": "949e88709af1312c",
+        "name": "",
+        "property": "in_chat.arguments[0]",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "set",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "list",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "show",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 4,
+        "x": 590,
+        "y": 440,
+        "wires": [
+            [
+                "67e1fd7677be3c66"
+            ],
+            [
+                "a644ae5476a5efe9"
+            ],
+            [
+                "15392ece44cbbbe4"
+            ],
+            [
+                "b4fd325aee909d5a"
+            ]
+        ]
+    },
+    {
+        "id": "67e1fd7677be3c66",
+        "type": "chatbot-message",
+        "z": "949e88709af1312c",
+        "name": "set",
+        "message": [
+            {
+                "message": "set"
+            }
+        ],
+        "language": "none",
+        "x": 794,
+        "y": 418.9999694824219,
+        "wires": [
+            [
+                "09cc9403877a4d84"
+            ]
+        ]
+    },
+    {
+        "id": "a644ae5476a5efe9",
+        "type": "chatbot-message",
+        "z": "949e88709af1312c",
+        "name": "list",
+        "message": [
+            {
+                "message": "set"
+            }
+        ],
+        "language": "none",
+        "x": 790,
+        "y": 460,
+        "wires": [
+            [
+                "09cc9403877a4d84"
+            ]
+        ]
+    },
+    {
+        "id": "15392ece44cbbbe4",
+        "type": "chatbot-message",
+        "z": "949e88709af1312c",
+        "name": "show",
+        "message": [
+            {
+                "message": "set"
+            }
+        ],
+        "language": "none",
+        "x": 790,
+        "y": 500,
+        "wires": [
+            [
+                "09cc9403877a4d84"
+            ]
+        ]
+    },
+    {
+        "id": "b4fd325aee909d5a",
+        "type": "chatbot-message",
+        "z": "949e88709af1312c",
+        "name": "default",
+        "message": [
+            {
+                "message": "incorrect choice"
+            }
+        ],
+        "language": "none",
+        "x": 790,
+        "y": 540,
+        "wires": [
+            [
+                "09cc9403877a4d84"
             ]
         ]
     }
