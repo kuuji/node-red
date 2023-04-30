@@ -4657,8 +4657,8 @@
         "name": "",
         "channelIdFilter": "",
         "token": "0eb218dbf9195653",
-        "x": 260,
-        "y": 260,
+        "x": 280,
+        "y": 280,
         "wires": [
             [
                 "e2d99765ac24ce04"
@@ -4674,7 +4674,8 @@
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "false",
+        "complete": "true",
+        "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
         "x": 580,
@@ -4682,25 +4683,14 @@
         "wires": []
     },
     {
-        "id": "1b556188fc06bce8",
-        "type": "discordPermissions",
+        "id": "55d965f1614c16bb",
+        "type": "discordMessageManager",
         "z": "68e879ad42e9213e",
         "name": "",
+        "channel": "",
         "token": "0eb218dbf9195653",
-        "x": 430,
-        "y": 200,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "a03d0191859318ed",
-        "type": "discordClient",
-        "z": "68e879ad42e9213e",
-        "name": "",
-        "token": "",
         "x": 870,
-        "y": 240,
+        "y": 260,
         "wires": [
             []
         ]
