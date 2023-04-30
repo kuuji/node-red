@@ -4302,7 +4302,7 @@
         "y": 440,
         "wires": [
             [
-                "67e1fd7677be3c66"
+                "327f16a4c7ab1c11"
             ],
             [
                 "3d92837670053e72"
@@ -4322,7 +4322,7 @@
         "name": "set",
         "message": [
             {
-                "message": "set"
+                "message": "Session set to {{payload.current_session_index}}"
             }
         ],
         "language": "none",
@@ -4426,6 +4426,26 @@
         "wires": [
             [
                 "a644ae5476a5efe9"
+            ]
+        ]
+    },
+    {
+        "id": "327f16a4c7ab1c11",
+        "type": "function",
+        "z": "949e88709af1312c",
+        "name": "set",
+        "func": "const session_index = msg.in_chat.arguments[1]\n\nlet all_convo = msg.payload\nall_convo[msg.in_chat.userId].current_session_index = session_index\n\nmsg.topic = `convo/${msg.in_chat.userId}`\nmsg.payload = all_convo[msg.in_chat.userId]\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 670,
+        "y": 420,
+        "wires": [
+            [
+                "67e1fd7677be3c66",
+                "c2d3733170484e13"
             ]
         ]
     }
